@@ -28,6 +28,17 @@ export interface Repo {
   getPhotoJob(userId: string, jobId: string): Promise<PhotoJob | undefined>;
   /** since（ISO）以降に作った撮影採点のジョブ数 */
   countPhotoJobs(userId: string, since: string): Promise<number>;
+  /**
+   * 回数制限用のカウンタ。key の bucket（時間枠の名前）の回数を1増やし、増やした後の回数を返す。
+   * ttlSec 後に自動で消える
+   */
+  hit(key: string, bucket: string, ttlSec: number): Promise<number>;
+
+  // ---------- 運営の管理画面用（件数が少ない検証期間向け。全件を読む） ----------
+  /** since 以降の受験（ゲスト・ログインユーザーの両方） */
+  listAllAttempts(since: string): Promise<{ who: string; attempt: AttemptDetail }[]>;
+  listFeedback(since: string): Promise<FeedbackRecord[]>;
+  listAllPhotoJobs(since: string): Promise<PhotoJob[]>;
 }
 
 export interface FeedbackRecord extends FeedbackRequest {

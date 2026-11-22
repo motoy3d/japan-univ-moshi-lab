@@ -4,6 +4,7 @@ import { currentUser } from "./auth";
 import { trackPage } from "./analytics";
 import { importLocalResults } from "./guest";
 import { PhotoPage } from "./pages/PhotoPage";
+import { AdminPage } from "./pages/AdminPage";
 import { LocalResultPage } from "./pages/ResultPage";
 import { CallbackPage, LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
@@ -45,6 +46,7 @@ function Shell({ children }: { children: ReactNode }) {
             <NavLink to="/" end>ホーム</NavLink>
             <NavLink to="/history">成績分析</NavLink>
             <NavLink to="/settings">志望校・目標</NavLink>
+            {user.admin && <NavLink to="/admin">運営</NavLink>}
           </nav>
         ) : (
           loc.pathname !== "/login" && <Link className="header-login" to={`/login?next=${encodeURIComponent(loc.pathname)}`}>ログイン</Link>
@@ -97,6 +99,7 @@ export function App() {
       <Route path="/results/:id/print" element={authed(<AnswerKeyPrintPage />, false)} />
       <Route path="/history" element={authed(<HistoryPage />)} />
       <Route path="/settings" element={authed(<SettingsPage />)} />
+      <Route path="/admin" element={authed(<AdminPage />)} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </>

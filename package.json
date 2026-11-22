@@ -14,7 +14,8 @@
     "dev:web": "npm -w web run dev",
     "dev": "concurrently -n api,web -c blue,green \"npm run dev:api\" \"npm run dev:web\"",
     "build": "npm run validate && npm -w web run build",
-    "deploy": "npm run build && npm -w infra run deploy"
+    "deploy": "npm run build && npm -w infra run deploy",
+    "e2e": "playwright test --trace off"
   },
   "devDependencies": {
     "@aws-sdk/client-dynamodb": "^3.1175.0",
@@ -22,6 +23,7 @@
     "@aws-sdk/client-s3": "^3.1175.0",
     "@aws-sdk/client-secrets-manager": "^3.1175.0",
     "@aws-sdk/lib-dynamodb": "^3.1175.0",
+    "@playwright/test": "^1.63.0",
     "@types/aws-lambda": "^8.10.164",
     "@types/node": "^26.6.6",
     "concurrently": "^10.0.7",

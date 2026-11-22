@@ -34,7 +34,10 @@ export async function handler(event: APIGatewayProxyEventV2WithJWTAuthorizer): P
   const sub = event.requestContext.authorizer?.jwt?.claims?.sub as string | undefined;
   const body = event.body && event.isBase64Encoded ? Buffer.from(event.body, "base64").toString("utf8") : event.body;
   try {
-    const res = await route(repo, event.requestContext.http.method, event.rawPath, sub, body, services);
+    // Cognito のグループ（アクセストークンの cognito:groups）。HTTP API は配列を "[admin other]" の文字列で渡すことがある
+    const groups = String(event.requestContext.authorizer?.jwt?.claims?.["cognito:groups"] ?? "");
+    const admin = !!sub && /(^|[\s,\[])admin([\s,\]]|$)/.test(groups);
+    const res = await route(repo, event.requestContext.http.method, event.rawPath, sub, body, services, { admin, ip: event.requestContext.http.sourceIp });
     return {
       statusCode: res.status,
       headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },

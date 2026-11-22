@@ -1,0 +1,17 @@
+# 依存関係の更新を毎週提案する（セキュリティ更新は随時）
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      aws-sdk:
+        patterns: ["@aws-sdk/*", "aws-cdk-lib", "constructs"]
+      react:
+        patterns: ["react", "react-dom", "@types/react*", "react-router-dom"]
+    open-pull-requests-limit: 5
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

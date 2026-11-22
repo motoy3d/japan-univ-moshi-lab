@@ -16,6 +16,8 @@ export interface User {
   id: string;
   name: string;
   email?: string;
+  /** 運営者（Cognito の admin グループ）。画面の出し分けだけに使い、権限の判定は API 側で行う */
+  admin?: boolean;
 }
 
 const b64url = (buf: ArrayBuffer | Uint8Array) =>
@@ -56,13 +58,14 @@ export function currentUser(): User | null {
   if (!t) return null;
   if (getConfig().authMode === "local") {
     const name = decodeURIComponent(t.accessToken.slice(4));
-    return { id: `dev-${name}`, name };
+    return { id: `dev-${name}`, name, admin: name === "admin" };
   }
   const c = decodeJwt(t.idToken);
   return {
     id: String(c.sub),
     name: String(c.name ?? c.given_name ?? (c.email as string | undefined)?.split("@")[0] ?? "ユーザー"),
     email: c.email as string | undefined,
+    admin: Array.isArray(c["cognito:groups"]) && (c["cognito:groups"] as string[]).includes("admin"),
   };
 }
 

@@ -4,7 +4,9 @@ import {
   GetCommand,
   PutCommand,
   QueryCommand,
+  ScanCommand,
   TransactWriteCommand,
+  UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
 import type { AttemptDetail, PhotoJob, Profile } from "../../shared/types";
 import type { RawStats } from "../../shared/stats";
@@ -19,6 +21,7 @@ import type { FeedbackRecord, Repo } from "./repo";
  *   PK=GUEST#<examId> SK=<attemptId>       登録なし受験の匿名記録（clientId 付き）
  *   PK=FEEDBACK#<examId> SK=<日時>#<乱数>  問題への意見・満足度
  *   PK=USER#<sub>  SK=PHOTO#<jobId>        撮影採点のジョブ（jobId は時刻順）
+ *   PK=RATE#<key>  SK=<時間枠>              回数制限のカウンタ（ttl で自動削除）
  * 初回の印と集計の加算は1トランザクションで行うので、途中で失敗しても数がずれない。
  */
 export class DynamoRepo implements Repo {
@@ -153,6 +156,56 @@ export class DynamoRepo implements Repo {
       }),
     );
     return r.Count ?? 0;
+  }
+
+  async hit(key: string, bucket: string, ttlSec: number) {
+    const r = await this.doc.send(
+      new UpdateCommand({
+        TableName: this.table,
+        Key: { PK: `RATE#${key}`, SK: bucket },
+        UpdateExpression: "ADD n :one SET #ttl = if_not_exists(#ttl, :ttl)",
+        ExpressionAttributeNames: { "#ttl": "ttl" },
+        ExpressionAttributeValues: { ":one": 1, ":ttl": Math.floor(Date.now() / 1000) + ttlSec },
+        ReturnValues: "UPDATED_NEW",
+      }),
+    );
+    return Number(r.Attributes?.n ?? 1);
+  }
+
+  /** 管理画面用: 条件に合う項目を全件読む（検証期間の小さなデータ量を前提にした Scan） */
+  private async scan(filter: string, values: Record<string, unknown>, names?: Record<string, string>) {
+    const items: Record<string, unknown>[] = [];
+    let ExclusiveStartKey: Record<string, unknown> | undefined;
+    do {
+      const r = await this.doc.send(
+        new ScanCommand({ TableName: this.table, FilterExpression: filter, ExpressionAttributeValues: values, ExpressionAttributeNames: names, ExclusiveStartKey }),
+      );
+      items.push(...(r.Items ?? []));
+      ExclusiveStartKey = r.LastEvaluatedKey;
+    } while (ExclusiveStartKey);
+    return items;
+  }
+
+  async listAllAttempts(since: string) {
+    const items = await this.scan(
+      "(begins_with(PK, :u) AND begins_with(SK, :a) OR begins_with(PK, :g)) AND createdAt >= :since",
+      { ":u": "USER#", ":a": "ATTEMPT#", ":g": "GUEST#", ":since": since },
+    );
+    return items.map((it) => {
+      const { PK, SK: _s, clientId, ...rest } = it as Record<string, unknown>;
+      const who = String(PK).startsWith("GUEST#") ? `guest:${clientId}` : `user:${String(PK).slice(5)}`;
+      return { who, attempt: rest as unknown as AttemptDetail };
+    });
+  }
+
+  async listFeedback(since: string) {
+    const items = await this.scan("begins_with(PK, :f) AND createdAt >= :since", { ":f": "FEEDBACK#", ":since": since });
+    return items.map(({ PK: _p, SK: _s, ...rest }) => rest as unknown as FeedbackRecord);
+  }
+
+  async listAllPhotoJobs(since: string) {
+    const items = await this.scan("begins_with(SK, :p) AND createdAt >= :since", { ":p": "PHOTO#", ":since": since });
+    return items.map(({ PK: _p, SK: _s, ...rest }) => rest as unknown as PhotoJob);
   }
 }
 

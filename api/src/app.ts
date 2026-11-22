@@ -20,6 +20,7 @@ import {
   type SubmitAttemptRequest,
 } from "../../shared/types";
 import { newAttemptId, type FeedbackRecord, type Repo } from "./repo";
+import { itemStats, summarize } from "./admin";
 
 export interface ApiResponse {
   status: number;
@@ -40,6 +41,26 @@ export const BOT_GUARD = {
 export const PHOTO_DAILY_LIMIT = 5;
 /** 撮影採点: 画像1枚あたりの上限（Base64 の文字数。端末で長辺2000pxの JPEG に縮小してから送る） */
 const PHOTO_MAX_B64 = 3_000_000;
+
+/**
+ * 登録なしで使える API の回数制限（濫用・費用の暴走を防ぐ）。
+ * 端末ID は作り直せるので、送信元 IP でも数える。学校など同じ IP から大勢が使う場合を考え、IP の上限は大きめ。
+ */
+export const LIMITS = {
+  guestPerClientPerDay: 30,
+  guestPerIpPerDay: 300,
+  feedbackPerIpPerDay: 100,
+  /** 撮影採点のサービス全体の1日の上限（API 費用の上限になる） */
+  photoTotalPerDay: 300,
+};
+
+/** リクエストごとの情報（Lambda がオーソライザのクレームと送信元から作る） */
+export interface RequestContext {
+  /** Cognito の admin グループに属する（運営者） */
+  admin?: boolean;
+  /** 送信元 IP（回数制限に使う。保存はしない） */
+  ip?: string;
+}
 
 /** 環境ごとに差し替える外部処理（本番: S3 + 読み取り用 Lambda。ローカル・デモ: なし） */
 export interface Services {
@@ -132,7 +153,11 @@ export async function route(
   userId: string | undefined,
   rawBody: string | undefined,
   services: Services = {},
+  ctx: RequestContext = {},
 ): Promise<ApiResponse> {
+  const today = new Date().toISOString().slice(0, 10);
+  /** 1日の回数制限。上限を超えたら true */
+  const over = async (key: string, limit: number) => (await repo.hit(key, today, 2 * 86400)) > limit;
   const p = path.replace(/^\/api/, "").replace(/\/+$/, "") || "/";
   if (method === "GET" && p === "/health") return ok({ ok: true });
 
@@ -169,6 +194,8 @@ export async function route(
     if (!exam) return err(404, "模試が見つかりません");
     if (typeof req.answers !== "object" || req.answers === null) return err(400, "解答がありません");
     if (typeof req.clientId !== "string" || !CLIENT_ID.test(req.clientId)) return err(400, "リクエストが不正です");
+    if ((await over(`guest:${req.clientId}`, LIMITS.guestPerClientPerDay)) || (ctx.ip && (await over(`ip:${ctx.ip}`, LIMITS.guestPerIpPerDay))))
+      return err(429, "本日の提出回数の上限に達しました。明日またお試しください");
     const attempt = await makeAttempt(repo, exam, { ...req, imported: false }, `guest:${req.clientId}`);
     await repo.putGuestAttempt(req.clientId, attempt);
     return ok(await review(repo, attempt, exam));
@@ -179,6 +206,7 @@ export async function route(
     const req = parse<FeedbackRequest>(rawBody);
     const exam = req && findExam(req.examId);
     if (!req || !exam) return err(400, "リクエストが不正です");
+    if (ctx.ip && (await over(`fb:${ctx.ip}`, LIMITS.feedbackPerIpPerDay))) return err(429, "本日の送信回数の上限に達しました");
     const rec: FeedbackRecord = { type: req.type === "rating" ? "rating" : "question", examId: exam.id, createdAt: new Date().toISOString() };
     if (userId) rec.userId = userId;
     if (typeof req.clientId === "string" && CLIENT_ID.test(req.clientId)) rec.clientId = req.clientId;
@@ -231,6 +259,7 @@ export async function route(
     const since = new Date(Date.now() - 24 * 3600 * 1000).toISOString();
     if ((await repo.countPhotoJobs(userId, since)) >= PHOTO_DAILY_LIMIT)
       return err(429, `撮影採点は24時間に${PHOTO_DAILY_LIMIT}回までです`);
+    if (await over("photo:all", LIMITS.photoTotalPerDay)) return err(503, "本日の撮影採点の受付を終了しました。答えを手で入力して採点してください");
     const job: PhotoJob = { jobId: newAttemptId(), examId: exam.id, status: "PENDING", createdAt: new Date().toISOString() };
     await repo.putPhotoJob(userId, job);
     await services.photo.start(userId, job, images);
@@ -259,6 +288,28 @@ export async function route(
     const exam = findExam(attempt.examId);
     if (!exam) return err(404, "模試が見つかりません");
     return ok(await review(repo, attempt, exam));
+  }
+
+  // ---------- 運営の管理画面（Cognito の admin グループのみ） ----------
+  if (p.startsWith("/admin/")) {
+    if (!ctx.admin) return err(403, "権限がありません");
+    const days = 60;
+    const since = new Date(Date.now() - days * 86400 * 1000).toISOString();
+    if (method === "GET" && p === "/admin/summary") {
+      const [attempts, feedback, photos] = await Promise.all([repo.listAllAttempts(since), repo.listFeedback(since), repo.listAllPhotoJobs(since)]);
+      return ok(summarize(since, attempts, feedback, photos));
+    }
+    if (method === "GET" && p === "/admin/feedback") {
+      const list = await repo.listFeedback(since);
+      return ok(list.sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 500));
+    }
+    m = p.match(/^\/admin\/exams\/([\w-]+)\/items$/);
+    if (method === "GET" && m) {
+      const [attempts, feedback] = await Promise.all([repo.listAllAttempts(since), repo.listFeedback(since)]);
+      const items = itemStats(m[1], attempts.map((a) => a.attempt), feedback);
+      return items ? ok(items) : err(404, "模試が見つかりません");
+    }
+    return err(404, "Not Found");
   }
 
   // GET /me ・ PUT /me （目標設定）

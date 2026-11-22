@@ -1,8 +1,10 @@
+# プッシュ・プルリクエストごとの検査: 型・単体テスト・模試データの検証・ビルド・依存関係の脆弱性・画面の通し確認（E2E）
 name: ci
 on:
   push:
-    branches-ignore: [main]
   pull_request:
+permissions:
+  contents: read
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -15,4 +17,23 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
-      - run: npm run build
+      - run: npm run build # 模試データの検証（validate）を含む
+      - name: 依存関係の脆弱性（high 以上で失敗）
+        run: npm audit --audit-level=high --omit=dev
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-results
+          path: test-results/
+          retention-days: 7

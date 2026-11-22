@@ -17,4 +17,6 @@ new MoshiLabStack(app, "MoshiLab", {
   // 撮影採点を有効にする: -c photoGrading=true（Secrets Manager の anthropicSecretName に {"apiKey":"..."} が必要）
   photoGrading: String(app.node.tryGetContext("photoGrading") ?? "") === "true",
   anthropicSecretName: app.node.tryGetContext("anthropicSecretName") || undefined,
+  // 月の予算（USD）: -c monthlyBudgetUsd=30
+  monthlyBudgetUsd: Number(app.node.tryGetContext("monthlyBudgetUsd")) || undefined,
 });

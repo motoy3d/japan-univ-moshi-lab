@@ -11,6 +11,7 @@ interface Data {
   guests?: { clientId: string; attempt: AttemptDetail }[];
   feedback?: FeedbackRecord[];
   photoJobs?: Record<string, PhotoJob[]>;
+  hits?: Record<string, number>;
 }
 
 /** ローカル開発・テスト用。file を渡すと JSON に保存して再起動後も残す */
@@ -75,5 +76,23 @@ export class MemoryRepo implements Repo {
   }
   async countPhotoJobs(userId: string, since: string) {
     return (this.data.photoJobs?.[userId] ?? []).filter((j) => j.createdAt >= since).length;
+  }
+  async hit(key: string, bucket: string) {
+    const k = `${key}#${bucket}`;
+    const hits = (this.data.hits ??= {});
+    hits[k] = (hits[k] ?? 0) + 1;
+    this.save();
+    return hits[k];
+  }
+  async listAllAttempts(since: string) {
+    const users = Object.entries(this.data.attempts).flatMap(([u, list]) => list.map((attempt) => ({ who: `user:${u}`, attempt })));
+    const guests = (this.data.guests ?? []).map((g) => ({ who: `guest:${g.clientId}`, attempt: g.attempt }));
+    return [...users, ...guests].filter((x) => x.attempt.createdAt >= since);
+  }
+  async listFeedback(since: string) {
+    return (this.data.feedback ?? []).filter((f) => f.createdAt >= since);
+  }
+  async listAllPhotoJobs(since: string) {
+    return Object.values(this.data.photoJobs ?? {}).flat().filter((j) => j.createdAt >= since);
   }
 }

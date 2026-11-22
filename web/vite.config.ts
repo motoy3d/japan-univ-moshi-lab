@@ -33,7 +33,7 @@ export default defineConfig({
   server: {
     port: 5173,
     // ローカルでは /api を local-server に転送（本番は CloudFront が API Gateway に転送）
-    proxy: { "/api": "http://localhost:8787" },
+    proxy: { "/api": `http://localhost:${process.env.API_PORT ?? 8787}` },
     fs: { allow: [".."] },
   },
   build: { outDir: "dist", sourcemap: false },

@@ -74,8 +74,10 @@ export async function readAnswerSheets(client: Anthropic, examId: string, images
       .map((q) => {
         const m = byNo.get(q.no);
         const n = q.choices?.length ?? 4;
-        const choice = m?.choice != null && m.choice >= 1 && m.choice <= n ? m.choice : null;
-        return { no: q.no, choice, confidence: m ? m.confidence : "low" };
+        const valid = m?.choice != null && m.choice >= 1 && m.choice <= n;
+        // 範囲外の番号を読んだ行・読み取り結果に無い行は、本人に確かめてもらう
+        const confidence = !m || (m.choice != null && !valid) ? "low" : m.confidence;
+        return { no: q.no, choice: valid ? m!.choice : null, confidence };
       }),
     writes: qs
       .filter((q) => q.kind === "write")

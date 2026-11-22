@@ -44,7 +44,7 @@ window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
   if (!path.startsWith("/api")) return realFetch(input, init);
   const auth = new Headers(init?.headers).get("authorization") ?? "";
   const user = auth.startsWith("Bearer dev:") ? `dev-${decodeURIComponent(auth.slice(11))}` : undefined;
-  const res = await route(repo, (init?.method ?? "GET").toUpperCase(), path.split("?")[0], user, init?.body as string | undefined);
+  const res = await route(repo, (init?.method ?? "GET").toUpperCase(), path.split("?")[0], user, init?.body as string | undefined, {}, { admin: user === "dev-admin" });
   return new Response(JSON.stringify(res.body), { status: res.status, headers: { "content-type": "application/json" } });
 };
 

@@ -12,6 +12,8 @@ import type {
   SubmitAttemptRequest,
 } from "../../shared/types";
 import { getAccessToken } from "./auth";
+import type { AdminSummary, ItemStat } from "../../api/src/admin";
+import type { FeedbackRecord as AdminFeedback } from "../../api/src/repo";
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
@@ -47,4 +49,7 @@ export const api = {
   feedback: (req: FeedbackRequest) => call<{ ok: true }>("POST", "/feedback", req),
   photoJob: (req: PhotoJobRequest) => call<PhotoJob>("POST", "/photo-jobs", req),
   photoJobStatus: (id: string) => call<PhotoJob>("GET", `/photo-jobs/${id}`),
+  adminSummary: () => call<AdminSummary>("GET", "/admin/summary"),
+  adminFeedback: () => call<AdminFeedback[]>("GET", "/admin/feedback"),
+  adminItems: (examId: string) => call<ItemStat[]>("GET", `/admin/exams/${examId}/items`),
 };

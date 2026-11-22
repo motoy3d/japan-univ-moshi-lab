@@ -19,6 +19,7 @@ import * as sns from "aws-cdk-lib/aws-sns";
 import * as subs from "aws-cdk-lib/aws-sns-subscriptions";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
+import * as budgets from "aws-cdk-lib/aws-budgets";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -33,6 +34,8 @@ export interface MoshiLabProps extends StackProps {
   /** 撮影採点を有効にする（Anthropic の APIキーを Secrets Manager に置いてから） */
   photoGrading?: boolean;
   anthropicSecretName?: string;
+  /** 月の予算（USD）。超えそうになったら alertEmail に通知（既定 30） */
+  monthlyBudgetUsd?: number;
 }
 
 /** ログの保管期間（約3か月） */
@@ -58,6 +61,9 @@ export class MoshiLabStack extends Stack {
       partitionKey: { name: "PK", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "SK", type: dynamodb.AttributeType.STRING },
       billing: dynamodb.Billing.onDemand(),
+      timeToLiveAttribute: "ttl", // 回数制限のカウンタを自動で消す
+      // 誤操作・障害に備えて35日分の任意時点に復元できるようにする
+      pointInTimeRecoverySpecification: { pointInTimeRecoveryEnabled: true },
       removalPolicy: RemovalPolicy.RETAIN, // 受験記録を誤って消さない
     });
 
@@ -232,6 +238,10 @@ export class MoshiLabStack extends Stack {
     });
     if (google) client.node.addDependency(google);
 
+    // 運営者のグループ。管理画面（/admin）と /api/admin/* はこのグループの人だけが使える。
+    // 自分のユーザーを追加: aws cognito-idp admin-add-user-to-group --user-pool-id <UserPoolId> --username <ユーザー名> --group-name admin
+    new cognito.CfnUserPoolGroup(this, "AdminGroup", { userPoolId: userPool.userPoolId, groupName: "admin", description: "模試ラボの運営者" });
+
     // ---------- ルート ----------
     // 登録なしで使えるルート（JWT 認証なし）。HTTP API は具体的なルートを優先するので、
     // 残りの /api/{proxy+}（JWT 認証付き）より先に当たる。
@@ -301,6 +311,22 @@ export class MoshiLabStack extends Stack {
       alarm.addAlarmAction(notify);
     }
 
+    // ---------- 費用の監視（AWS Budgets） ----------
+    if (props.alertEmail) {
+      new budgets.CfnBudget(this, "MonthlyBudget", {
+        budget: {
+          budgetName: "moshi-lab-monthly",
+          budgetType: "COST",
+          timeUnit: "MONTHLY",
+          budgetLimit: { amount: props.monthlyBudgetUsd ?? 30, unit: "USD" },
+        },
+        notificationsWithSubscribers: [80, 100].map((threshold) => ({
+          notification: { notificationType: threshold === 100 ? "FORECASTED" : "ACTUAL", comparisonOperator: "GREATER_THAN", threshold, thresholdType: "PERCENTAGE" },
+          subscribers: [{ subscriptionType: "EMAIL", address: props.alertEmail! }],
+        })),
+      });
+    }
+
     // ---------- フロントのデプロイ ----------
     new s3deploy.BucketDeployment(this, "DeploySite", {
       destinationBucket: siteBucket,
@@ -324,6 +350,7 @@ export class MoshiLabStack extends Stack {
     new CfnOutput(this, "CognitoDomain", { value: domain.baseUrl() });
     new CfnOutput(this, "GoogleRedirectUri", { value: `${domain.baseUrl()}/oauth2/idpresponse`, description: "Google Cloud Console の「承認済みのリダイレクト URI」に登録する" });
     new CfnOutput(this, "UserPoolClientId", { value: client.userPoolClientId });
+    new CfnOutput(this, "UserPoolId", { value: userPool.userPoolId, description: "運営者を admin グループに追加するときに使う" });
     new CfnOutput(this, "TableName", { value: table.tableName });
     new CfnOutput(this, "AlarmTopicArn", {
       value: alarmTopic.topicArn,

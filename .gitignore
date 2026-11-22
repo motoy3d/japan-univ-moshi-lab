@@ -8,3 +8,5 @@ cdk.out/
 dist-demo/
 .local/
 __pycache__/
+test-results/
+playwright-report/

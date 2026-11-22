@@ -721,3 +721,12 @@ h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
 .photo-slot img { max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 6px; }
 .sheet-row.low { background: color-mix(in srgb, var(--warn) 14%, transparent); }
 .low-mark { background: color-mix(in srgb, var(--warn) 22%, transparent); padding: 0 4px; border-radius: 4px; }
+
+/* ---------- 運営の管理画面 ---------- */
+.admin-tabs { margin-bottom: 12px; gap: 6px; flex-wrap: wrap; }
+.admin-kpis { grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr)); }
+.kpi-ok b { color: var(--good, #2e7d32); }
+.kpi-ng b { color: var(--warn); }
+.admin-flag td { background: color-mix(in srgb, var(--warn) 10%, transparent); }
+.admin-text { max-width: 28em; white-space: pre-wrap; word-break: break-word; }
+.nowrap { white-space: nowrap; }

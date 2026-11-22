@@ -1,11 +1,12 @@
-// ローカル開発用 API サーバ（認証はダミー: "Bearer dev:<ユーザー名>"）
+// ローカル開発用 API サーバ（認証はダミー: "Bearer dev:<ユーザー名>"。ユーザー名 admin は運営者扱い）
 import http from "node:http";
 import path from "node:path";
 import { route } from "./app";
 import { MemoryRepo } from "./repo-memory";
 
 const port = Number(process.env.PORT ?? 8787);
-const file = process.env.DATA_FILE ?? path.resolve(process.cwd(), ".local-data.json");
+// DATA_FILE=memory ならファイルに保存しない（E2E テスト用）
+const file = process.env.DATA_FILE === "memory" ? undefined : (process.env.DATA_FILE ?? path.resolve(process.cwd(), ".local-data.json"));
 const repo = new MemoryRepo(file);
 
 http
@@ -16,7 +17,7 @@ http
     const user = auth.startsWith("Bearer dev:") ? decodeURIComponent(auth.slice(11)) : undefined;
     const url = new URL(req.url ?? "/", "http://localhost");
     try {
-      const r = await route(repo, req.method ?? "GET", url.pathname, user ? `dev-${user}` : undefined, Buffer.concat(chunks).toString("utf8"));
+      const r = await route(repo, req.method ?? "GET", url.pathname, user ? `dev-${user}` : undefined, Buffer.concat(chunks).toString("utf8"), {}, { admin: user === "admin", ip: req.socket.remoteAddress });
       res.writeHead(r.status, { "content-type": "application/json; charset=utf-8" });
       res.end(JSON.stringify(r.body));
     } catch (e) {
@@ -24,4 +25,4 @@ http
       res.writeHead(500).end();
     }
   })
-  .listen(port, () => console.log(`local API: http://localhost:${port}/api  (data: ${file})`));
+  .listen(port, () => console.log(`local API: http://localhost:${port}/api  (data: ${file ?? "memory"})`));
