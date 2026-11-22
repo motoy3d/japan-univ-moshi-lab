@@ -90,6 +90,11 @@ for (const exam of EXAMS) {
       if (!secQs.some((q) => q.kind === "write" && q.label === t)) fail(exam.id, `大問${section.label}: 本文の記述空所 ${t} に対応する設問がない`);
     if (new Set(allMarkTokens).size !== allMarkTokens.length) fail(exam.id, `大問${section.label}: 本文の番号が重複`);
   }
+  // 正解の位置の偏り（4択で一つの番号に集中すると、当て推量で点が取れてしまう）
+  const four = qs.filter((q) => q.kind === "mark" && (q.choices?.length ?? 0) === 4);
+  const counts = [1, 2, 3, 4].map((n) => four.filter((q) => q.answer === n).length);
+  if (four.length >= 20 && counts.some((c) => c === 0 || c / four.length > 0.4))
+    fail(exam.id, `正解の位置が偏っている（1〜4: ${counts.join(" / ")}）`);
   console.log(`✓ ${exam.id}: マーク ${qs.filter((q) => q.kind === "mark").length} 問 / 記述 ${qs.filter((q) => q.kind === "write").length} 問 / ${total} 点`);
 }
 // 志望校データ: 日付の形式・模試 ID の存在・年度切れ

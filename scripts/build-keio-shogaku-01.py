@@ -69,64 +69,65 @@ sections = []
 
 # ───────────────────────── I 長文（動的価格設定） ─────────────────────────
 p1 = [
-    "When a ride-hailing app charges twice the usual fare on a rainy Friday night, many customers feel cheated. Yet the same customers rarely complain when an airline charges more for a seat booked the day before departure, or when a hotel raises its rates during a popular festival. The practice behind all three cases is known as dynamic pricing: the adjustment of prices in response to changes in demand, supply, or other market conditions. {{b:1}} the idea is hardly new — street vendors have always raised their prices when crowds gather — digital technology has transformed its speed and scale.",
-    "Economists generally defend dynamic pricing on grounds of efficiency. A fixed price, they argue, sends no signal when conditions change. If fares stay the same during a storm, more people want rides than there are drivers willing to work, and the result is long waits for everyone. A higher price, by contrast, does two things at once: it {{b:2}} some riders to postpone trips that are not urgent, and it attracts additional drivers onto the road. In this view, the price is not a penalty imposed on unlucky customers but a piece of information that helps match buyers and sellers.",
-    "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:5|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
-    "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:3}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
-    "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:6|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
-    "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:4}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
-    "The debate over dynamic pricing, then, is less about whether prices should move than about who benefits when they do. A price that rises during a storm may put more cars on the road, but if customers come to believe that the system is designed mainly to extract as much money from them as possible, they may simply turn to competitors — or to their own cars. A business that loses its customers' goodwill may not notice the damage at once, because the loss appears gradually, in trips not taken and accounts quietly closed. In the long run, firms that rely on flexible pricing may find that {{u:7|their most valuable asset is not the cleverness of their algorithms but the trust of the people who use them}}.",
+    "Dynamic pricing, the continuous adjustment of prices in response to fluctuations in demand, supply, or other market conditions, is frequently portrayed as a creation of the digital economy. {{b:1}} its algorithmic implementations are undeniably recent, the underlying principle is considerably older: itinerant merchants have always raised their prices when crowds congregated, and theaters have long distinguished between matinee and evening performances. What digital infrastructure has altered is not the logic of the practice but its velocity, its granularity, and, perhaps most consequentially, its visibility to the consumers who are subject to it.",
+    "Economists have generally defended the practice on grounds of allocative efficiency. A fixed price, in this account, transmits no information when circumstances change. Should fares remain constant during a storm, prospective passengers will outnumber the drivers willing to work, and the resulting shortage will be rationed by queuing rather than by price, an outcome that is arguably less equitable, since it privileges those with the most time rather than those with the most urgent need. A higher price, by contrast, performs two functions simultaneously: it {{b:2}} some passengers to defer journeys that are not pressing, and it draws additional drivers into the market. The price, on this view, is not a penalty inflicted on the unfortunate but a signal that coordinates the decisions of buyers and sellers who would otherwise remain unaware of one another.",
+    "Consumers, however, do not evaluate prices exclusively in terms of efficiency. A substantial body of research in behavioral economics indicates that judgments of price are inseparable from judgments of fairness. In a frequently cited series of surveys, respondents were asked to assess a hardware store that raised the price of snow shovels on the morning after a heavy snowfall. A large majority regarded the increase as unfair, notwithstanding the fact that it was precisely what an elementary model of supply and demand would predict. {{u:5|What respondents objected to was not the magnitude of the change but its motive}}: a firm that passed on an increase in its own costs was generally exonerated, whereas a firm that appeared to profit from a sudden intensification of need was condemned.",
+    "Such intuitions impose genuine constraints on commercial conduct. When a prominent online retailer was discovered, around the turn of the century, to be charging different customers different prices for identical DVDs, the public response was so {{b:3}} that the company promptly apologized and refunded the difference. The episode exposed a distinction that consumers appear to draw almost instinctively. Prices that vary over time, for everyone simultaneously, are tolerated as a feature of the market; prices that vary from one individual to another, for reasons that remain opaque, are experienced as a form of deception.",
+    "The proliferation of machine learning has rendered this distinction increasingly difficult to sustain. Algorithms can now infer, from a customer's location, device, and transaction history, approximately how much that particular individual would be willing to pay. In principle, a firm could exploit such inferences to quote a distinct price to every shopper, a strategy that economists term \"first-degree price discrimination.\" Its proponents contend that the consequences need not be regressive: students or low-income households might be offered discounts that a uniform price would never permit. Its critics respond that the practice {{u:6|entrenches an asymmetry of information that systematically favors the seller}}, since the customer, unable to observe what others are paying, has no means of determining whether a given offer is advantageous.",
+    "Regulatory authorities in several jurisdictions have begun to respond. Some proposals would oblige firms to disclose whenever a price has been personalized; others would prohibit the use of particular categories of data, such as medical information, in the determination of prices. {{b:4}}, a number of firms have concluded that transparency serves their own interests. Certain ride-hailing platforms now indicate, before a booking is confirmed, the extent to which the current fare exceeds the customary one, and offer to notify the customer when it declines. Such measures leave the underlying economics unchanged, yet they appear to mitigate the sense of having been exploited.",
+    "The controversy over dynamic pricing is therefore less a dispute about whether prices ought to fluctuate than about who benefits when they do. A fare that rises during a storm may well increase the supply of vehicles, but if customers come to believe that the system is designed principally to extract the maximum possible payment from them, they may defect to competitors or abandon the service altogether. Because the erosion of goodwill is gradual and largely invisible, registering only in journeys not taken and accounts quietly closed, it is easily underestimated. In the long run, firms that depend on flexible pricing may discover that {{u:7|their most valuable asset is not the sophistication of their algorithms but the confidence of the people who use them}}.",
 ]
 q1 = [
-    blank(["Although", "Because", "Unless", "Whether"], 1,
-          "「考え自体は新しくない」と「デジタル技術が速度と規模を一変させた」は対比（譲歩）の関係。Although が入る。Because では因果が逆になり、Unless・Whether は文意が通らない。"),
-    blank(["forbids", "encourages", "obliges", "permits"], 2,
-          "encourage O to do「Oに〜するよう促す」。値上げは急ぎでない利用者に移動の延期を『促す』のであって、禁じる（forbid）・義務づける（oblige）わけではない。permit O to do は「許可する」で文脈に合わない。", category="vocab"),
-    uline(5, [
-        "People cared mostly about the size of a price increase.",
-        "People judged a price increase according to why it happened.",
-        "People believed that shops should never change their prices.",
-        "People were unable to explain their reactions to price changes.",
-    ], 2, "直後のコロン以下「コスト上昇の転嫁は許されるが、需要の急増につけ込むのは許されない」が言い換え。値上げの『理由』で判断した＝2。1 は「上げ幅」で逆。",
-        "Which of the following best expresses the meaning of underlined (5)?"),
-    blank(["indifferent", "hostile", "cautious", "favorable"], 2,
-          "so ~ that ...「非常に〜なので…」。会社がすぐ謝罪・返金したのだから、世間の反応は『敵対的』（hostile）だったと分かる。", category="vocab"),
-    uline(6, [
-        "It gives sellers more knowledge about the transaction than buyers have.",
-        "It forces sellers to share their data with buyers.",
-        "It makes prices easier for buyers to compare.",
-        "It reduces the amount of data that sellers collect.",
-    ], 1, "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。",
-        "Which of the following best expresses the meaning of underlined (6)?"),
+    blank(["Although", "Because", "Unless", "Provided that"], 1,
+          "「アルゴリズムによる実装は最近のもの」と「原理はずっと古い」は譲歩・対比の関係。Although が入る。Because では因果が逆になり、Unless・Provided that（〜という条件で）は条件を表すので文意が通らない。"),
+    blank(["prohibits", "prompts", "entitles", "exempts"], 2,
+          "prompt O to do「Oに〜するよう促す」。値上げは急ぎでない乗客に移動の延期を『促す』。prohibit O from -ing は形も意味も合わず、entitle（権利を与える）・exempt（免除する）は文脈に合わない。", category="vocab"),
+    blank(["indifferent", "vehement", "tentative", "favorable"], 2,
+          "so ~ that ...「非常に〜なので…」。会社がすぐ謝罪・返金したのだから、世間の反応は『激しい』（vehement）ものだった。indifferent（無関心な）・tentative（ためらいがちな）・favorable（好意的な）では謝罪につながらない。", category="vocab"),
     blank(["Otherwise", "Instead", "Meanwhile", "For instance"], 3,
           "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。For instance は前文の具体例ではないので不適、Instead は代替、Otherwise は条件の逆で不適。"),
+    uline(5, [
+        "Respondents accepted large price increases as long as they were announced in advance.",
+        "Respondents judged a price increase by the reason behind it rather than by its size.",
+        "Respondents believed that the size of a price change mattered more than the reason for it.",
+        "Respondents objected to any price change that a model of supply and demand could predict.",
+    ], 2, "下線部は「反対したのは変化の大きさではなく動機」。直後のコロン以下（コスト転嫁は許され、需要の急増につけ込むのは非難された）と一致する 2。3 は逆、4 は「モデル通りの値上げでも不公平とされた」ことを『あらゆる変化に反対』と言い過ぎている。1 は本文にない。",
+        "What does the author mean by underlined (5)?"),
+    uline(6, [
+        "It requires sellers to reveal the prices that other customers have paid.",
+        "It allows sellers to know more about a transaction than buyers can, and this imbalance works to the sellers' advantage.",
+        "It gives buyers and sellers equal access to information, but only for a limited period of time.",
+        "It guarantees that low-income households will always be offered lower prices than other customers.",
+    ], 2, "entrench an asymmetry of information that favors the seller「売り手に有利な情報の非対称を固定化する」。since 以下（客は他人の支払額が見えない）が理由。2 が正解。4 は擁護派の主張を『必ず』と言い過ぎたもので、しかも批判派の論点ではない。",
+        "What does the author mean by underlined (6)?"),
     uline(7, [
-        "Firms should stop using algorithms to set prices.",
-        "Customers will remain loyal only if they believe that prices are set honestly.",
-        "Clever algorithms are the key to attracting new customers.",
-        "Trustworthy firms never need to change their prices.",
-    ], 2, "直前で「搾取されていると感じた客は競合に流れる」と述べており、柔軟な価格設定を続けるには利用者の信頼こそが最大の資産だ、という結論。2 が最も近い。1・4 は言い過ぎ、3 は逆。",
+        "Firms should abandon algorithms and return to fixed prices if they wish to retain their customers.",
+        "Flexible pricing can succeed in the long term only if customers continue to trust the firms that use it.",
+        "Firms with the most sophisticated algorithms will eventually earn the confidence of their customers.",
+        "Customers are confident that algorithms set prices more fairly than human managers do.",
+    ], 2, "直前で「搾取されていると感じた客は離れ、その損失は気づきにくい」と述べ、柔軟な価格設定を続ける企業にとって最大の資産は利用者の信頼だと結論している。2 が最も近い。1 は筆者の主張を超えており、3・4 は本文にない。",
         "What does the author mean by underlined (7)?"),
-    detail("The example of the snow shovels is used to show that", [
-        "most stores raise their prices after natural disasters.",
-        "economic models cannot predict how prices change.",
-        "people's sense of fairness can conflict with standard economic reasoning.",
-        "hardware stores face higher costs in winter.",
-    ], 3, "需要と供給の単純なモデル通りの値上げでも、多くの人が『不公平』と答えた。経済学的な推論と公平感が食い違う例＝3。2 は「モデルは値上げを予測した」とあるので誤り。"),
-    detail("Which of the following is true according to the passage?", [
-        "Dynamic pricing was first invented as a result of digital technology.",
-        "Supporters of personalized pricing argue that some customers could benefit from it.",
-        "Regulators in all countries have banned the use of personal data in setting prices.",
-        "Showing customers the size of a fare increase has changed the economics of ride-hailing.",
-    ], 2, "第5段落に「学生や低所得者は単一価格では得られない割引を受けられるかもしれない」とある＝2。1 は第1段落（昔からある）、3 は several countries / proposals、4 は「経済的な仕組みは変えない」に反する。"),
+    detail("According to the passage, why is the example of the snow shovels significant?", [
+        "It shows that hardware stores tend to raise their prices whenever their own costs increase.",
+        "It demonstrates that elementary economic models fail to predict how prices respond to demand.",
+        "It illustrates that consumers' sense of fairness can diverge from what standard economic reasoning would predict.",
+        "It suggests that most consumers are willing to pay more for goods that are in short supply.",
+    ], 3, "需要と供給の単純なモデルどおりの値上げでも、多くの人が『不公平』と答えた。経済学の推論と公平感が食い違う例＝3。2 は「モデルは値上げを予測した」とあるので誤り。4 は調査結果と逆。"),
+    detail("Which one of the following statements is consistent with the content of the passage?", [
+        "Dynamic pricing originated with the spread of digital technology around the turn of the century.",
+        "Some defenders of personalized pricing argue that it could benefit customers with limited means.",
+        "Regulators in most countries now prohibit firms from using personal data to set prices.",
+        "Disclosing the size of a fare increase has altered the basic economics of ride-hailing services.",
+    ], 2, "第5段落「学生や低所得世帯は、単一価格では得られない割引を受けられるかもしれない」と擁護派が主張している＝2。1 は第1段落（原理はずっと古い）、3 は several jurisdictions / proposals、4 は「経済的な仕組みは変わらない」に反する。"),
     title([
-        "How Algorithms Learned to Read Our Minds",
-        "Fair Prices, Flexible Prices, and the Problem of Trust",
-        "Why Economists Oppose Dynamic Pricing",
-        "The History of Ride-Hailing Services",
-    ], 2, "効率性（柔軟な価格）と公平感の対立を論じ、信頼の重要性で締めくくっている＝2。3 は逆（経済学者は擁護）、1・4 は一部の話題にすぎない。"),
+        "The Algorithmic Revolution in Retail",
+        "Efficiency, Fairness, and Trust in Flexible Pricing",
+        "Why Economists Have Abandoned Fixed Prices",
+        "Regulating Ride-Hailing Platforms in the Digital Age",
+    ], 2, "効率性（柔軟な価格の利点）と公平感の対立を論じ、信頼の重要性で締めくくっている＝2。3 は逆（経済学者は柔軟な価格を擁護しているが、固定価格を『捨てた』とは述べていない）、1・4 は一部の話題にすぎない。",
+        "Which one of the following titles best captures the main idea of the passage?"),
 ]
-sections.append(long_section("I", 1, 10, p1, ["ride-hailing 配車サービスの", "hardware store 金物店", "snow shovel 雪かき用シャベル"], q1))
+sections.append(long_section("I", 1, 10, p1, ["matinee （演劇などの）昼の公演", "allocative efficiency 配分の効率性", "exonerate 責任を免除する"], q1))
 
 # ───────────────────────── II 長文（コンテナ輸送） ─────────────────────────
 p2 = [
@@ -139,48 +140,48 @@ p2 = [
     "In this sense, the humble metal box helped create the global supply chains that define the modern economy — along with their weaknesses. A system designed to remove every unnecessary delay has little room to absorb an unexpected one. When ports were disrupted during the pandemic of 2020, ships waited for weeks to unload, empty containers piled up in the wrong places, and shortages spread from one industry to the next. {{u:17|The very efficiency that had made the system so attractive}} also made it fragile, and many companies have since begun to keep larger stocks and to buy from suppliers closer to home.",
 ]
 q2 = [
-    blank(["avoid", "cause", "report", "measure"], 1,
-          "マクリーンは渋滞で遅れるトラック輸送に困っており、その解決策として船での輸送を考えた。渋滞を『避ける』avoid が入る。", category="vocab"),
-    uline(12, [
-        "the number of boxes carried by the Ideal X",
-        "dramatic reductions in the cost of handling cargo",
-        "the distances between major ports",
-        "the number of dockworkers who lost their jobs",
-    ], 2, "直前の文「積み込みコストが1トン約6ドルから16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。",
-        "Which of the following does underlined (14) refer to?"),
-    blank(["competing", "common", "temporary", "private"], 2,
-          "異なるサイズの箱が混在して不便だった、という文脈。システムの利点は全員が『共通の』規格を採用することにかかっていた。competing（競合する）は逆。", category="vocab"),
+    blank(["circumvent", "aggravate", "document", "quantify"], 1,
+          "マクリーンは渋滞で遅れるトラック輸送に困っており、その解決策として船での輸送を考えた。渋滞を『回避する』circumvent が入る。aggravate（悪化させる）は逆、document（記録する）・quantify（数量化する）は目的に合わない。", category="vocab"),
+    blank(["proprietary", "uniform", "provisional", "divergent"], 2,
+          "異なるサイズの箱が混在して不便だった、という文脈。システムの利点は全員が『統一された』規格を採用することにかかっていた。proprietary（自社独自の）・divergent（ばらばらの）は逆、provisional（暫定的な）は文脈に合わない。", category="vocab"),
+    blank(["curtail", "disperse", "postpone", "nationalize"], 2,
+          "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（disperse）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。curtail（削減する）・postpone（延期する）・nationalize（国有化する）は合わない。", category="vocab"),
     uline(14, [
-        "a rule that only engineers could understand",
-        "a minor matter such as the exact size of a box",
-        "a disagreement between shipping lines and railways",
-        "the design of the cranes used in new ports",
-    ], 2, "前の文脈は箱のサイズ（寸法）の統一をめぐる交渉。『技術的な細部に見えたもの』＝箱の正確な寸法という些細に思える事柄＝2。",
-        "Which of the following best expresses the meaning of underlined (15)?"),
-    uline(15, ["slow", "unstoppable", "accidental", "temporary"], 2,
-          "relentless「容赦ない・とどまることのない」。直前の「組合はその前進を止められなかった」とも一致する。",
-          "Which of the following is closest in meaning to underlined (16)?"),
-    blank(["limit", "spread", "delay", "copy"], 2,
-          "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（spread）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。", category="vocab"),
+        "the number of containers that the Ideal X was able to carry on its first voyage",
+        "the dramatic reduction in loading costs that McLean's first voyage reportedly achieved",
+        "the time that ships had previously spent in port compared with the time they spent at sea",
+        "the number of dockworkers who would eventually lose their jobs because of containers",
+    ], 2, "直前の文「積み込みコストが1トン約6ドルから約16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。3 は第2段落の内容で、下線部とは離れている。",
+        "Which one of the following does underlined (14) refer to?"),
+    uline(15, [
+        "a set of engineering rules so complex that only specialists could understand them",
+        "the seemingly minor question of exactly what size the containers should be",
+        "the disagreements between shipping lines and railways over who should pay for new cranes",
+        "the decision to build new terminals on open land far from the centers of cities",
+    ], 2, "前の文脈は箱の寸法の統一をめぐる交渉と、20フィートの箱が業界の単位になったこと。『技術的な細部に見えたもの』＝箱の正確な寸法という些細に思える問題＝2。4 は次の段落の内容。",
+        "What does the author mean by underlined (15)?"),
+    uline(16, ["sluggish", "inexorable", "fortuitous", "transient"], 2,
+          "relentless「容赦ない・とどまることのない」≒ inexorable「止められない」。直前の「組合はその前進を止められなかった」とも一致する。sluggish（緩慢な）・fortuitous（偶然の）・transient（一時的な）は合わない。",
+          "Which one of the following is closest in meaning to underlined (16)?"),
     uline(17, [
-        "Because the system worked so smoothly, it had no spare capacity to cope with disruption.",
-        "Because shipping had become cheap, companies stopped caring about efficiency.",
-        "Because ports were efficient, the pandemic had little effect on trade.",
-        "Because containers were attractive, more ships were built than were needed.",
-    ], 1, "無駄な遅れを徹底的に取り除いた仕組みは、予期せぬ遅れを吸収する余地がない（直前の A system designed ... absorb an unexpected one）。効率性こそが脆さの原因でもあった＝1。",
+        "Having been built to remove every avoidable delay, the system had little room to cope when an unforeseen delay occurred.",
+        "Because shipping had become so cheap, companies no longer paid attention to the efficiency of their supply chains.",
+        "Because ports had become highly efficient, the disruption caused by the pandemic had little lasting effect on trade.",
+        "Because containers proved so attractive, far more ships were built than the volume of trade could justify.",
+    ], 1, "直前の「無駄な遅れを取り除くよう設計された仕組みは、予期せぬ遅れを吸収する余地がほとんどない」を言い換えた 1。効率性こそが脆さの原因でもあった。3 は本文（数週間待たされ、品不足が広がった）と逆。",
         "What does the author mean by underlined (17)?"),
     detail("According to the fourth paragraph, why did the container not succeed immediately?", [
-        "Dockworkers refused to lift the boxes.",
-        "The boxes were too heavy for most ships.",
-        "Firms used boxes of different sizes and were reluctant to change them.",
-        "Shipping lines did not believe McLean's cost figures.",
-    ], 3, "第4段落: 各社が異なるサイズの箱を使い、設備の交換が高くつくため自社の寸法を好んだ＝3。"),
-    detail("Which of the following is true according to the passage?", [
-        "McLean's main goal was to make dockwork safer.",
-        "Reliable delivery encouraged firms to keep smaller stocks of parts.",
-        "Labor unions succeeded in stopping the use of containers in some ports.",
-        "Since 2020, companies have bought more parts from distant suppliers.",
-    ], 2, "第6段落: 部品が予定通り届くようになり、予備部品の在庫は無駄とみなされ、数日分だけ持つようになった＝2。3 は「止められなかった」、4 は「より近い供給元から買い始めた」に反する。"),
+        "Dockworkers refused to handle the boxes until their unions had negotiated new agreements.",
+        "The early boxes were too heavy for the cranes that most ports possessed at the time.",
+        "Companies used boxes of different sizes and were reluctant to adopt dimensions that would require new equipment.",
+        "Shipping lines doubted McLean's claims about how much money the new method would save.",
+    ], 3, "第4段落: 各社が異なるサイズの箱を使い、寸法を変えるには高価な設備の入れ替えが必要なため、自社の寸法を好んだ＝3。1 の組合の話は第5段落で、普及の遅れの理由としては述べられていない。"),
+    detail("Which one of the following statements is consistent with the content of the passage?", [
+        "McLean introduced containers mainly in order to make the work of dockworkers safer.",
+        "Once deliveries became more reliable, many manufacturers decided that large stocks of spare parts were no longer necessary.",
+        "Labor unions in some ports succeeded in preventing the introduction of containers for many years.",
+        "Since 2020, most companies have shifted their purchases toward suppliers located far from home.",
+    ], 2, "第6段落: 部品が予定通り届くようになり、予備部品の在庫は無駄とみなされ、数日分だけ持つようになった＝2。3 は「収入を守る合意は得たが、前進は止められなかった」に反する。4 は「より近い供給元から買い始めた」と逆。"),
 ]
 sections.append(long_section("II", 11, 19, p2, ["hold 船倉", "bale （貨物の）梱", "pier 埠頭、桟橋"], q2))
 
@@ -196,75 +197,76 @@ p3 = [
     "None of this means that nudges are useless. It means that the choice of a default is itself a decision with consequences, and that someone must take responsibility for making it well. A carefully designed plan might begin with a modest contribution and raise it automatically each time a worker receives a pay increase — an approach that takes advantage of people's tendency to accept the status quo while gradually moving them toward a more adequate level of saving. Such a plan does not force anyone to save more; workers remain free to leave or to lower their contributions at any time. But it recognizes that, for most people, the hardest step is not deciding what is right but actually getting around to doing it.",
 ]
 q3 = [
-    blank(["failure", "surplus", "fear", "cost"], 1,
-          "not A but B の対比。「情報不足ではなく、行動の『欠如・不履行』」。a failure of action「行動しないこと」。直前の「意図はあったが何もしなかった」と一致。", category="vocab"),
-    blank(["join", "opt out", "retire", "complain"], 2,
-          "自動加入にした上で「〜を選ばない限り」なので、自ら脱退する opt out が入る。join では自動加入と矛盾する。", category="vocab"),
+    blank(["failure", "surplus", "prospect", "premium"], 1,
+          "not A but B の対比。「情報の不足ではなく、行動の『欠如・不履行』」。a failure of action「行動しないこと」。直前の「意図はあったが何もしなかった」と一致。surplus（過剰）は逆、prospect（見込み）・premium（割増金）は文意に合わない。", category="vocab"),
+    blank(["enroll", "opt out", "reciprocate", "comply"], 2,
+          "自動で加入させた上で「〜を選ばない限り」なので、自ら脱退する opt out が入る。enroll（加入する）は自動加入と矛盾し、reciprocate（お返しをする）・comply（従う）は文意に合わない。", category="vocab"),
     blank(["far", "very", "such", "so"], 1,
-          "比較級・too を強める副詞は far / much。far too small「あまりにも小さすぎる」。very too とは言わない。", category="vocab"),
+          "比較級・too を強める副詞は far / much。far too small「あまりにも小さすぎる」。very too / so too とは言わない。such は名詞を修飾する。", category="vocab"),
     uline(23, [
-        "Nudges cost little and still left people free to choose.",
-        "Nudges allowed governments to ban unhealthy products.",
-        "Nudges required large financial incentives.",
-        "Nudges were popular among school children.",
-    ], 1, "コロン以下が理由の説明「安価で、個人の自由を尊重しつつ成果を上げるように見えた」＝1。2・3 はナッジの定義（禁止しない・金銭的誘因を大きく変えない）に反する。",
-        "Why does the author say underlined (23)?"),
+        "Nudges promised to improve outcomes at little cost while leaving individuals free to choose otherwise.",
+        "Nudges gave governments a convenient way to ban products they considered harmful to health.",
+        "Nudges worked only when they were combined with substantial financial incentives.",
+        "Nudges had already proved more effective than information campaigns in every country that tried them.",
+    ], 1, "コロン以下が理由の説明「安価で、個人の自由を尊重しつつ成果を上げるように見えた」＝1。2・3 はナッジの定義（何も禁止せず、金銭的誘因を大きく変えない）に反し、4 は本文にない言い過ぎ。",
+        "Why does the author say that underlined (23)?"),
     uline(24, [
-        "rules that forbid people from choosing certain options",
-        "unnecessary difficulties that discourage people from acting in their own interest",
-        "financial rewards offered to people who save more",
-        "information that is too simple to be useful",
-    ], 2, "sludge はナッジの悪用例として挙げられた「解約をわざと分かりにくくする」などの障害。直後の「20ページの申請書が困っている人ほど遠ざける」も例＝2。",
-        "Which of the following best expresses what underlined (24) refers to?"),
+        "rules that forbid people from choosing options that are considered harmful to them",
+        "deliberate obstacles that make it harder for people to act in their own interest",
+        "small financial rewards offered to people who agree to save more money",
+        "information that is presented too simply to be of any practical use",
+    ], 2, "sludge はナッジの悪用例として挙げられた「解約をわざと分かりにくくする」などの障害。直後の「20ページの申請書が、助けを最も必要とする人を遠ざける」も例＝2。1 は『禁止』で、本文の sludge は禁止ではなく手間を増やすもの。",
+        "Which one of the following best expresses what underlined (24) refers to?"),
     uline(25, [
-        "People should be allowed to make every decision for themselves.",
-        "Whoever designs a choice inevitably influences the result, even if they deny it.",
-        "Governments should avoid making decisions about retirement plans.",
-        "It is impossible to know who designed a particular form.",
-    ], 2, "直前で「選択肢を中立に示す方法はない（順番や何もしない人の扱いを必ず決める必要がある）」と述べている。設計者は認めるかどうかに関わらず結果に影響を与える＝2。",
-        "Which of the following best expresses the meaning of underlined (25)?"),
-    detail("According to the first paragraph, earlier efforts to encourage saving were disappointing because", [
-        "workers could not understand the charts they were shown.",
-        "people did not act even when they knew that saving was important.",
-        "employers stopped offering retirement plans.",
-        "the brochures contained false information.",
-    ], 2, "第1段落「貯蓄すべきだと同意し、そのつもりもあったが何もしなかった」＝2。"),
-    detail("According to the fourth paragraph, why were the effects of nudges smaller when tested by governments?", [
-        "Governments used different nudges from those studied by researchers.",
-        "Journals had tended to publish studies that found effects rather than those that did not.",
-        "Workers had learned to ignore nudges by the time governments used them.",
-        "Large-scale tests always produce bigger effects than small ones.",
-    ], 2, "効果がなかった研究は発表されにくかった（出版バイアス）ため、論文上の効果が大きく見えた＝2。"),
-    detail("Which of the following is true according to the passage?", [
-        "Thaler and Sunstein argued that sweets should be banned in schools.",
-        "Automatic enrollment had no effect on the number of workers who saved.",
-        "Critics worry that the techniques used in nudges can also be used against people's interests.",
-        "The author believes that choices can always be presented in a neutral way.",
-    ], 3, "第5段落: 同じ手法が、不要なサブスクを払い続けさせる等に使われうると批判者は懸念＝3。4 は第6段落（中立な提示方法はない）に反する。"),
+        "Individuals should be allowed to make every decision about their savings for themselves.",
+        "Whoever designs the way a choice is presented inevitably shapes the outcome, whether or not they acknowledge it.",
+        "Governments should leave decisions about retirement plans entirely to employers.",
+        "It is usually impossible to discover who was responsible for designing a particular form.",
+    ], 2, "直前で「選択肢を中立に示す方法はない（順番や、何もしない人の扱いを必ず決めなければならない）」と述べている。設計者は認めるかどうかに関わらず結果に影響を与える＝2。",
+        "What does the author mean by underlined (25)?"),
+    detail("According to the first paragraph, why were earlier efforts to encourage saving disappointing?", [
+        "Most workers found the charts and brochures they were given too difficult to understand.",
+        "Many people failed to act even though they agreed that they ought to save more.",
+        "Employers gradually stopped offering retirement plans to their new employees.",
+        "The information that workers received was later found to be inaccurate.",
+    ], 2, "第1段落「貯蓄すべきだと同意し、そのつもりもあったが何もしなかった」＝2。問題は情報不足ではなく行動の欠如、とまとめられている。"),
+    detail("According to the fourth paragraph, why did nudges appear to have smaller effects when governments tested them?", [
+        "Governments tended to choose nudges that were quite different from those studied by researchers.",
+        "Studies that found no effect were less likely to be published, so the published effects were inflated.",
+        "By the time governments used them, workers had learned to recognize and ignore nudges.",
+        "Large-scale tests are designed to produce smaller effects than small-scale experiments.",
+    ], 2, "効果がなかった研究は発表されにくかった（出版バイアス）ため、論文上の効果が大きく見えた、と評者は指摘している＝2。"),
+    detail("Which one of the following statements is consistent with the content of the passage?", [
+        "Thaler and Sunstein argued that schools should ban sweets in order to improve children's diets.",
+        "Automatic enrollment raised participation and also led most workers to choose higher contribution rates.",
+        "Critics fear that the methods used to design nudges can also be turned against people's interests.",
+        "The author maintains that a well-designed form can present its options in a perfectly neutral way.",
+    ], 3, "第5段落: 同じ手法が、不要なサブスクを払い続けさせることなどに使われうると批判者は懸念している＝3。2 は前半は正しいが、第4段落「多くは雇用主が決めた低い拠出率のまま」に反する。4 は第6段落「選択肢を中立に示す方法はない」と逆。"),
     title([
         "Why Information Campaigns Always Fail",
         "The Promise and Limits of Nudging",
-        "How to Retire Early",
-        "The End of Behavioral Economics",
-    ], 2, "ナッジの有効性（自動加入の成功）と限界・批判の両方を論じ、慎重な設計を求めて締めくくる＝2。"),
+        "Saving for Retirement in an Age of Uncertainty",
+        "How Behavioral Economics Replaced Traditional Economics",
+    ], 2, "ナッジの有効性（自動加入の成功）と限界・批判の両方を論じ、慎重な設計を求めて締めくくる＝2。1 は always が言い過ぎ、3・4 は本文の中心ではない。",
+        "Which one of the following titles best captures the main idea of the passage?"),
 ]
 sections.append(long_section("III", 20, 29, p3, ["contribution 拠出金、掛け金", "offset 相殺する", "status quo 現状"], q3))
 
 # ───────────────────────── IV 文法・語法 ─────────────────────────
 G = 2
 q4 = [
-    mark("grammar", ["that", "which", "what", "where"], 2,
-         "カンマで挟まれた非制限用法の関係代名詞。非制限用法で that は使えない。", prompt="The new regulations, _____ take effect next April, will affect most small retailers.", points=G),
-    mark("grammar", ["simple", "simplicity", "simply", "simplify"], 2,
-         "the _____ of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。", prompt="Investors were impressed by the _____ of the start-up's business plan.", points=G),
-    mark("grammar", ["meet", "see", "hold", "take"], 1,
-         "meet demand「需要を満たす」（多義語 meet ＝ satisfy）。在庫切れになったのは需要を満たせなかったから。", prompt="The company failed to _____ the demand for its new phone, and many stores ran out of stock.", points=G),
-    mark("grammar", ["is", "be", "will be", "being"], 2,
-         "recommend that S (should) 原形 ― 提案・要求を表す動詞に続く that 節では仮定法現在（原形）を使う。", prompt="The committee recommended that the plan _____ postponed until further notice.", points=G),
+    mark("grammar", ["Who", "Whoever", "Whomever", "Whatever"], 2,
+         "複合関係代名詞 whoever「〜する人は誰でも」が主語の名詞節を作る（Whoever arrives ... is responsible）。Who では節が主語にならず、Whomever は目的格、Whatever は人を指さない。", prompt="_____ arrives at the office first is responsible for unlocking the doors.", points=G),
+    mark("grammar", ["explaining", "explained", "having explained", "to explain"], 2,
+         "分詞構文が条件を表す形。proposal は『説明される』側なので過去分詞 explained（= If it had been explained ...）。帰結節が might have won（仮定法過去完了）であることもヒント。", prompt="The proposal, _____ in more detail, might have won the board's approval.", points=G),
+    mark("grammar", ["adverse", "averse", "adversary", "advert"], 1,
+         "紛らわしい語の区別。adverse effect「悪影響」。averse は「嫌って（be averse to）」で名詞を前から修飾しない。adversary は「敵」（名詞）、advert は「広告」。", prompt="The new tax will have an _____ effect on small businesses, which are already struggling with rising costs.", points=G),
     mark("grammar", ["makes", "made", "will make", "has made"], 2,
          "It is (high) time + S + 過去形（仮定法過去）で「もう〜してよい頃だ（なのにしていない）」。現在のことでも過去形を使う。", prompt="It is high time the board _____ a decision about the merger.", points=G),
-    mark("grammar", ["Although", "Despite", "Even", "However"], 2,
-         "直後が名詞句（the bad weather）なので前置詞 Despite。Although は接続詞なので後に節が続く。", prompt="_____ the bad weather, the shipment arrived on time.", points=G),
+    mark("grammar", ["the public realized", "did the public realize", "the public did realize", "realized the public"], 2,
+         "Not until ... が文頭に出ると、主節は疑問文の語順（倒置）になる: did + S + 原形。", prompt="Not until the final report was published _____ the true scale of the losses.", points=G),
+    mark("grammar", ["than", "but", "as", "nor"], 3,
+         "not so much A as B「AというよりむしろB」。than や but は組み合わない。", prompt="She is not so much a scientist _____ a philosopher who happens to work in a laboratory.", points=G),
     mark("grammar", ["would borrow", "will have borrowed", "would have borrowed", "had borrowed"], 3,
          "If が省略された倒置の仮定法過去完了（Had S p.p.）。last year の事実に反する仮定なので、帰結節は would have p.p.。", prompt="Had the central bank lowered interest rates last year, more firms _____ money to expand.", points=G),
 ]
@@ -282,12 +284,12 @@ p5 = [
     "Not every company benefits from such tactics, however. Customers who feel tricked into paying are more likely to cancel later and to warn their friends. Some firms have found that trials which end without automatic billing attract fewer subscribers at first but keep them longer. In a market where switching to a {{b:41}} takes only a few clicks, a reputation for honesty may be worth more than a few months of forgotten payments. The free trial, in other words, works best when it is {{b:42}} what it claims to be: a chance to try before you buy.",
 ]
 q5 = [
-    mark("vocab", ["speak", "look", "care", "stand"], 1, "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。look / care / stand for themselves では文意が通らない。", points=V),
-    mark("vocab", ["gift", "loss", "habit", "risk"], 2, "すでに自分の物だと感じているので、手放すことは『損失』のように感じられる（保有効果・損失回避）。rather than「買わないという決定」との対比。", points=V),
-    mark("vocab", ["suffers", "escapes", "profits", "recovers"], 3, "profit from ~「〜から利益を得る」。解約し忘れた客の不注意から企業が利益を得る。", points=V),
-    mark("vocab", ["charged", "refused", "earned", "spent"], 1, "the first payment is charged「最初の支払いが請求される」。請求される前に通知を送るよう義務づける。", points=V),
-    mark("vocab", ["sponsor", "competitor", "partner", "colleague"], 2, "乗り換え先は『競合他社』。数クリックで他社に移れる市場なので、正直さの評判が重要になる。", points=V),
-    mark("vocab", ["hardly", "exactly", "partly", "seldom"], 2, "exactly what it claims to be「まさにうたっている通りのもの」。hardly / seldom では文意が逆になる。", points=V),
+    mark("vocab", ["speak", "look", "care", "opt"], 1, "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。look / care for themselves は文意が通らず、opt for は「〜を選ぶ」で themselves と結びつかない。", points=V),
+    mark("vocab", ["windfall", "loss", "ritual", "privilege"], 2, "すでに自分の物だと感じているので、手放すことは『損失』のように感じられる（保有効果・損失回避）。rather than「買わないという決定」との対比。windfall（思わぬ授かり物）は逆、ritual（儀式）・privilege（特権）は文脈に合わない。", points=V),
+    mark("vocab", ["suffers", "abstains", "profits", "retreats"], 3, "profit from ~「〜から利益を得る」。解約し忘れた客の不注意から企業が利益を得る。suffer from（苦しむ）は立場が逆、abstain from（控える）・retreat from（退く）は文意に合わない。", points=V),
+    mark("vocab", ["charged", "waived", "spent", "refunded"], 1, "the first payment is charged「最初の支払いが請求される」。請求される前に通知を送るよう義務づける。waived（免除される）・refunded（返金される）では通知の意味がなく、spent（費やされる）は主語の payment と合わない。", points=V),
+    mark("vocab", ["partner", "competitor", "subsidiary", "predecessor"], 2, "乗り換え先は『競合他社』。数クリックで他社に移れる市場なので、正直さの評判が重要になる。partner（提携先）・subsidiary（子会社）・predecessor（前任者）は乗り換え先として不自然。", points=V),
+    mark("vocab", ["scarcely", "precisely", "ostensibly", "marginally"], 2, "precisely what it claims to be「まさにうたっている通りのもの」。scarcely では文意が逆になり、ostensibly（表向きは）・marginally（わずかに）では『本当に試せる機会である』という結論と合わない。", points=V),
 ]
 sections.append({
     "label": "V",
@@ -410,6 +412,32 @@ for sec in sections:
             else:
                 n_write += 1
                 q["id"], q["no"] = f"w{n_write}", n_write
+
+# 正解の位置を 1〜4 に均等に散らす（作問時は正解を2番目に置きがちなため）。
+# 正解の選択肢と、目標の位置にある選択肢を入れ替え、解説中の選択肢番号も入れ替える。
+import random
+import re as _re
+
+_CHOICE_NO = _re.compile(r"(?<![第\d.０-９])([1-4])(?=\s*(?:は|が|・|。|も|で|の|、|）|\)|$|と))")
+
+
+def _swap_numbers(text, a, b):
+    if a == b:
+        return text
+    return _CHOICE_NO.sub(lambda m: str(b) if m.group(1) == str(a) else str(a) if m.group(1) == str(b) else m.group(1), text)
+
+
+_marks = [q for sec in sections for g in sec["groups"] for q in g["questions"] if q["kind"] == "mark"]
+_targets = [1, 2, 3, 4] * (len(_marks) // 4 + 1)
+_targets = _targets[: len(_marks)]
+random.Random(2027).shuffle(_targets)
+for q, t in zip(_marks, _targets):
+    a = q["answer"]
+    if a != t:
+        ch = q["choices"]
+        ch[a - 1], ch[t - 1] = ch[t - 1], ch[a - 1]
+        q["answer"] = t
+        q["explanation"] = _swap_numbers(q["explanation"], a, t)
 
 exam = {
     "id": "keio-shogaku-eigo-01",
