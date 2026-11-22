@@ -118,12 +118,12 @@
               "choices": [
                 "agents had to travel more quickly than the merchants who employed them",
                 "news of an agent's dishonesty had to spread before he could find new employers",
-                "written contracts had to reach the courts before the agent could escape",
-                "merchants had to keep information about their agents secret from rivals"
+                "the coalition had to tell merchants outside the community which agents could be trusted",
+                "merchants had to report a dishonest agent to a judge before he left the region"
               ],
               "points": 5,
               "answer": 2,
-              "explanation": "仕組みが機能するには、不正の情報が『ごまかした者が動くよりも速く』仲間に広まる必要がある。つまり、不正の知らせが次の雇い主に届くのが先でなければならない。1 は移動の速さの比較を取り違えている。3 は「判事は不要」と矛盾、4 は情報共有と逆。"
+              "explanation": "仕組みが機能するには、不正の情報が『ごまかした者が動くよりも速く』仲間に広まる必要がある。つまり、不正の知らせが次の雇い主に届くのが先でなければならない。1 は移動の速さの比較を取り違えている。3 は情報が共同体の『外』に伝わる話になっていて本文と違う。4 は「判事も警察もいらない」と矛盾。"
             },
             {
               "id": "m6",
@@ -132,14 +132,14 @@
               "category": "paraphrase",
               "prompt": "What does the author mean by underlined (6)?",
               "choices": [
-                "Textbook writers have deliberately ignored evidence found in the letters.",
+                "The account remains popular in textbooks even though critics have proved it false.",
                 "Historians agree that the coalition model is the final word on the subject.",
-                "The account was first proposed in textbooks rather than in historical research.",
+                "The account is admired mainly because it is based on records of courts and contracts.",
                 "The coalition explanation is widely taught partly because it is simple and persuasive."
               ],
               "points": 5,
               "answer": 4,
-              "explanation": "elegance（簡潔で美しいこと）のために教科書の定番（fixture）になった、という意味。4 が一致。直後に yet it has not gone unchallenged とあるので 2 は誤り。1・3 は本文にない。"
+              "explanation": "elegance（簡潔で美しいこと）のために教科書の定番（fixture）になった、という意味。4 が一致。直後に yet it has not gone unchallenged とあるので 2 は誤り。1 は「批判されている」を「誤りと証明された」に言い過ぎ。3 は、裁判や契約への言及はむしろ批判側の根拠。"
             },
             {
               "id": "m7",
@@ -148,14 +148,14 @@
               "category": "paraphrase",
               "prompt": "Underlined (7) suggests that ___.",
               "choices": [
-                "the question is of interest mainly to collectors of ancient objects",
+                "the question matters mainly to specialists in the history of the Mediterranean",
                 "modern courts have solved the problems faced by medieval merchants",
-                "historians have exaggerated the importance of personal networks",
+                "online marketplaces have overcome the weaknesses of earlier reputation systems",
                 "the issues raised by medieval trade remain relevant to commerce today"
               ],
               "points": 5,
               "answer": 4,
-              "explanation": "antiquarian「骨董的・好古趣味の」。単なる昔話ではない、と述べたあとで、裁判所が頼りにならない現代の商取引やオンライン市場の評価制度に話を広げている。4 が一致。2 は「裁判所が遅く高く信頼できない地域が多い」と矛盾。"
+              "explanation": "antiquarian「骨董的・好古趣味の」。単なる昔話ではない、と述べたあとで、裁判所が頼りにならない現代の商取引やオンライン市場の評価制度に話を広げている。4 が一致。1 は antiquarian の否定を取り違えている。3 は「先行者の弱点を再現している」と矛盾、2 は「裁判所が遅く高く信頼できない地域が多い」と矛盾。"
             },
             {
               "id": "m8",
@@ -164,14 +164,14 @@
               "category": "detail",
               "prompt": "According to the passage, which one of the following was a criticism of the coalition model?",
               "choices": [
-                "The merchants kept no written records of their business dealings.",
+                "The coalition was too large for information about agents to circulate quickly.",
                 "Agents appear to have been able to move fairly freely between networks.",
-                "The coalition punished honest agents more harshly than dishonest ones.",
-                "Reputation played no role whatsoever in medieval long-distance trade."
+                "Agents who cheated could still be hired by other members of the coalition.",
+                "Kinship turned out to matter more than reputation in medieval trade."
               ],
               "points": 5,
               "answer": 2,
-              "explanation": "第3段落の二つ目の批判「排除された者に行き場がなければ機能しないが、代理人はネットワーク間をかなり自由に移っていた」と一致する 2。1 は手紙が残っていることと矛盾、4 は「評判が重要だったかどうかより…」の部分と矛盾（言い過ぎ）。3 は本文にない。"
+              "explanation": "第3段落の二つ目の批判「排除された者に行き場がなければ機能しないが、代理人はネットワーク間をかなり自由に移っていた」と一致する 2。1・4 は批判として述べられていない。3 は、同盟の内部では再雇用されないという理論の前提と逆で、批判は『同盟の外』に行き場があったという点。"
             },
             {
               "id": "m9",
@@ -180,14 +180,14 @@
               "category": "detail",
               "prompt": "Which one of the following is NOT mentioned in the passage as a weakness of online rating systems?",
               "choices": [
-                "Buyers are unable to understand reviews written in foreign languages.",
+                "Ratings tend to favor sellers who have been in business the longest.",
                 "Sellers who have been excluded can return under a different name.",
                 "Reviews can be bought.",
                 "Decisions to exclude sellers can seldom be challenged."
               ],
               "points": 5,
               "answer": 1,
-              "explanation": "第6段落で挙げられている弱点は、レビューの買収・評価の水増し・名前を変えての再登場・排除の決定に異議を申し立てにくいこと。言語の問題は述べられていないので 1。"
+              "explanation": "第6段落で挙げられている弱点は、レビューの買収・評価の水増し・名前を変えての再登場・排除の決定に異議を申し立てにくいこと。営業年数の長い売り手が有利になるという点は述べられていないので 1。"
             },
             {
               "id": "m10",
@@ -197,13 +197,13 @@
               "prompt": "Which one of the following titles best captures the main idea of the passage?",
               "choices": [
                 "How Online Platforms Replaced Medieval Courts",
-                "Why Honest Agents Earned Less Than Dishonest Ones",
-                "The Decline of Merchant Guilds in Medieval Europe",
+                "Collective Punishment and the Medieval Merchant Guilds",
+                "The Coalition Model: How Reputation Made Law Unnecessary",
                 "Reputation, Law, and the Foundations of Trust in Long-Distance Trade"
               ],
               "points": 5,
               "answer": 4,
-              "explanation": "遠隔地交易での信用の問題、評判の仕組み（同盟）への批判、評判と法の補完関係、現代への示唆を経て「信用は単一の基盤に依らない」と結ぶ。4 が全体を表す。1 はオンライン市場の話に偏り、裁判所に取って代わったとも言っていない。3・2 は本文にない。"
+              "explanation": "遠隔地交易での信用の問題、評判の仕組み（同盟）への批判、評判と法の補完関係、現代への示唆を経て「信用は単一の基盤に依らない」と結ぶ。4 が全体を表す。1 はオンライン市場の話に偏り、裁判所に取って代わったとも言っていない。3 は筆者が疑問視する『評判が法の代わりになった』という見方。2 は第5段落の一例だけ。"
             }
           ]
         }
@@ -292,14 +292,14 @@
               "category": "paraphrase",
               "prompt": "The idea described in underlined (14) was that ___.",
               "choices": [
-                "Morse code could be sent to stores by shining a light on the sand",
+                "four parallel lines would be enough to identify any product",
                 "circles would be easier for a machine to read than straight lines",
                 "information could be represented by lines of different widths",
-                "customers could use Morse code to tell cashiers what they had bought"
+                "a pattern drawn in sand could be read by a machine from any direction"
               ],
               "points": 5,
               "answer": 3,
-              "explanation": "モールス信号の点と線を『細い線と太い線』に引き延ばせば、情報を線の太さの違いで表せる、という着想。3 が一致。2 の円形は読む方向の問題として後で出てくるが、下線部の内容ではない。1・4 は本文にない。"
+              "explanation": "モールス信号の点と線を『細い線と太い線』に引き延ばせば、情報を線の太さの違いで表せる、という着想。3 が一致。1 は砂に引いた線の本数を取り違えている。2・4 の円形・読む方向は後で出てくる設計の話で、下線部の内容ではない。"
             },
             {
               "id": "m15",
@@ -309,13 +309,13 @@
               "prompt": "What does the author mean by underlined (15)?",
               "choices": [
                 "Lasers were still too expensive for most stores to buy.",
-                "IBM refused to share its design with other companies.",
+                "Retailers were unwilling to pay for printing codes on packaging.",
                 "Businesses also had to agree on a single, shared code.",
-                "Cashiers needed a long period of training to use scanners."
+                "Scanners could not yet read rectangular codes reliably."
               ],
               "points": 5,
               "answer": 3,
-              "explanation": "直後に「コードはみんなが同じものを使うと合意して初めて役に立つ」とあり、業界委員会で単一の規格を選ぶ話が続く。技術に加えて『共通規格への合意』が必要だったので 3。1 は前段落で安価になったと述べている。2・4 は本文にない。"
+              "explanation": "直後に「コードはみんなが同じものを使うと合意して初めて役に立つ」とあり、業界委員会で単一の規格を選ぶ話が続く。技術に加えて『共通規格への合意』が必要だったので 3。1 は前段落で安価になったと述べている。2 は印刷費を負担するのはメーカーで、立場が逆。4 は本文にない。"
             },
             {
               "id": "m16",
@@ -324,14 +324,14 @@
               "category": "paraphrase",
               "prompt": "Which one of the following best explains underlined (16)?",
               "choices": [
-                "barcodes made lines at the register longer because of scanning errors",
+                "barcodes allowed manufacturers to learn more about customers than stores did",
                 "barcodes changed who held information and power in the retail industry",
                 "manufacturers gained more control over what stores would sell",
                 "the main benefit of barcodes was the speed of the checkout"
               ],
               "points": 5,
               "answer": 2,
-              "explanation": "段落全体で、レジのデータにより小売店が商品の動きを把握し、力がメーカーから大手小売店に移ったと述べている。『レジの列を短くした以上のこと』とは 2。3 は力の移動の向きが逆、4 は下線部の否定する内容。"
+              "explanation": "段落全体で、レジのデータにより小売店が商品の動きを把握し、力がメーカーから大手小売店に移ったと述べている。『レジの列を短くした以上のこと』とは 2。1・3 は力と情報の移動の向きが逆、4 は下線部が否定している内容。"
             },
             {
               "id": "m17",
@@ -341,7 +341,7 @@
               "prompt": "Why was the first design made of circles?",
               "choices": [
                 "Because circles were less likely to smear during printing.",
-                "Because circles reflected more light than straight lines.",
+                "Because circles could be printed more cheaply than straight lines.",
                 "Because IBM had already patented the rectangular design.",
                 "Because the code could then be read from any direction."
               ],
@@ -358,12 +358,12 @@
               "choices": [
                 "Scanners cost a great deal of money.",
                 "Only a small number of products carried codes.",
-                "Cashiers refused to operate the new machines.",
+                "Stores feared that scanners would slow down the checkout at busy times.",
                 "Some people worried that prices would no longer be marked on items."
               ],
               "points": 5,
               "answer": 3,
-              "explanation": "第5段落の理由は、スキャナーが高価・コード付き商品が少ない・個々の商品に価格が表示されなくなるという消費者団体の抗議の三つ。レジ係の拒否は述べられていないので 3。"
+              "explanation": "第5段落の理由は、スキャナーが高価・コード付き商品が少ない・個々の商品に価格が表示されなくなるという消費者団体の抗議の三つ。混雑時にレジが遅くなるという懸念は述べられていないので 3。"
             },
             {
               "id": "m19",
@@ -372,14 +372,14 @@
               "category": "detail",
               "prompt": "Which one of the following is true according to the passage?",
               "choices": [
-                "Silver and Woodland became wealthy after selling their patent.",
-                "The first item scanned was chosen because it was the most expensive product in the store.",
+                "Silver earned a large sum when the patent was sold in 1952.",
+                "The first item scanned was chosen because it was the most popular product in the store.",
                 "In the early days, retailers stood to gain more directly from the system than manufacturers did.",
-                "The industry committee chose IBM's design because Woodland was the chairman of the committee."
+                "Woodland developed the rectangular design on his own after leaving IBM."
               ],
               "points": 5,
               "answer": 3,
-              "explanation": "第4段落「印刷の費用はメーカーが負担し、節約の恩恵は主に小売店に」と一致する 3。1 は最終段落・第3段落と矛盾。2 は「最も小さな商品でも」という象徴的な理由と矛盾。4 は本文にない（Woodland は IBM の社員としてプロジェクトに関わっただけ）。"
+              "explanation": "第4段落「印刷の費用はメーカーが負担し、節約の恩恵は主に小売店に」と一致する 3。1 は最終段落・第3段落と矛盾。2 は「最も小さな商品でも」という象徴的な理由と矛盾。4 は IBM の社員としてプロジェクトに関わったという記述と矛盾。"
             }
           ]
         }
@@ -470,13 +470,13 @@
               "prompt": "What does the author mean by underlined (23)?",
               "choices": [
                 "Repair costs have risen only because the wages of technicians have increased.",
-                "Consumers today simply prefer new products to repaired ones.",
-                "Governments have placed heavy taxes on repair services.",
+                "Consumers have chosen convenience over durability of their own accord.",
+                "Safety rules have made repair work too costly for small shops.",
                 "The difficulty of repair is often the result of deliberate decisions by manufacturers."
               ],
               "points": 5,
               "answer": 4,
-              "explanation": "『割に合わなくなった』のではなく『割に合わなくされた』。接着剤・密閉電池・部品や診断ソフトの囲い込みはメーカーの選択だという段落の主張なので 4。1 は筆者が「それだけではない」と言っている説明、2・3 は本文にない。"
+              "explanation": "『割に合わなくなった』のではなく『割に合わなくされた』。接着剤・密閉電池・部品や診断ソフトの囲い込みはメーカーの選択だという段落の主張なので 4。1 は筆者が「それだけではない」と言っている説明。2 は消費者の選択の話にすり替えている。3 は本文にない（安全はメーカーの言い分として出てくるだけ）。"
             },
             {
               "id": "m24",
@@ -485,14 +485,14 @@
               "category": "paraphrase",
               "prompt": "Underlined (24) suggests that ___.",
               "choices": [
-                "repair shops hide their real prices from their customers",
+                "the price of a repair usually includes hidden charges",
                 "the prices we compare ignore the environmental and social costs of throwing products away",
                 "recycling has made new products cheaper than repairs",
-                "receipts often contain mistakes that benefit the store"
+                "repairs cost more than replacements only in poorer countries"
               ],
               "points": 5,
               "answer": 2,
-              "explanation": "these costs は段落で述べた電子ごみ・危険な環境での金属回収・製造時のエネルギーと原材料。修理代と買い替え代の比較にはそれらが含まれていない、ということなので 2。3 は「適切にリサイクルされるのはごく一部」と矛盾。"
+              "explanation": "these costs は段落で述べた電子ごみ・危険な環境での金属回収・製造時のエネルギーと原材料。修理代と買い替え代の比較にはそれらが含まれていない、ということなので 2。1 は修理代の内訳の話にすり替えている。3 は「適切にリサイクルされるのはごく一部」と矛盾。4 は本文にない。"
             },
             {
               "id": "m25",
@@ -502,13 +502,13 @@
               "prompt": "In underlined (25), the author refers to ___.",
               "choices": [
                 "people who use products without being able to maintain them",
-                "people who buy only the cheapest goods available",
-                "people who refuse to spend money on anything new",
+                "people who buy more things than they actually need",
+                "people who care more about price than about quality",
                 "people who prefer to repair everything themselves"
               ],
               "points": 5,
               "answer": 1,
-              "explanation": "コロンの後で people who use things but cannot look after them と言い換えている。1 が一致。4 は逆、2・3 は本文にない。"
+              "explanation": "コロンの後で people who use things but cannot look after them と言い換えている。1 が一致。2 は本文にない（下線部の定義は「使えるが手入れできない」）。3 は本文にない。4 は逆。"
             },
             {
               "id": "m26",
@@ -520,11 +520,11 @@
                 "The author admits they are partly true but doubts them in light of the companies' other practices.",
                 "The author accepts them without reservation.",
                 "The author rejects them as completely false.",
-                "The author argues that water resistance is unimportant to most customers."
+                "The author accepts only their point about safety and rejects the rest."
               ],
               "points": 5,
               "answer": 1,
-              "explanation": "There is some truth in these claims. と一部認めたうえで、正規修理の価格の高さや部品供給の打ち切りを挙げて説得力を疑っている。1 が一致。3・2 はどちらも極端、4 は本文にない。"
+              "explanation": "There is some truth in these claims. と一部認めたうえで、正規修理の価格の高さや部品供給の打ち切りを挙げて説得力を疑っている。1 が一致。3・2 はどちらも極端。4 は安全の点だけを認めたとは書かれていない。"
             },
             {
               "id": "m27",
@@ -534,13 +534,13 @@
               "prompt": "According to the passage, what is the main aim of repair cafés?",
               "choices": [
                 "To replace professional repairers with volunteers.",
-                "To sell second-hand goods at low prices.",
+                "To repair goods free of charge for people who cannot afford professionals.",
                 "To change the way people think about the things they own.",
-                "To train technicians to work for manufacturers."
+                "To teach visitors how to become professional repairers."
               ],
               "points": 5,
               "answer": 3,
-              "explanation": "The organizers ... say that their aim is not to replace professional repairers but to change attitudes. 3 が一致。1 は明確に否定されている。2・4 は本文にない。"
+              "explanation": "The organizers ... say that their aim is not to replace professional repairers but to change attitudes. 3 が一致。1 は明確に否定されている。2 は無料修理サービスとしての説明で、目的が違う。4 は本文にない。"
             },
             {
               "id": "m28",
@@ -567,12 +567,12 @@
               "choices": [
                 "The Rising Cost of Labor in the Repair Industry",
                 "Made to Be Replaced: Why Repair Deserves Protection",
-                "How to Fix Your Own Phone: A Beginner's Guide",
-                "Recycling Electronic Waste: A Global Success Story"
+                "The Hidden Environmental Cost of Electronic Waste",
+                "Repair Cafés and the Revival of Neighborhood Skills"
               ],
               "points": 5,
               "answer": 2,
-              "explanation": "製品の短命さはメーカーの選択の結果であり、修理を守る価値がある、というのが全体の主張。2 が一致。1 は筆者が不十分とする説明、3 は手引きではない、4 は「適切にリサイクルされるのはごく一部」と矛盾。"
+              "explanation": "製品の短命さはメーカーの選択の結果であり、修理を守る価値がある、というのが全体の主張。2 が一致。1 は筆者が不十分とする説明。3 は第4段落、4 は第6段落の一部だけを取り上げている。"
             }
           ]
         }
