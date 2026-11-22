@@ -103,7 +103,7 @@ function Cover({ exam }: { exam: Exam }) {
         <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試</span>
         <span>{exam.faculty}</span>
       </div>
-      <div className="subject">{exam.subject.split("").join("")}</div>
+      <div className="subject">{exam.subject}</div>
       <div className="subtitle">（ 問 題 ）</div>
       <div className="time">試験時間 <b>{exam.durationMin}分</b>　　配点 {exam.totalPoints}点</div>
       <div className="notes-box">

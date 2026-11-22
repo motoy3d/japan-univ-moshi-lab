@@ -61,3 +61,9 @@ export function topPercent(score: number, stats: ExamStats): number | null {
   const pct = (above / stats.count) * 100;
   return Math.max(0.1, Math.round(pct * 10) / 10);
 }
+
+/** 目標偏差値に必要な得点（現在の母集団で換算）。母集団が小さい間は null */
+export function scoreForDeviation(goal: number, stats: ExamStats): number | null {
+  if (stats.count < MIN_POPULATION_FOR_DEVIATION || stats.sd < 1e-9) return null;
+  return Math.min(stats.maxScore, Math.max(0, Math.ceil(stats.mean + (stats.sd * (goal - 50)) / 10)));
+}

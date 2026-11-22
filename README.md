@@ -18,23 +18,24 @@
 | 採点・解説 | 大問別・分野別の得点、全問の正誤と解説、解答・解説冊子の印刷 |
 | 偏差値 | 全ユーザーの**初回受験**を母集団として、偏差値・推定順位（上位%）・得点分布を表示。30人未満のときは「参考値」と明示 |
 | 成績分析 | 得点率の推移、分野別の累計得点率、苦手分野と対策の表示 |
+| 目標・やる気 | 目標偏差値と受験日を設定 → ホームに「本番まであと◯日」「目標まであと◯点」。結果画面に自己ベスト更新・前回比、失点の大きい分野（伸びしろ）から該当解説へ移動 |
 
 サンプル: [問題冊子＋解答用紙 PDF (A4)](docs/samples/keio-shogaku-eigo-01-A4.pdf) ／ [解答・解説 PDF](docs/samples/keio-shogaku-eigo-01-answers.pdf)
 
-![印刷イメージ](docs/screenshots/print-pages.png)
+![ホーム（PC）](docs/screenshots/home-desktop.png)
+![スマホ（ログイン・ホーム・目標設定・結果・伸びしろ・ダークモード）](docs/screenshots/motivation-mobile.png)
 ![スマホ受験](docs/screenshots/mobile-take.png)
+![印刷イメージ](docs/screenshots/print-pages.png)
 
 ## 構成（AWS・低コスト）
 
-```
-ブラウザ ─ CloudFront ─┬─ S3（React SPA）
-                       └─ /api/* → API Gateway HTTP API（Cognito JWT 認証）→ Lambda（Node 22, arm64）→ DynamoDB（オンデマンド）
-認証: Cognito User Pool（Lite プラン）+ Hosted UI（Google / メール）
-```
+![AWS アーキテクチャ](docs/architecture.svg)
 
 - サーバー常駐なし（すべて従量課金）。小規模（〜数千ユーザー）なら月数十円〜数百円程度が目安です。Google ログインを使う場合は、Secrets Manager の料金（1シークレット月 $0.40）が加わります。
 - 偏差値は DynamoDB の集計レコード（人数・Σx・Σx²・10点刻みヒストグラム）を原子的に加算して算出するため、全件スキャンは不要です。
 - 正解・解説は提出前のクライアントには送りません。採点はサーバー側で行います。
+- 「初回受験の記録」と「集計への加算」は DynamoDB のトランザクションで同時に行うため、途中で失敗しても人数がずれません。
+- CloudFront の `/api/*` は Authorization ヘッダをキャッシュキーに含めて転送します（含めないと GET で認証ヘッダが落ちて 401 になる）。SPA の振り分けは CloudFront Function で行い、API のエラー応答は書き換えません。
 
 ```
 content/exams/*.json   模試データ（本文・設問・正解・解説）

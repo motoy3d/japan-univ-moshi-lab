@@ -4,6 +4,7 @@ import type {
   Exam,
   ExamListItem,
   ExamStats,
+  Profile,
   SubmitAttemptRequest,
 } from "../../shared/types";
 import { getAccessToken } from "./auth";
@@ -36,4 +37,6 @@ export const api = {
   submit: (req: SubmitAttemptRequest) => call<{ attemptId: string }>("POST", "/attempts", req),
   attempts: () => call<AttemptSummary[]>("GET", "/attempts"),
   attempt: (id: string) => call<AttemptReview>("GET", `/attempts/${id}`),
+  me: () => call<Profile>("GET", "/me"),
+  saveMe: (p: Profile) => call<Profile>("PUT", "/me", p),
 };

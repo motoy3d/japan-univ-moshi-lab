@@ -75,6 +75,47 @@ export class MoshiLabStack extends Stack {
 
     // ---------- CloudFront ----------
     const apiOrigin = new origins.HttpOrigin(`${httpApi.apiId}.execute-api.${this.region}.amazonaws.com`);
+    // API 用: Authorization ヘッダをキャッシュキーに含めないと、CloudFront は GET/HEAD で
+    // Authorization をオリジンに転送しない（＝本番で 401 になる）。TTL は 0（API 側も no-store）。
+    const apiCachePolicy = new cloudfront.CachePolicy(this, "ApiCache", {
+      defaultTtl: Duration.seconds(0),
+      minTtl: Duration.seconds(0),
+      maxTtl: Duration.seconds(1),
+      headerBehavior: cloudfront.CacheHeaderBehavior.allowList("Authorization"),
+      queryStringBehavior: cloudfront.CacheQueryStringBehavior.all(),
+      cookieBehavior: cloudfront.CacheCookieBehavior.none(),
+    });
+    const securityHeaders = new cloudfront.ResponseHeadersPolicy(this, "SecurityHeaders", {
+      securityHeadersBehavior: {
+        contentTypeOptions: { override: true },
+        frameOptions: { frameOption: cloudfront.HeadersFrameOption.DENY, override: true },
+        referrerPolicy: { referrerPolicy: cloudfront.HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN, override: true },
+        strictTransportSecurity: { accessControlMaxAge: Duration.days(365), includeSubdomains: true, override: true },
+        contentSecurityPolicy: {
+          contentSecurityPolicy: [
+            "default-src 'self'",
+            "script-src 'self'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com",
+            "img-src 'self' data:",
+            "connect-src 'self' https://*.amazoncognito.com",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self' https://*.amazoncognito.com",
+          ].join("; "),
+          override: true,
+        },
+      },
+    });
+
+    // SPA ルーティング: 拡張子のないパスは index.html を返す（/api/* には適用しない）
+    const spaRewrite = new cloudfront.Function(this, "SpaRewrite", {
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+      code: cloudfront.FunctionCode.fromInline(
+        "function handler(event){var r=event.request;if(r.uri.indexOf('.')===-1){r.uri='/index.html';}return r;}",
+      ),
+    });
+
     const distribution = new cloudfront.Distribution(this, "Cdn", {
       defaultRootObject: "index.html",
       priceClass: cloudfront.PriceClass.PRICE_CLASS_200, // 日本を含み、最も高い地域を除外
@@ -82,14 +123,16 @@ export class MoshiLabStack extends Stack {
         origin: origins.S3BucketOrigin.withOriginAccessControl(siteBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+        responseHeadersPolicy: securityHeaders,
         compress: true,
+        functionAssociations: [{ function: spaRewrite, eventType: cloudfront.FunctionEventType.VIEWER_REQUEST }],
       },
       additionalBehaviors: {
         "/api/*": {
           origin: apiOrigin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.HTTPS_ONLY,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
-          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          cachePolicy: apiCachePolicy,
           originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
         },
         "/config.json": {
@@ -98,11 +141,6 @@ export class MoshiLabStack extends Stack {
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
         },
       },
-      // SPA: 存在しないパスは index.html を返す（S3 は OAC 経由だと 403 を返す）
-      errorResponses: [
-        { httpStatus: 403, responseHttpStatus: 200, responsePagePath: "/index.html", ttl: Duration.minutes(5) },
-        { httpStatus: 404, responseHttpStatus: 200, responsePagePath: "/index.html", ttl: Duration.minutes(5) },
-      ],
     });
     const siteUrl = `https://${distribution.distributionDomainName}`;
 
@@ -164,7 +202,7 @@ export class MoshiLabStack extends Stack {
     });
     const integration = new HttpLambdaIntegration("ApiInt", fn);
     httpApi.addRoutes({ path: "/api/health", methods: [apigw.HttpMethod.GET], integration });
-    httpApi.addRoutes({ path: "/api/{proxy+}", methods: [apigw.HttpMethod.GET, apigw.HttpMethod.POST], integration, authorizer });
+    httpApi.addRoutes({ path: "/api/{proxy+}", methods: [apigw.HttpMethod.GET, apigw.HttpMethod.POST, apigw.HttpMethod.PUT], integration, authorizer });
 
     // 濫用対策のスロットリング（デフォルトステージ）
     const stage = httpApi.defaultStage!.node.defaultChild as apigw.CfnStage;

@@ -15,10 +15,18 @@ export function LoginPage() {
   }, [nav, next]);
 
   return (
-    <div style={{ maxWidth: 420, margin: "24px auto" }}>
-      <h1>ログイン</h1>
-      <p className="muted small">受験記録・成績分析・偏差値の表示にはログインが必要です。</p>
+    <div className="login-wrap">
+      <div className="login-pitch">
+        <h1>本番そっくりの模試で、<br />合格までの距離を測る。</h1>
+        <ul>
+          <li>志望学部の出題形式を再現したオリジナル問題</li>
+          <li>スマホで90分本番演習。紙に印刷してマークシートでも</li>
+          <li>偏差値・分野別の伸びしろ・目標までの残り点数を表示</li>
+        </ul>
+      </div>
       <div className="card grid" style={{ gap: 12 }}>
+        <h2 style={{ margin: 0 }}>ログイン / 新規登録</h2>
+        <p className="muted small" style={{ margin: 0 }}>受験記録と成績分析を保存するためにログインします。</p>
         {cfg.authMode === "cognito" ? (
           <>
             {cfg.googleEnabled && (

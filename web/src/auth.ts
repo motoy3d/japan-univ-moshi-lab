@@ -55,7 +55,7 @@ export function currentUser(): User | null {
   const t = load();
   if (!t) return null;
   if (getConfig().authMode === "local") {
-    const name = t.accessToken.slice(4);
+    const name = decodeURIComponent(t.accessToken.slice(4));
     return { id: `dev-${name}`, name };
   }
   const c = decodeJwt(t.idToken);
@@ -67,7 +67,8 @@ export function currentUser(): User | null {
 }
 
 export function localLogin(name: string) {
-  save({ accessToken: `dev:${name}`, idToken: "", expiresAt: Date.now() + 365 * 864e5 });
+  // HTTP ヘッダーには ASCII しか使えないので、日本語名は URL エンコードする
+  save({ accessToken: `dev:${encodeURIComponent(name)}`, idToken: "", expiresAt: Date.now() + 365 * 864e5 });
 }
 
 /** Hosted UI へリダイレクト。provider="Google" なら Google の画面へ直行 */

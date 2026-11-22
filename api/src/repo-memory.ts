@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import type { AttemptDetail } from "../../shared/types";
+import type { AttemptDetail, Profile } from "../../shared/types";
 import type { RawStats } from "../../shared/stats";
 import type { Repo } from "./repo";
 
@@ -7,13 +7,14 @@ interface Data {
   attempts: Record<string, AttemptDetail[]>;
   firsts: Record<string, string>;
   stats: Record<string, RawStats>;
+  profiles: Record<string, Profile>;
 }
 
-/** ローカル開発用。file を渡すと JSON に保存して再起動後も残す */
+/** ローカル開発・テスト用。file を渡すと JSON に保存して再起動後も残す */
 export class MemoryRepo implements Repo {
-  private data: Data = { attempts: {}, firsts: {}, stats: {} };
+  private data: Data = { attempts: {}, firsts: {}, stats: {}, profiles: {} };
   constructor(private file?: string) {
-    if (file && fs.existsSync(file)) this.data = JSON.parse(fs.readFileSync(file, "utf8"));
+    if (file && fs.existsSync(file)) this.data = { ...this.data, ...JSON.parse(fs.readFileSync(file, "utf8")) };
   }
   private save() {
     if (this.file) fs.writeFileSync(this.file, JSON.stringify(this.data));
@@ -23,19 +24,15 @@ export class MemoryRepo implements Repo {
     this.save();
   }
   async listAttempts(userId: string) {
-    return [...(this.data.attempts[userId] ?? [])].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return [...(this.data.attempts[userId] ?? [])].sort((a, b) => b.attemptId.localeCompare(a.attemptId));
   }
   async getAttempt(userId: string, attemptId: string) {
     return this.data.attempts[userId]?.find((a) => a.attemptId === attemptId);
   }
-  async claimFirstAttempt(examId: string, userId: string, attemptId: string) {
+  async recordFirstAttempt(examId: string, userId: string, attemptId: string, score: number, bucket: number, sectionScores: Record<string, number>) {
     const key = `${examId}#${userId}`;
     if (this.data.firsts[key]) return false;
     this.data.firsts[key] = attemptId;
-    this.save();
-    return true;
-  }
-  async addToStats(examId: string, score: number, bucket: number, sectionScores: Record<string, number>) {
     const s = (this.data.stats[examId] ??= { count: 0, sum: 0, sumSq: 0, buckets: {}, sectionSums: {} });
     s.count += 1;
     s.sum += score;
@@ -43,8 +40,16 @@ export class MemoryRepo implements Repo {
     s.buckets[bucket] = (s.buckets[bucket] ?? 0) + 1;
     for (const [k, v] of Object.entries(sectionScores)) s.sectionSums[k] = (s.sectionSums[k] ?? 0) + v;
     this.save();
+    return true;
   }
   async getStats(examId: string): Promise<RawStats> {
     return this.data.stats[examId] ?? { count: 0, sum: 0, sumSq: 0, buckets: {}, sectionSums: {} };
+  }
+  async getProfile(userId: string) {
+    return this.data.profiles[userId] ?? {};
+  }
+  async putProfile(userId: string, profile: Profile) {
+    this.data.profiles[userId] = profile;
+    this.save();
   }
 }

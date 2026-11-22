@@ -2,49 +2,133 @@ import { Link } from "react-router-dom";
 import { api } from "../api";
 import { currentUser } from "../auth";
 import { fmtDate, useAsync } from "../hooks";
+import { Ring, daysUntil, opportunities } from "../components/Motivation";
+import { deviationScore, scoreForDeviation } from "../../../shared/stats";
+
+function greeting() {
+  const h = new Date().getHours();
+  return h < 5 ? "遅くまでお疲れさまです" : h < 11 ? "おはようございます" : h < 18 ? "こんにちは" : "こんばんは";
+}
 
 export function HomePage() {
   const exams = useAsync(() => api.exams(), []);
   const attempts = useAsync(() => api.attempts(), []);
+  const me = useAsync(() => api.me(), []);
+  const firstExamId = exams.data?.[0]?.id;
+  const stats = useAsync(() => (firstExamId ? api.stats(firstExamId) : Promise.resolve(undefined)), [firstExamId]);
   const user = currentUser();
+  const name = me.data?.nickname || user?.name;
+  const list = attempts.data ?? [];
+  const latest = list[0];
+  const best = list.length ? Math.max(...list.map((a) => a.score)) : null;
+  const days = daysUntil(me.data?.examDate);
+  const goal = me.data?.goalDeviation;
+  const latestDev = latest && stats.data ? deviationScore(latest.score, stats.data) : null;
+  const goalScore = goal && stats.data ? scoreForDeviation(goal, stats.data) : null;
+  const opp = latest ? opportunities(latest.categories, 1)[0] : undefined;
+
   return (
     <>
-      <h1>{user?.name} さんの模試</h1>
+      <section className="hero">
+        <div className="hero-main">
+          <p className="hero-greet">{greeting()}、{name} さん</p>
+          {days !== null && days >= 0 ? (
+            <h1 className="hero-title">本番まで <span className="hero-num">{days}</span> 日</h1>
+          ) : (
+            <h1 className="hero-title">今日も1セット、積み上げよう</h1>
+          )}
+          <p className="hero-sub">
+            {latest
+              ? opp
+                ? `次の一手：「${opp.label}」の失点 ${opp.lost}点 が最大の伸びしろです。`
+                : "前回は満点。次は時間を短縮して精度を保ちましょう。"
+              : "まずは1回、本番と同じ90分で現在地を測りましょう。"}
+          </p>
+          <div className="row" style={{ marginTop: 14 }}>
+            {firstExamId && (
+              <Link className="btn btn-hero" to={`/exams/${firstExamId}${latest ? "" : "/take"}`}>
+                {latest ? "模試に取り組む" : "最初の模試を始める"}
+              </Link>
+            )}
+            {(!goal || !me.data?.examDate) && (
+              <Link className="btn btn-ghost" to="/settings">目標と受験日を設定</Link>
+            )}
+          </div>
+        </div>
+        <div className="hero-side">
+          {goal ? (
+            <Ring
+              value={latestDev ?? 0}
+              max={goal}
+              label={latestDev !== null ? latestDev.toFixed(1) : "—"}
+              sub={`目標 偏差値${goal}`}
+            />
+          ) : (
+            <Ring value={latest ? latest.score : 0} max={latest?.maxScore ?? 200} label={latest ? `${latest.score}` : "—"} sub="最新の得点" />
+          )}
+          {goal && goalScore !== null && (
+            <p className="hero-goal">
+              {latest && latest.score >= goalScore ? "目標ライン到達！" : <>目標まで あと <b>{Math.max(0, goalScore - (latest?.score ?? 0))}</b> 点</>}
+              <span>（{goalScore}点 ≒ 偏差値{goal}）</span>
+            </p>
+          )}
+        </div>
+      </section>
+
+      <div className="kpis">
+        <div className="kpi"><span>受験回数</span><b>{list.length}</b><small>回</small></div>
+        <div className="kpi"><span>自己ベスト</span><b>{best ?? "—"}</b><small>{best !== null ? "点" : ""}</small></div>
+        <div className="kpi"><span>最新の偏差値</span><b>{latestDev?.toFixed(1) ?? "—"}</b></div>
+      </div>
+
+      <h2>模試</h2>
       {exams.error && <p className="error">{exams.error}</p>}
       <div className="grid grid-2">
         {exams.data?.map((e) => {
-          const mine = attempts.data?.filter((a) => a.examId === e.id) ?? [];
+          const mine = list.filter((a) => a.examId === e.id);
+          const top = mine.length ? Math.max(...mine.map((a) => a.score)) : 0;
           return (
-            <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card" style={{ textDecoration: "none", color: "inherit" }}>
-              <span className="badge">{e.edition}</span>
-              <h3>{e.university} {e.faculty}　{e.subject}</h3>
-              <div className="meta">
-                試験時間 {e.durationMin}分 ／ {e.totalPoints}点満点 ／ {e.questionCount}問
+            <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card">
+              <div className="exam-card-top">
+                <span className="badge">{e.edition}</span>
+                <span className={`status ${mine.length ? "done" : ""}`}>{mine.length ? `受験済み ${mine.length}回` : "未受験"}</span>
               </div>
-              <div className="meta" style={{ marginTop: 6 }}>
-                {mine.length ? `受験済み ${mine.length}回（最高 ${Math.max(...mine.map((a) => a.score))}点）` : "未受験"}
+              <h3>{e.university}<br /><span>{e.faculty}　{e.subject}</span></h3>
+              <div className="meta">{e.durationMin}分 ・ {e.totalPoints}点満点 ・ {e.questionCount}問</div>
+              <div className="exam-progress" aria-label={`自己ベスト ${top}点`}>
+                <span style={{ width: `${(top / e.totalPoints) * 100}%` }} />
               </div>
+              <div className="meta">{mine.length ? `自己ベスト ${top} / ${e.totalPoints}点` : "まずは時間を計って1回"}</div>
             </Link>
           );
         })}
+        <div className="card exam-card coming">
+          <div className="exam-card-top"><span className="badge">準備中</span></div>
+          <h3>続々追加予定<br /><span>商学部 第2回 ／ 経済・法・文学部 ／ 共通テスト</span></h3>
+        </div>
       </div>
 
-      <h2>最近の受験</h2>
-      {attempts.data?.length === 0 && <p className="muted">まだ受験記録はありません。</p>}
-      <div className="table-wrap">
-        <table className="table">
-          <tbody>
-            {attempts.data?.slice(0, 5).map((a) => (
-              <tr key={a.attemptId}>
-                <td>{fmtDate(a.createdAt)}</td>
-                <td>{a.examTitle}</td>
-                <td className="num">{a.score}/{a.maxScore}</td>
-                <td><Link to={`/results/${a.attemptId}`}>結果</Link></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {list.length > 0 && (
+        <>
+          <h2>最近の受験</h2>
+          <div className="recent">
+            {list.slice(0, 5).map((a, i) => {
+              const prev = list[i + 1];
+              const delta = prev && prev.examId === a.examId ? a.score - prev.score : null;
+              return (
+                <Link key={a.attemptId} to={`/results/${a.attemptId}`} className="recent-row">
+                  <span className="recent-date">{fmtDate(a.createdAt)}</span>
+                  <span className="recent-title">{a.examTitle}</span>
+                  <span className="recent-score">
+                    {a.score}<small>/{a.maxScore}</small>
+                    {delta !== null && delta !== 0 && <em className={delta > 0 ? "up" : "down"}>{delta > 0 ? `+${delta}` : delta}</em>}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </>
+      )}
     </>
   );
 }

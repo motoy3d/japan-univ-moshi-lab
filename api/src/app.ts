@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import { EXAMS, findExam } from "../../content/index";
 import { allQuestions, scoreExam, stripAnswers } from "../../shared/scoring";
 import { bucketOf, deviationScore, toExamStats, topPercent } from "../../shared/stats";
@@ -7,9 +6,10 @@ import type {
   AttemptReview,
   AttemptSummary,
   ExamListItem,
+  Profile,
   SubmitAttemptRequest,
 } from "../../shared/types";
-import type { Repo } from "./repo";
+import { newAttemptId, type Repo } from "./repo";
 
 export interface ApiResponse {
   status: number;
@@ -79,12 +79,9 @@ export async function route(
       answers[q.id] = q.kind === "mark" ? Number(v) : String(v).slice(0, 60);
     }
     const scored = scoreExam(exam, answers);
-    const attemptId = randomUUID();
-    const counted = await repo.claimFirstAttempt(exam.id, userId, attemptId);
-    if (counted) {
-      const sec = Object.fromEntries(scored.sections.map((s) => [s.key, s.score]));
-      await repo.addToStats(exam.id, scored.score, bucketOf(scored.score, exam.totalPoints), sec);
-    }
+    const attemptId = newAttemptId();
+    const sec = Object.fromEntries(scored.sections.map((s) => [s.key, s.score]));
+    const counted = await repo.recordFirstAttempt(exam.id, userId, attemptId, scored.score, bucketOf(scored.score, exam.totalPoints), sec);
     const stats = await currentStats(repo, exam.id);
     const attempt: AttemptDetail = {
       attemptId,
@@ -130,6 +127,24 @@ export async function route(
       topPercent: topPercent(attempt.score, stats),
     };
     return ok(review);
+  }
+
+  // GET /me ・ PUT /me （目標設定）
+  if (p === "/me" && method === "GET") return ok(await repo.getProfile(userId));
+  if (p === "/me" && method === "PUT") {
+    let body: Record<string, unknown>;
+    try {
+      body = JSON.parse(rawBody ?? "");
+    } catch {
+      return err(400, "リクエストが不正です");
+    }
+    const profile: Profile = {};
+    if (typeof body.nickname === "string" && body.nickname.trim()) profile.nickname = body.nickname.trim().slice(0, 20);
+    const g = Number(body.goalDeviation);
+    if (body.goalDeviation != null && Number.isFinite(g)) profile.goalDeviation = Math.min(80, Math.max(40, Math.round(g)));
+    if (typeof body.examDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.examDate)) profile.examDate = body.examDate;
+    await repo.putProfile(userId, profile);
+    return ok(profile);
   }
 
   return err(404, "Not Found");

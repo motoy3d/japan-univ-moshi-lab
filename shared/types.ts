@@ -177,3 +177,13 @@ export interface AttemptReview {
 export interface ExamListItem extends ExamMeta {
   questionCount: number;
 }
+
+/** ユーザーごとの目標設定（モチベーション表示に使う） */
+export interface Profile {
+  /** 表示名（未設定ならログイン情報の名前） */
+  nickname?: string;
+  /** 目標偏差値（40〜80） */
+  goalDeviation?: number;
+  /** 本番の受験日 YYYY-MM-DD（カウントダウン表示） */
+  examDate?: string;
+}

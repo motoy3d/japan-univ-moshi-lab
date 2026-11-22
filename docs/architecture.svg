@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#52514e"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2a78d6"/></marker>
+    <style>
+      .box{fill:#fff;stroke:#c9c8c1;stroke-width:1.2}
+      .t{font-size:14px;font-weight:700;fill:#1b1b19}
+      .s{font-size:11.5px;fill:#52514e}
+      .lab{font-size:11px;fill:#52514e}
+      .labb{font-size:11px;fill:#2a78d6;font-weight:700}
+      .ln{stroke:#52514e;stroke-width:1.6;fill:none}
+      .lnb{stroke:#2a78d6;stroke-width:2;fill:none}
+      .dash{stroke-dasharray:5 4}
+    </style>
+  </defs>
+  <rect width="1000" height="640" fill="#fcfcfb"/>
+  <text x="24" y="34" font-size="20" font-weight="700" fill="#14284b">予想模試ラボ　AWS アーキテクチャ</text>
+  <text x="24" y="56" class="s">サーバー常駐なし・すべて従量課金（東京リージョン ap-northeast-1）／ AWS CDK で一括構築</text>
+
+  <!-- AWS クラウド境界 -->
+  <rect x="196" y="78" width="784" height="480" rx="14" fill="#f3f7fd" stroke="#2a78d6" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="212" y="100" font-size="12" font-weight="700" fill="#2a78d6">AWS Cloud</text>
+
+  <!-- 利用者 -->
+  <rect x="24" y="240" width="140" height="96" rx="12" fill="#14284b"/>
+  <text x="94" y="272" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">受験生</text>
+  <text x="94" y="293" text-anchor="middle" font-size="11.5" fill="#dbe8f8">PC・スマホ</text>
+  <text x="94" y="311" text-anchor="middle" font-size="11.5" fill="#dbe8f8">印刷・PDF</text>
+
+  <!-- Google -->
+  <rect x="24" y="452" width="140" height="80" rx="12" class="box"/>
+  <text x="94" y="484" text-anchor="middle" class="t">Google</text>
+  <text x="94" y="504" text-anchor="middle" class="s">OAuth ログイン</text>
+
+  <!-- CloudFront -->
+  <rect x="226" y="214" width="200" height="148" rx="12" class="box" stroke="#8c4fff" stroke-width="1.6"/>
+  <text x="326" y="242" text-anchor="middle" class="t">CloudFront</text>
+  <text x="326" y="262" text-anchor="middle" class="s">CDN・HTTPS</text>
+  <text x="326" y="290" text-anchor="middle" class="s">CloudFront Function</text>
+  <text x="326" y="306" text-anchor="middle" class="s">（SPA ルーティング）</text>
+  <text x="326" y="330" text-anchor="middle" class="s">セキュリティヘッダー（CSP等）</text>
+  <text x="326" y="347" text-anchor="middle" class="s">/api/* はキャッシュしない</text>
+
+  <!-- S3 -->
+  <rect x="490" y="112" width="190" height="80" rx="12" class="box" stroke="#3f8624" stroke-width="1.6"/>
+  <text x="585" y="142" text-anchor="middle" class="t">S3</text>
+  <text x="585" y="162" text-anchor="middle" class="s">React SPA・config.json</text>
+  <text x="585" y="178" text-anchor="middle" class="s">非公開（OAC 経由のみ）</text>
+
+  <!-- API Gateway -->
+  <rect x="490" y="242" width="190" height="92" rx="12" class="box" stroke="#e7157b" stroke-width="1.6"/>
+  <text x="585" y="270" text-anchor="middle" class="t">API Gateway</text>
+  <text x="585" y="290" text-anchor="middle" class="s">HTTP API</text>
+  <text x="585" y="306" text-anchor="middle" class="s">JWT オーソライザー</text>
+  <text x="585" y="322" text-anchor="middle" class="s">スロットリング 20req/s</text>
+
+  <!-- Lambda -->
+  <rect x="760" y="242" width="196" height="92" rx="12" class="box" stroke="#ed7100" stroke-width="1.6"/>
+  <text x="858" y="270" text-anchor="middle" class="t">Lambda</text>
+  <text x="858" y="290" text-anchor="middle" class="s">Node.js 22・arm64</text>
+  <text x="858" y="306" text-anchor="middle" class="s">採点・偏差値・成績</text>
+  <text x="858" y="322" text-anchor="middle" class="s">（正解は採点時のみ使用）</text>
+
+  <!-- CloudWatch -->
+  <rect x="760" y="112" width="196" height="80" rx="12" class="box" stroke="#e7157b" stroke-width="1.2"/>
+  <text x="858" y="142" text-anchor="middle" class="t">CloudWatch Logs</text>
+  <text x="858" y="162" text-anchor="middle" class="s">エラーログ</text>
+  <text x="858" y="178" text-anchor="middle" class="s">保存期間 1か月</text>
+
+  <!-- DynamoDB -->
+  <rect x="760" y="392" width="196" height="132" rx="12" class="box" stroke="#2e27ad" stroke-width="1.6"/>
+  <text x="858" y="420" text-anchor="middle" class="t">DynamoDB</text>
+  <text x="858" y="440" text-anchor="middle" class="s">オンデマンド・1テーブル</text>
+  <text x="772" y="464" class="s">・受験記録（ユーザー別）</text>
+  <text x="772" y="481" class="s">・目標偏差値・受験日</text>
+  <text x="772" y="498" class="s">・模試ごとの集計値</text>
+  <text x="772" y="515" class="s">　（人数・Σx・Σx²・分布）</text>
+
+  <!-- Cognito -->
+  <rect x="226" y="430" width="200" height="104" rx="12" class="box" stroke="#dd344c" stroke-width="1.6"/>
+  <text x="326" y="458" text-anchor="middle" class="t">Cognito</text>
+  <text x="326" y="478" text-anchor="middle" class="s">User Pool（Lite プラン）</text>
+  <text x="326" y="494" text-anchor="middle" class="s">Hosted UI・メール認証</text>
+  <text x="326" y="510" text-anchor="middle" class="s">Google 連携（任意）</text>
+
+  <!-- Secrets Manager -->
+  <rect x="490" y="452" width="190" height="72" rx="12" class="box" stroke="#dd344c" stroke-width="1.2"/>
+  <text x="585" y="480" text-anchor="middle" class="t">Secrets Manager</text>
+  <text x="585" y="500" text-anchor="middle" class="s">Google のクライアント</text>
+  <text x="585" y="514" text-anchor="middle" class="s">シークレット（任意）</text>
+
+  <!-- 矢印: データの流れ -->
+  <path class="lnb" d="M164 288 H222" marker-end="url(#b)"/>
+  <text x="193" y="280" text-anchor="middle" class="labb">HTTPS</text>
+  <path class="ln" d="M426 250 C458 250 458 152 486 152" marker-end="url(#a)"/>
+  <text x="452" y="196" text-anchor="middle" class="lab">画面</text>
+  <path class="lnb" d="M426 288 H486" marker-end="url(#b)"/>
+  <text x="456" y="280" text-anchor="middle" class="labb">/api/*</text>
+  <path class="lnb" d="M680 288 H756" marker-end="url(#b)"/>
+  <text x="718" y="280" text-anchor="middle" class="labb">検証済み</text>
+  <path class="lnb" d="M858 334 V388" marker-end="url(#b)"/>
+  <text x="866" y="366" class="labb">読み書き</text>
+  <path class="ln dash" d="M858 242 V196" marker-end="url(#a)"/>
+
+  <!-- 認証 -->
+  <path class="ln" d="M94 336 V400 H300 V426" marker-end="url(#a)"/>
+  <text x="110" y="394" class="lab">ログイン（認可コード＋PKCE）</text>
+  <path class="ln" d="M226 492 H168" marker-end="url(#a)" marker-start="url(#a)"/>
+  <text x="197" y="484" text-anchor="middle" class="lab">連携</text>
+  <path class="ln dash" d="M490 488 H430" marker-end="url(#a)"/>
+  <path class="ln dash" d="M585 334 V376 H360 V426" marker-end="url(#a)"/>
+  <text x="478" y="394" text-anchor="middle" class="lab">トークンの署名を検証（公開鍵）</text>
+
+  <!-- 凡例・コスト -->
+  <rect x="24" y="576" width="952" height="50" rx="10" fill="#fff" stroke="#e1e0d9"/>
+  <path class="lnb" d="M40 594 H70" marker-end="url(#b)"/><text x="78" y="598" class="s">受験データの流れ</text>
+  <path class="ln" d="M190 594 H220" marker-end="url(#a)"/><text x="228" y="598" class="s">画面配信・認証</text>
+  <path class="ln dash" d="M336 594 H366" marker-end="url(#a)"/><text x="374" y="598" class="s">設定・ログ</text>
+  <text x="40" y="616" class="s">費用の目安：小規模（〜数千ユーザー）なら月数十円〜数百円。Google ログインを使う場合は Secrets Manager の月 $0.40 が加わります。</text>
+</svg>

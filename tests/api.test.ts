@@ -75,3 +75,20 @@ test("API: 正解は受験前に返さない・提出→結果→統計", async 
   assert.equal(mine.length, 2);
   assert.deepEqual(mine.map((m) => m.counted).sort(), [false, true]);
 });
+
+test("受験IDは時刻順に並ぶ", async () => {
+  const { newAttemptId } = await import("../api/src/repo");
+  const a = newAttemptId(1_700_000_000_000);
+  const b = newAttemptId(1_700_000_000_001);
+  assert.ok(a < b);
+});
+
+test("API: 目標設定の保存と入力値の検証", async () => {
+  const repo = new MemoryRepo();
+  const r = await route(repo, "PUT", "/api/me", "u1", JSON.stringify({ goalDeviation: 99, examDate: "2027-02-14", nickname: "  たろう  " }));
+  assert.deepEqual(r.body, { goalDeviation: 80, examDate: "2027-02-14", nickname: "たろう" });
+  const bad = await route(repo, "PUT", "/api/me", "u1", JSON.stringify({ examDate: "来年" }));
+  assert.deepEqual(bad.body, {});
+  const got = await route(repo, "GET", "/api/me", "u2", undefined);
+  assert.deepEqual(got.body, {});
+});
