@@ -96,11 +96,11 @@
                 "Otherwise",
                 "Instead",
                 "Meanwhile",
-                "Therefore"
+                "For instance"
               ],
               "points": 3,
               "answer": 3,
-              "explanation": "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。Therefore は因果、Instead は代替、Otherwise は条件の逆で不適。"
+              "explanation": "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。For instance は前文の具体例ではないので不適、Instead は代替、Otherwise は条件の逆で不適。"
             }
           ]
         },
@@ -653,16 +653,16 @@
               "kind": "mark",
               "no": 34,
               "category": "grammar",
-              "prompt": "I'd rather you _____ tell anyone about the merger until it is officially announced.",
+              "prompt": "It is high time the board _____ a decision about the merger.",
               "choices": [
-                "don't",
-                "didn't",
-                "won't",
-                "haven't"
+                "makes",
+                "made",
+                "will make",
+                "has made"
               ],
               "points": 2,
               "answer": 2,
-              "explanation": "would rather + S + 過去形（仮定法過去）で「Sに〜してほしい」。現在・未来のことでも過去形を使う。"
+              "explanation": "It is (high) time + S + 過去形（仮定法過去）で「もう〜してよい頃だ（なのにしていない）」。現在のことでも過去形を使う。"
             },
             {
               "id": "m35",
@@ -722,13 +722,13 @@
               "category": "vocab",
               "choices": [
                 "speak",
-                "pay",
+                "look",
                 "care",
                 "stand"
               ],
               "points": 2,
               "answer": 1,
-              "explanation": "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。"
+              "explanation": "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。look / care / stand for themselves では文意が通らない。"
             },
             {
               "id": "m38",
@@ -781,7 +781,7 @@
               "no": 41,
               "category": "vocab",
               "choices": [
-                "supplier",
+                "sponsor",
                 "competitor",
                 "partner",
                 "colleague"
@@ -1079,7 +1079,7 @@
       "passage": {
         "paragraphs": [
           "Every new business rests on a set of {{w:a}} about what customers want, and the most dangerous of these are the ones that founders never think to question. A start-up may spend years building a product before learning that nobody needs it. To avoid this, many investors now encourage founders to test their ideas early, with simple versions of the product and real customers. The {{w:b}} of a company's early plans, in this view, is not a sign of failure but of learning.",
-          "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a team honest enough to point out which is which."
+          "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a culture in which people feel safe to point out which is which."
         ],
         "source": "[Original passage written for this mock exam]"
       },
@@ -1172,7 +1172,7 @@
               "answer": [
                 "maintenance"
               ],
-              "explanation": "the + 名詞 + of ...。maintain → maintenance「維持」（ai が消える綴りに注意）。"
+              "explanation": "the maintenance of a culture「文化の維持」。maintain → maintenance（ai が消える綴りに注意）。"
             }
           ]
         }

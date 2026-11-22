@@ -98,8 +98,8 @@ q1 = [
         "It reduces the amount of data that sellers collect.",
     ], 1, "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。",
         "Which of the following best expresses the meaning of underlined (6)?"),
-    blank(["Otherwise", "Instead", "Meanwhile", "Therefore"], 3,
-          "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。Therefore は因果、Instead は代替、Otherwise は条件の逆で不適。"),
+    blank(["Otherwise", "Instead", "Meanwhile", "For instance"], 3,
+          "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。For instance は前文の具体例ではないので不適、Instead は代替、Otherwise は条件の逆で不適。"),
     uline(7, [
         "Firms should stop using algorithms to set prices.",
         "Customers will remain loyal only if they believe that prices are set honestly.",
@@ -261,8 +261,8 @@ q4 = [
          "meet demand「需要を満たす」（多義語 meet ＝ satisfy）。在庫切れになったのは需要を満たせなかったから。", prompt="The company failed to _____ the demand for its new phone, and many stores ran out of stock.", points=G),
     mark("grammar", ["is", "be", "will be", "being"], 2,
          "recommend that S (should) 原形 ― 提案・要求を表す動詞に続く that 節では仮定法現在（原形）を使う。", prompt="The committee recommended that the plan _____ postponed until further notice.", points=G),
-    mark("grammar", ["don't", "didn't", "won't", "haven't"], 2,
-         "would rather + S + 過去形（仮定法過去）で「Sに〜してほしい」。現在・未来のことでも過去形を使う。", prompt="I'd rather you _____ tell anyone about the merger until it is officially announced.", points=G),
+    mark("grammar", ["makes", "made", "will make", "has made"], 2,
+         "It is (high) time + S + 過去形（仮定法過去）で「もう〜してよい頃だ（なのにしていない）」。現在のことでも過去形を使う。", prompt="It is high time the board _____ a decision about the merger.", points=G),
     mark("grammar", ["Although", "Despite", "Even", "However"], 2,
          "直後が名詞句（the bad weather）なので前置詞 Despite。Although は接続詞なので後に節が続く。", prompt="_____ the bad weather, the shipment arrived on time.", points=G),
     mark("grammar", ["would borrow", "will have borrowed", "would have borrowed", "had borrowed"], 3,
@@ -282,11 +282,11 @@ p5 = [
     "Not every company benefits from such tactics, however. Customers who feel tricked into paying are more likely to cancel later and to warn their friends. Some firms have found that trials which end without automatic billing attract fewer subscribers at first but keep them longer. In a market where switching to a {{b:41}} takes only a few clicks, a reputation for honesty may be worth more than a few months of forgotten payments. The free trial, in other words, works best when it is {{b:42}} what it claims to be: a chance to try before you buy.",
 ]
 q5 = [
-    mark("vocab", ["speak", "pay", "care", "stand"], 1, "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。", points=V),
+    mark("vocab", ["speak", "look", "care", "stand"], 1, "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。look / care / stand for themselves では文意が通らない。", points=V),
     mark("vocab", ["gift", "loss", "habit", "risk"], 2, "すでに自分の物だと感じているので、手放すことは『損失』のように感じられる（保有効果・損失回避）。rather than「買わないという決定」との対比。", points=V),
     mark("vocab", ["suffers", "escapes", "profits", "recovers"], 3, "profit from ~「〜から利益を得る」。解約し忘れた客の不注意から企業が利益を得る。", points=V),
     mark("vocab", ["charged", "refused", "earned", "spent"], 1, "the first payment is charged「最初の支払いが請求される」。請求される前に通知を送るよう義務づける。", points=V),
-    mark("vocab", ["supplier", "competitor", "partner", "colleague"], 2, "乗り換え先は『競合他社』。数クリックで他社に移れる市場なので、正直さの評判が重要になる。", points=V),
+    mark("vocab", ["sponsor", "competitor", "partner", "colleague"], 2, "乗り換え先は『競合他社』。数クリックで他社に移れる市場なので、正直さの評判が重要になる。", points=V),
     mark("vocab", ["hardly", "exactly", "partly", "seldom"], 2, "exactly what it claims to be「まさにうたっている通りのもの」。hardly / seldom では文意が逆になる。", points=V),
 ]
 sections.append({
@@ -374,7 +374,7 @@ sections.append({
 # ───────────────────────── VIII 記述：名詞形 ─────────────────────────
 p8 = [
     "Every new business rests on a set of {{w:a}} about what customers want, and the most dangerous of these are the ones that founders never think to question. A start-up may spend years building a product before learning that nobody needs it. To avoid this, many investors now encourage founders to test their ideas early, with simple versions of the product and real customers. The {{w:b}} of a company's early plans, in this view, is not a sign of failure but of learning.",
-    "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a team honest enough to point out which is which.",
+    "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a culture in which people feel safe to point out which is which.",
 ]
 VIII_WORDS = ["assume", "deny", "maintain", "persist", "revise"]
 VIII_FORMS = {
@@ -389,7 +389,7 @@ q8 = [
     write("b", ["revision"], "The + 名詞 + of ...。revise → revision「修正」。早期の計画の修正は失敗ではなく学習の証。", category="noun-form"),
     write("c", ["persistence"], "their + 名詞。persist → persistence「粘り強さ」（-ance ではなく -ence）。直後の determination と対応。", category="noun-form"),
     write("d", ["denial"], "前置詞 for の後なので名詞。deny → denial「（現実の）否認」。警告を無視した創業者が、失敗すれば現実否認だと批判される。", category="noun-form"),
-    write("e", ["maintenance"], "the + 名詞 + of ...。maintain → maintenance「維持」（ai が消える綴りに注意）。", category="noun-form"),
+    write("e", ["maintenance"], "the maintenance of a culture「文化の維持」。maintain → maintenance（ai が消える綴りに注意）。", category="noun-form"),
 ]
 sections.append({
     "label": "VIII",
