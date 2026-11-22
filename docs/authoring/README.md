@@ -139,7 +139,7 @@ npm test && npm run typecheck
 PY=python3 scripts/simulate/make_all_packets.sh /tmp/sim
 # 2) 冊子1冊ごとに、新しい会話の AI（前後の文脈・正解を一切知らない）に解かせる。
 #    指示: 「この冊子だけを読み、冒頭の受験者になりきって解き、最後の JSON を出力して保存せよ。
-#           [?] の語を復元しない。他のファイルや Web は見ない」
+#           [?] の語を復元しない。他のファイルや Web は見ない。ファイルの読み書き以外のツールは使わない」
 # 3) 採点と集計
 python3 scripts/simulate/score.py grade content/exams/keio-shogaku-eigo-02.json dev62 /tmp/sim/out/ex02-dev62.txt /tmp/sim/res/ex02-dev62.json
 python3 scripts/simulate/score.py report /tmp/sim/res/*.json --md docs/quality/simulations/<日付>.md
@@ -155,6 +155,7 @@ python3 scripts/simulate/score.py report /tmp/sim/res/*.json --md docs/quality/s
 
 - 語彙は英語圏の語の頻度で近似しているため、日本の単語帳で習う語（aloud、accuse など）を知らない扱いにすることがある。本番と模試に同じ基準を当てているので、比較には使える。
 - 解答者は AI なので、伏せた語の推測や消去法が実際の受験生より上手な可能性がある。受験者間・試験間の**相対比較**として使い、絶対的な得点予測には使わない。
+- **AI の解答者は、伏せ字があっても消去法と文脈で正解してしまう。** 2026-11 の試行では、偏差値62・68の受験者は本番でも模試でも 89〜100% になり、差が出なかった（`docs/quality/calibration-keio-shogaku-eigo.md`）。差を測れるのは偏差値55程度の受験者で、比較もその受験者で行う。偏差値と得点の対応（絶対的な水準）は、公開後の実際の受験データで較正する。
 - 1回の試行はばらつく。差が小さいときは、同じ冊子を別の会話でもう一度解かせて平均を取る。
 
 完了条件: 較正レポート（`docs/quality/calibration-*.md`）を書き、目安を満たした。満たさない場合は調整して再試行した。
