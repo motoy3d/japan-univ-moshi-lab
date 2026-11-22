@@ -3,6 +3,7 @@ import { api } from "../api";
 import { useAsync } from "../hooks";
 import { pageCss } from "./PrintPage";
 import { answerText } from "./ResultPage";
+import { questionLabel } from "../../../shared/scoring";
 
 /** 解答・解説冊子（自分の解答つき） */
 export function AnswerKeyPrintPage() {
@@ -31,7 +32,7 @@ export function AnswerKeyPrintPage() {
                 <h3><span style={{ fontFamily: "var(--font-en)" }}>{s.label}</span>（{items.reduce((t, { q }) => t + q.points, 0)}点）</h3>
                 {items.map(({ q, g }) => (
                   <div className="exp" key={q.id}>
-                    <span>{res.get(q.id)?.correct ? "○" : "×"} {q.kind === "write" ? "記" : ""}({q.no})</span>
+                    <span>{res.get(q.id)?.correct ? "○" : "×"} {q.kind === "write" ? "記" : ""}({questionLabel(q)})</span>
                     <span className="ans">{q.kind === "write" ? (q.answer as string[]).join(" / ") : q.answer}</span>
                     <span>
                       {q.explanation}

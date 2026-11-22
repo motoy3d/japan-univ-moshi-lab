@@ -3,8 +3,8 @@ import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { api } from "../api";
 import { store, useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
-import { allQuestions } from "../../../shared/scoring";
-import type { Answers, Exam, Question, QuestionGroup, Section } from "../../../shared/types";
+import { allQuestions, questionLabel } from "../../../shared/scoring";
+import type { Answers, Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
 interface Draft {
   answers: Answers;
@@ -90,10 +90,10 @@ function WebExam({ exam }: { exam: Exam }) {
     window.scrollTo({ top: 0 });
     document.querySelectorAll(".take-body > .pane").forEach((p) => (p.scrollTop = 0));
   };
-  const jumpTo = (no: number) => {
+  const jumpTo = (q: Question) => {
     setPane("questions");
     requestAnimationFrame(() => {
-      const el = document.getElementById(`q-mark-${no}`);
+      const el = document.getElementById(`q-${q.kind}-${q.no}`);
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
       el?.classList.remove("flash");
       void el?.offsetWidth;
@@ -111,6 +111,7 @@ function WebExam({ exam }: { exam: Exam }) {
             <li>試験時間は <b>{exam.durationMin}分</b> です。開始するとタイマーが動き出します。</li>
             <li>解答は自動で端末に一時保存されます。途中でページを閉じても、同じ端末なら続きから再開できます。</li>
             <li>本文中の空所をタップすると、その設問に移動します。</li>
+            <li>大問 VII・VIII は記述式です（本番では記述解答用紙に記入）。綴りまで正確に入力してください。</li>
             <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。</li>
           </ol>
           <div className="row" style={{ marginTop: 16 }}>
@@ -158,7 +159,7 @@ function WebExam({ exam }: { exam: Exam }) {
         {hasPassage && (
           <div className={`pane ${pane === "passage" ? "" : "hidden-mobile"}`}>
             <p className="instruction"><b style={{ fontFamily: "var(--font-en)" }}>{section.label}.</b>　{section.instruction}</p>
-            <PassageView section={section} answers={draft.answers} onBlank={jumpTo} qs={qs} />
+            <PassageView passage={section.passage!} answers={draft.answers} onBlank={jumpTo} qs={section.groups.flatMap((g) => g.questions)} />
             <p className="small muted no-print" style={{ marginTop: 24 }}>
               <button className="btn" onClick={() => setPane("questions")} style={{ minHeight: 40 }}>設問へ →</button>
             </p>
@@ -169,7 +170,7 @@ function WebExam({ exam }: { exam: Exam }) {
             <p className="instruction"><b style={{ fontFamily: "var(--font-en)" }}>{section.label}.</b>　{section.instruction}</p>
           )}
           {section.groups.map((g, gi) => (
-            <GroupView key={gi} group={g} answers={draft.answers} onPick={setAnswer} onText={setText} disabled={timeUp} />
+            <GroupView key={gi} group={g} answers={draft.answers} onPick={setAnswer} onText={setText} onBlank={jumpTo} disabled={timeUp} />
           ))}
           <div className="row submit-area">
             {draft.section > 0 && <button className="btn" onClick={() => goSection(draft.section - 1)}>← 大問{exam.sections[draft.section - 1].label}</button>}
@@ -205,18 +206,21 @@ function WebExam({ exam }: { exam: Exam }) {
   );
 }
 
-function PassageView({ section, answers, onBlank, qs }: { section: Section; answers: Answers; onBlank: (no: number) => void; qs: Question[] }) {
-  const p = section.passage!;
+function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; answers: Answers; onBlank: (q: Question) => void; qs: Question[] }) {
   const byNo = new Map(qs.filter((q) => q.kind === "mark").map((q) => [q.no, q]));
-  const blank = (no: number) => {
-    const q = byNo.get(no);
+  const byLabel = new Map(qs.filter((q) => q.kind === "write").map((q) => [q.label, q]));
+  const blankBtn = (q: Question | undefined, text: string) => {
     const v = q ? answers[q.id] : undefined;
     return (
-      <button type="button" className={`blank ${v ? "filled" : ""}`} onClick={() => onBlank(no)} aria-label={`空所${no}の設問へ`}>
-        <span className="n">({no})</span>
+      <button type="button" className={`blank ${v ? "filled" : ""} ${q?.kind === "write" ? "w" : ""}`} onClick={() => q && onBlank(q)} aria-label={`空所${text}の設問へ`}>
+        <span className="n">({text})</span>
         {v ? <span className="v">{v}</span> : null}
       </button>
     );
+  };
+  const opts = {
+    blank: (no: number) => blankBtn(byNo.get(no), String(no)),
+    write: (label: string) => blankBtn(byLabel.get(label), label),
   };
   return (
     <div className={`passage ${p.dialogue ? "dialogue" : ""}`}>
@@ -228,10 +232,10 @@ function PassageView({ section, answers, onBlank, qs }: { section: Section; answ
             {sp ? (
               <>
                 <b>{sp[0]}:</b>{" "}
-                {renderMarkup(sp[1], { blank })}
+                {renderMarkup(sp[1], opts)}
               </>
             ) : (
-              renderMarkup(para, { blank })
+              renderMarkup(para, opts)
             )}
           </p>
         );
@@ -246,17 +250,24 @@ function PassageView({ section, answers, onBlank, qs }: { section: Section; answ
 }
 
 function GroupView({
-  group, answers, onPick, onText, disabled,
+  group, answers, onPick, onText, onBlank, disabled,
 }: {
   group: QuestionGroup;
   answers: Answers;
   onPick: (id: string, v: number) => void;
   onText: (id: string, v: string) => void;
+  onBlank: (q: Question) => void;
   disabled: boolean;
 }) {
   return (
     <div className="q-group">
       {group.instruction && <p className="instruction">{group.instruction}</p>}
+      {group.passage && <PassageView passage={group.passage} answers={answers} onBlank={onBlank} qs={group.questions} />}
+      {group.wordBox && (
+        <div className="word-box" aria-label="語群">
+          {group.wordBox.map((w) => <span key={w}>{w}</span>)}
+        </div>
+      )}
       {group.choices && (
         <div className="shared-choices">
           <ol>{group.choices.map((c, i) => <li key={i}>{c}</li>)}</ol>
@@ -265,7 +276,7 @@ function GroupView({
       {group.questions.map((q) => (
         <div key={q.id} className="question" id={`q-${q.kind}-${q.no}`}>
           <div className="q-head">
-            <span className="q-no">({q.no})</span>
+            <span className="q-no">({questionLabel(q)})</span>
             {q.prompt && <span className="q-prompt">{q.prompt}</span>}
           </div>
           {q.kind === "write" ? (
@@ -279,7 +290,7 @@ function GroupView({
               spellCheck={false}
               placeholder="1語で記入"
               disabled={disabled}
-              aria-label={`記述(${q.no})`}
+              aria-label={`記述(${questionLabel(q)})`}
             />
           ) : q.choices ? (
             <div className="choices" style={q.choices.every((c) => c.length < 22) ? { gridTemplateColumns: "1fr 1fr" } : undefined}>
@@ -314,7 +325,7 @@ function PaperEntry({ exam }: { exam: Exam }) {
   useEffect(() => store.set(draftKey, { answers, startedAt: 0, section: 0 }), [answers, draftKey]);
 
   const rows = exam.sections.flatMap((s) =>
-    s.groups.flatMap((g) => g.questions.map((q) => ({ q, n: (q.choices ?? g.choices ?? []).length }))),
+    s.groups.flatMap((g) => g.questions.map((q) => ({ q, s: s.label, n: (q.choices ?? g.choices ?? []).length }))),
   );
   const marks = rows.filter((r) => r.q.kind === "mark");
   const writes = rows.filter((r) => r.q.kind === "write");
@@ -350,11 +361,11 @@ function PaperEntry({ exam }: { exam: Exam }) {
             </div>
           ))}
         </div>
-        <h2>記述（1〜{writes.length}）</h2>
+        <h2>記述（{writes.length}問）</h2>
         <div className="sheet-grid">
-          {writes.map(({ q }) => (
+          {writes.map(({ q, s }) => (
             <label className="sheet-row" key={q.id}>
-              <span className="no">{q.no}</span>
+              <span className="no" style={{ width: "auto", minWidth: 48 }}>{s} ({questionLabel(q)})</span>
               <input
                 type="text"
                 className="write-input"

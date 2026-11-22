@@ -103,3 +103,8 @@ export function stripAnswers(exam: ExamWithKey): Exam<Question> {
     })),
   };
 }
+
+/** 画面・印刷での設問番号の表記（記述は (a) などのラベル） */
+export function questionLabel(q: Pick<Question, "no" | "label">) {
+  return q.label ?? String(q.no);
+}

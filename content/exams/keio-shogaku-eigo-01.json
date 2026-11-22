@@ -9,237 +9,1069 @@
   "totalPoints": 200,
   "coverNotes": [
     "試験開始の合図があるまで、この問題冊子を開いてはいけません。",
-    "この問題冊子は、表紙を除き本文が全部で I から VII まであります。落丁、乱丁、印刷不鮮明の箇所等があった場合は、手を挙げて監督者に知らせてください。",
-    "解答は、すべて別紙の解答用紙に記入してください。マーク解答用紙と記述解答用紙の2種類があります。",
-    "マーク解答用紙には、HBの黒鉛筆を使用し、所定の解答欄の該当する番号を濃く正確にマークしてください。訂正する場合は、消しゴムできれいに消してください。",
+    "この問題冊子は、表紙を除き本文が I から VIII まであります。落丁、乱丁、印刷不鮮明の箇所等があった場合は、手を挙げて監督者に知らせてください。",
+    "解答用紙は、マーク解答用紙と記述解答用紙の2種類です。I〜VI の解答はマーク解答用紙に、VII・VIII の解答は記述解答用紙に記入してください。",
+    "マーク解答用紙には、HBの黒鉛筆を使用し、所定の解答欄の該当する番号を濃く正確にマークしてください。訂正する場合は、プラスチック製の消しゴムできれいに消してください。",
     "記述解答用紙には、所定の解答欄に、はっきりと記入してください。",
     "解答用紙の受験番号欄・氏名欄は必ず記入してください。",
     "問題冊子の余白は、適宜下書きに使用してかまいません。"
   ],
-  "disclaimer": "本模試は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。",
+  "disclaimer": "本模試は、過去の出題形式（大問構成・設問形式・分量）を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。配点は大学から公表されていないため、本模試独自の想定配点です。",
   "sections": [
     {
       "label": "I",
-      "instruction": "次の英文を読み、設問に答えなさい。解答はマーク解答用紙の 1 から 10 の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "passage": {
         "paragraphs": [
           "When a ride-hailing app charges twice the usual fare on a rainy Friday night, many customers feel cheated. Yet the same customers rarely complain when an airline charges more for a seat booked the day before departure, or when a hotel raises its rates during a popular festival. The practice behind all three cases is known as dynamic pricing: the adjustment of prices in response to changes in demand, supply, or other market conditions. {{b:1}} the idea is hardly new — street vendors have always raised their prices when crowds gather — digital technology has transformed its speed and scale.",
           "Economists generally defend dynamic pricing on grounds of efficiency. A fixed price, they argue, sends no signal when conditions change. If fares stay the same during a storm, more people want rides than there are drivers willing to work, and the result is long waits for everyone. A higher price, by contrast, does two things at once: it {{b:2}} some riders to postpone trips that are not urgent, and it attracts additional drivers onto the road. In this view, the price is not a penalty imposed on unlucky customers but a piece of information that helps match buyers and sellers.",
-          "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:5|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
-          "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:3}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
-          "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:6|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
-          "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:4}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
-          "The debate over dynamic pricing, then, is less about whether prices should move than about who benefits when they do. A price that rises during a storm may put more cars on the road, but if customers come to believe that the system is designed mainly to extract as much money from them as possible, they may simply turn to competitors — or to their own cars. In the long run, firms that rely on flexible pricing may find that their most valuable asset is not the cleverness of their algorithms but the trust of the people who use them."
+          "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:3|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
+          "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:4}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
+          "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:5|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
+          "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:6}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
+          "The debate over dynamic pricing, then, is less about whether prices should move than about who benefits when they do. A price that rises during a storm may put more cars on the road, but if customers come to believe that the system is designed mainly to extract as much money from them as possible, they may simply turn to competitors — or to their own cars. A business that loses its customers' goodwill may not notice the damage at once, because the loss appears gradually, in trips not taken and accounts quietly closed. In the long run, firms that rely on flexible pricing may find that {{u:7|their most valuable asset is not the cleverness of their algorithms but the trust of the people who use them}}."
         ],
-        "notes": ["ride-hailing 配車サービスの", "hardware store 金物店", "snow shovel 雪かき用シャベル"]
+        "notes": [
+          "ride-hailing 配車サービスの",
+          "hardware store 金物店",
+          "snow shovel 雪かき用シャベル"
+        ]
       },
       "groups": [
         {
-          "instruction": "設問A　空所（1）〜（4）に入る最も適切な語句を、それぞれ選択肢 1〜4 から1つ選びなさい。",
+          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
           "questions": [
-            { "id": "m1", "kind": "mark", "no": 1, "category": "logic", "choices": ["Although", "Because", "Unless", "Whether"], "points": 4, "answer": 1, "explanation": "「その考え自体は新しくない」と「デジタル技術が速度と規模を一変させた」は対比の関係。譲歩の Although が入る。" },
-            { "id": "m2", "kind": "mark", "no": 2, "category": "vocab", "choices": ["forbids", "encourages", "obliges", "permits"], "points": 4, "answer": 2, "explanation": "高い料金は、急ぎでない乗車を先送りするよう一部の利用者を「促す」。oblige（義務づける）は強すぎ、permit（許す）は文脈上「価格が延期を許可する」となり不自然。" },
-            { "id": "m3", "kind": "mark", "no": 3, "category": "vocab", "choices": ["indifferent", "hostile", "cautious", "favorable"], "points": 4, "answer": 2, "explanation": "so ... that 構文で「会社がすぐに謝罪し返金した」ほどの反応なので、「敵意に満ちた（hostile）」が適切。" },
-            { "id": "m4", "kind": "mark", "no": 4, "category": "logic", "choices": ["Otherwise", "Instead", "Meanwhile", "Therefore"], "points": 4, "answer": 3, "explanation": "規制当局の動き（前文）と並行して企業側も透明性を重視し始めた、という同時進行の関係。Meanwhile（一方で、その間に）が入る。因果関係はないので Therefore は不可。" }
-          ]
-        },
-        {
-          "instruction": "設問B　下線部（5）・（6）の意味・内容として最も適切なものを、それぞれ選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m5", "kind": "mark", "no": 5, "category": "paraphrase", "prompt": "下線部（5）", "choices": ["People cared mostly about the size of a price increase.", "People judged a price increase according to why it happened.", "People believed that shops should never change their prices.", "People were unable to explain their reactions to price changes."], "points": 4, "answer": 2, "explanation": "直後のコロン以下で「コスト転嫁なら許されるが、需要の急増につけ込むのは許されない」と説明されている。値上げの「理由」で判断する、という 2 が正解。" },
-            { "id": "m6", "kind": "mark", "no": 6, "category": "paraphrase", "prompt": "下線部（6）", "choices": ["It gives sellers more knowledge about the transaction than buyers have.", "It forces sellers to share their data with buyers.", "It makes prices easier for buyers to compare.", "It reduces the amount of data that sellers collect."], "points": 4, "answer": 1, "explanation": "since 以下「客は他人がいくら払っているか分からない」から、情報面で売り手が優位になるという意味。1 が正解。" }
-          ]
-        },
-        {
-          "instruction": "設問C　本文の内容に照らして、（7）〜（9）の英文を完成させる、または質問に答えるのに最も適切なものを、それぞれ選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m7", "kind": "mark", "no": 7, "category": "detail", "prompt": "According to the second paragraph, economists believe that keeping fares fixed during a storm would", "choices": ["reduce the number of drivers who stop working.", "lead to a shortage of rides and long waits.", "make customers feel that they were treated fairly.", "encourage riders to book their trips earlier."], "points": 4, "answer": 2, "explanation": "第2段落「料金が変わらなければ、乗りたい人が働く運転手より多くなり、全員が長く待つことになる」。2 が正解。" },
-            { "id": "m8", "kind": "mark", "no": 8, "category": "detail", "prompt": "The example of the snow shovels is used to show that", "choices": ["most stores raise their prices after natural disasters.", "economic models cannot predict how prices change.", "people's sense of fairness can conflict with standard economic reasoning.", "hardware stores face higher costs in winter."], "points": 4, "answer": 3, "explanation": "需給モデル通りの値上げなのに大多数が「不公平」と答えた例。公平感が経済学の標準的な考え方と食い違うことを示している。" },
-            { "id": "m9", "kind": "mark", "no": 9, "category": "detail", "prompt": "According to the passage, which kind of pricing do customers find most acceptable?", "choices": ["Prices that differ for each customer depending on browsing history.", "Prices that change over time but are the same for everyone at a given moment.", "Prices that are set according to customers' health information.", "Prices that are kept secret until after a purchase is made."], "points": 4, "answer": 2, "explanation": "第4段落「時間とともに全員一斉に変わる価格は容認され、人によって理由なく異なる価格は怒りを招く」。2 が正解。" }
-          ]
-        },
-        {
-          "instruction": "設問D　本文の内容と一致するものを、選択肢 1〜5 から1つ選び、解答番号（10）にマークしなさい。",
-          "questions": [
-            { "id": "m10", "kind": "mark", "no": 10, "category": "main-idea", "choices": ["Dynamic pricing was first invented as a result of digital technology.", "Supporters of personalized pricing argue that some customers could benefit from it.", "Regulators in all countries have banned the use of personal data in setting prices.", "Showing customers the size of a fare increase has changed the economics of ride-hailing.", "The author concludes that algorithms are a firm's most valuable asset."], "points": 4, "answer": 2, "explanation": "第5段落「支持者は、学生や低所得者が割引を受けられる可能性を指摘する」と一致。1 は第1段落（考え自体は昔からある）、3 は「一部の国」、4 は「根本的な経済性は変わらない」、5 は「最も価値ある資産は信頼」に反する。" }
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "logic",
+              "choices": [
+                "Although",
+                "Because",
+                "Unless",
+                "Whether"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "「考え自体は新しくない」と「デジタル技術が速度と規模を一変させた」は対比（譲歩）の関係。Although が入る。Because では因果が逆になり、Unless・Whether は文意が通らない。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "vocab",
+              "choices": [
+                "forbids",
+                "encourages",
+                "obliges",
+                "permits"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "encourage O to do「Oに〜するよう促す」。値上げは急ぎでない利用者に移動の延期を『促す』のであって、禁じる（forbid）・義務づける（oblige）わけではない。permit O to do は「許可する」で文脈に合わない。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (3)?",
+              "choices": [
+                "People cared mostly about the size of a price increase.",
+                "People judged a price increase according to why it happened.",
+                "People believed that shops should never change their prices.",
+                "People were unable to explain their reactions to price changes."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直後のコロン以下「コスト上昇の転嫁は許されるが、需要の急増につけ込むのは許されない」が言い換え。値上げの『理由』で判断した＝2。1 は「上げ幅」で逆。"
+            },
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "vocab",
+              "choices": [
+                "indifferent",
+                "hostile",
+                "cautious",
+                "favorable"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "so ~ that ...「非常に〜なので…」。会社がすぐ謝罪・返金したのだから、世間の反応は『敵対的』（hostile）だったと分かる。"
+            },
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (5)?",
+              "choices": [
+                "It gives sellers more knowledge about the transaction than buyers have.",
+                "It forces sellers to share their data with buyers.",
+                "It makes prices easier for buyers to compare.",
+                "It reduces the amount of data that sellers collect."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "logic",
+              "choices": [
+                "Otherwise",
+                "Instead",
+                "Meanwhile",
+                "Therefore"
+              ],
+              "points": 3,
+              "answer": 3,
+              "explanation": "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。Therefore は因果、Instead は代替、Otherwise は条件の逆で不適。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (7)?",
+              "choices": [
+                "Firms should stop using algorithms to set prices.",
+                "Customers will remain loyal only if they believe that prices are set honestly.",
+                "Clever algorithms are the key to attracting new customers.",
+                "Trustworthy firms never need to change their prices."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直前で「搾取されていると感じた客は競合に流れる」と述べており、柔軟な価格設定を続けるには利用者の信頼こそが最大の資産だ、という結論。2 が最も近い。1・4 は言い過ぎ、3 は逆。"
+            },
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "detail",
+              "prompt": "The example of the snow shovels is used to show that",
+              "choices": [
+                "most stores raise their prices after natural disasters.",
+                "economic models cannot predict how prices change.",
+                "people's sense of fairness can conflict with standard economic reasoning.",
+                "hardware stores face higher costs in winter."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "需要と供給の単純なモデル通りの値上げでも、多くの人が『不公平』と答えた。経済学的な推論と公平感が食い違う例＝3。2 は「モデルは値上げを予測した」とあるので誤り。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "detail",
+              "prompt": "Which of the following is true according to the passage?",
+              "choices": [
+                "Dynamic pricing was first invented as a result of digital technology.",
+                "Supporters of personalized pricing argue that some customers could benefit from it.",
+                "Regulators in all countries have banned the use of personal data in setting prices.",
+                "Showing customers the size of a fare increase has changed the economics of ride-hailing."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第5段落に「学生や低所得者は単一価格では得られない割引を受けられるかもしれない」とある＝2。1 は第1段落（昔からある）、3 は several countries / proposals、4 は「経済的な仕組みは変えない」に反する。"
+            },
+            {
+              "id": "m10",
+              "kind": "mark",
+              "no": 10,
+              "category": "main-idea",
+              "prompt": "Which of the following is the most appropriate title for the passage?",
+              "choices": [
+                "How Algorithms Learned to Read Our Minds",
+                "Fair Prices, Flexible Prices, and the Problem of Trust",
+                "Why Economists Oppose Dynamic Pricing",
+                "The History of Ride-Hailing Services"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "効率性（柔軟な価格）と公平感の対立を論じ、信頼の重要性で締めくくっている＝2。3 は逆（経済学者は擁護）、1・4 は一部の話題にすぎない。"
+            }
           ]
         }
       ]
     },
     {
       "label": "II",
-      "instruction": "次の英文を読み、設問に答えなさい。解答はマーク解答用紙の 11 から 20 の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（11）〜（19）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "passage": {
         "paragraphs": [
-          "In April 1956, a converted oil tanker called the Ideal X left the port of Newark, New Jersey, carrying fifty-eight large metal boxes on its deck. Few people paid attention. The ship's owner, a trucking businessman named Malcom McLean, was not trying to change the world; he was trying to {{b:11}} the traffic jams that slowed his trucks along the crowded highways of the East Coast. His solution was simple: rather than unloading goods from a truck, carrying them onto a ship piece by piece, and loading them onto another truck at the other end, why not lift the entire trailer body onto the ship?",
-          "Before the container, loading and unloading a ship was slow, expensive, and dangerous work. Cargo arrived at the docks in sacks, barrels, crates, and bales of every size, and gangs of dockworkers had to fit each item into the ship's hold by hand. A vessel could spend nearly as much time in port as it did at sea. Theft was common, and damage more common still. By some estimates, the cost of handling cargo at the docks made up {{b:12}} half the total cost of moving goods across the ocean.",
-          "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:15|Numbers like these}} were impossible for the rest of the industry to ignore.",
-          "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:13}} standards, and agreeing on them took years of difficult negotiation. Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived.",
-          "The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:16|relentless}} advance; the savings were simply too large.",
-          "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:14}} production across many countries, assembling a single product from components made in a dozen places. In this sense, the humble metal box helped create the global supply chains that define the modern economy — along with the vulnerabilities that became painfully clear when ports were disrupted during the pandemic of 2020."
+          "In April 1956, a converted oil tanker called the Ideal X left the port of Newark, New Jersey, carrying fifty-eight large metal boxes on its deck. Few people paid attention, and most experts at the time assumed that shipping by sea would always be slow and labor-intensive. The ship's owner, a trucking businessman named Malcom McLean, was not trying to change the world; he was trying to {{b:11}} the traffic jams that slowed his trucks along the crowded highways of the East Coast. His solution was simple: rather than unloading goods from a truck, carrying them onto a ship piece by piece, and loading them onto another truck at the other end, why not lift the entire trailer body onto the ship?",
+          "Before the container, loading and unloading a ship was slow, expensive, and dangerous work. Cargo arrived at the docks in sacks, barrels, crates, and bales of every size, and gangs of dockworkers had to fit each item into the ship's hold by hand. A vessel could spend nearly as much time in port as it did at sea. Theft was common, and damage more common still. By some estimates, the cost of handling cargo at the docks made up as much as half the total cost of moving goods across the ocean.",
+          "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:12|Numbers like these}} were impossible for the rest of the industry to ignore. Insurance companies, which had long charged high rates to cover theft and breakage on the docks, soon lowered their premiums as well, adding further to the savings.",
+          "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:13}} standards, and agreeing on them took years of difficult negotiation. Each firm naturally preferred the dimensions it already used, since changing them meant replacing expensive equipment. Only in the late 1960s did international bodies settle on a small family of sizes, including the twenty-foot box that still serves as the industry's unit of measurement. {{u:14|What had looked like a technical detail}} turned out to be the key to the whole system.",
+          "Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived. The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Some of the busiest ports of the 1950s, such as those on the west side of Manhattan and in central London, handled almost no cargo at all within a generation. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:15|relentless}} advance; the savings were simply too large.",
+          "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:16}} production across many countries, assembling a single product from components made in a dozen places. Distance, which had once protected local producers from foreign competition, mattered far less than before. Warehouses full of spare parts, once a sign of careful management, came to be seen as wasted money, and firms learned to keep only what they needed for the next few days.",
+          "In this sense, the humble metal box helped create the global supply chains that define the modern economy — along with their weaknesses. A system designed to remove every unnecessary delay has little room to absorb an unexpected one. When ports were disrupted during the pandemic of 2020, ships waited for weeks to unload, empty containers piled up in the wrong places, and shortages spread from one industry to the next. {{u:17|The very efficiency that had made the system so attractive}} also made it fragile, and many companies have since begun to keep larger stocks and to buy from suppliers closer to home."
         ],
-        "notes": ["hold 船倉", "bale （貨物の）梱", "pier 埠頭、桟橋"]
+        "notes": [
+          "hold 船倉",
+          "bale （貨物の）梱",
+          "pier 埠頭、桟橋"
+        ]
       },
       "groups": [
         {
-          "instruction": "設問A　空所（11）〜（14）に入る最も適切な語句を、それぞれ選択肢 1〜4 から1つ選びなさい。",
+          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
           "questions": [
-            { "id": "m11", "kind": "mark", "no": 11, "category": "vocab", "choices": ["avoid", "cause", "report", "measure"], "points": 4, "answer": 1, "explanation": "トラックの渋滞を「避けよう」としていた。続く「トラックごと船に載せればよい」という解決策とも合う。" },
-            { "id": "m12", "kind": "mark", "no": 12, "category": "grammar", "choices": ["as much as", "as many as", "no less", "so much"], "points": 4, "answer": 1, "explanation": "「総費用の半分ほども」。量・割合を強調する as much as + 数量。as many as は可算名詞の数に使う。no less は than が必要。" },
-            { "id": "m13", "kind": "mark", "no": 13, "category": "vocab", "choices": ["competing", "common", "temporary", "private"], "points": 4, "answer": 2, "explanation": "会社ごとにサイズが違って困ったので、全員が「共通の」規格を採用する必要があった。competing（競合する）は逆の意味。" },
-            { "id": "m14", "kind": "mark", "no": 14, "category": "vocab", "choices": ["limit", "spread", "delay", "copy"], "points": 4, "answer": 2, "explanation": "直後「十数か所で作られた部品から1つの製品を組み立てる」から、生産を多くの国に「分散させる（spread）」。" }
-          ]
-        },
-        {
-          "instruction": "設問B　下線部（15）・（16）について、最も適切なものを、それぞれ選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m15", "kind": "mark", "no": 15, "category": "reference", "prompt": "（15）下線部が指す内容として最も適切なものはどれか。", "choices": ["the number of boxes carried by the Ideal X", "dramatic reductions in the cost of handling cargo", "the distances between major ports", "the number of dockworkers who lost their jobs"], "points": 4, "answer": 2, "explanation": "直前の「積み込み費用が1トンあたり約6ドルから約16セントに下がった」という数字を指す。" },
-            { "id": "m16", "kind": "mark", "no": 16, "category": "vocab", "prompt": "（16）下線部の語に最も意味が近いものはどれか。", "choices": ["slow", "unstoppable", "accidental", "temporary"], "points": 4, "answer": 2, "explanation": "relentless は「容赦ない、止まることのない」。労働組合も止められなかった、という文脈とも一致。" }
-          ]
-        },
-        {
-          "instruction": "設問C　本文の内容に照らして、（17）〜（20）の質問に対する答えとして最も適切なものを、それぞれ選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m17", "kind": "mark", "no": 17, "category": "detail", "prompt": "Why did McLean first come up with the idea of shipping trailers by sea?", "choices": ["He wanted a faster way to move goods than the crowded roads allowed.", "He was asked by the government to improve the port of Newark.", "He believed that containers would reduce theft at sea.", "He wanted to sell the oil tanker that he owned."], "points": 4, "answer": 1, "explanation": "第1段落「東海岸の混雑した幹線道路でトラックを遅らせる渋滞を避けようとしていた」。" },
-            { "id": "m18", "kind": "mark", "no": 18, "category": "detail", "prompt": "According to the fourth paragraph, why did the container not succeed immediately?", "choices": ["Dockworkers refused to lift the boxes.", "The boxes were too heavy for most ships.", "Container sizes were not standardized, and many ports were unsuitable.", "Shipping lines did not believe McLean's cost figures."], "points": 4, "answer": 3, "explanation": "第4段落: 箱のサイズがばらばらで規格統一に年月がかかり、港も作り直す必要があった。" },
-            { "id": "m19", "kind": "mark", "no": 19, "category": "detail", "prompt": "According to the last paragraph, what may have been the container's most important effect?", "choices": ["It reduced the cost of shipping.", "It made the delivery of goods more dependable.", "It created new jobs at ports.", "It caused world trade to decline during the pandemic."], "points": 4, "answer": 2, "explanation": "「最も重要な効果は輸送費の低下そのものではなく、それが可能にした信頼性の向上かもしれない」。reliability = dependability。" },
-            { "id": "m20", "kind": "mark", "no": 20, "category": "main-idea", "prompt": "Which of the following is the most appropriate title for the passage?", "choices": ["The Life and Career of Malcom McLean", "How a Simple Box Reshaped the World Economy", "The Decline of Labor Unions in Port Cities", "Why Ports Were Built in City Centers"], "points": 4, "answer": 2, "explanation": "コンテナの誕生から普及、世界経済・サプライチェーンへの影響までを扱う文章。1・3・4 は一部の話題にすぎない。" }
+            {
+              "id": "m11",
+              "kind": "mark",
+              "no": 11,
+              "category": "vocab",
+              "choices": [
+                "avoid",
+                "cause",
+                "report",
+                "measure"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "マクリーンは渋滞で遅れるトラック輸送に困っており、その解決策として船での輸送を考えた。渋滞を『避ける』avoid が入る。"
+            },
+            {
+              "id": "m12",
+              "kind": "mark",
+              "no": 12,
+              "category": "paraphrase",
+              "prompt": "Which of the following does underlined (12) refer to?",
+              "choices": [
+                "the number of boxes carried by the Ideal X",
+                "dramatic reductions in the cost of handling cargo",
+                "the distances between major ports",
+                "the number of dockworkers who lost their jobs"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直前の文「積み込みコストが1トン約6ドルから16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。"
+            },
+            {
+              "id": "m13",
+              "kind": "mark",
+              "no": 13,
+              "category": "vocab",
+              "choices": [
+                "competing",
+                "common",
+                "temporary",
+                "private"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "異なるサイズの箱が混在して不便だった、という文脈。システムの利点は全員が『共通の』規格を採用することにかかっていた。competing（競合する）は逆。"
+            },
+            {
+              "id": "m14",
+              "kind": "mark",
+              "no": 14,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (14)?",
+              "choices": [
+                "a rule that only engineers could understand",
+                "a minor matter such as the exact size of a box",
+                "a disagreement between shipping lines and railways",
+                "the design of the cranes used in new ports"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "前の文脈は箱のサイズ（寸法）の統一をめぐる交渉。『技術的な細部に見えたもの』＝箱の正確な寸法という些細に思える事柄＝2。"
+            },
+            {
+              "id": "m15",
+              "kind": "mark",
+              "no": 15,
+              "category": "paraphrase",
+              "prompt": "Which of the following is closest in meaning to underlined (15)?",
+              "choices": [
+                "slow",
+                "unstoppable",
+                "accidental",
+                "temporary"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "relentless「容赦ない・とどまることのない」。直前の「組合はその前進を止められなかった」とも一致する。"
+            },
+            {
+              "id": "m16",
+              "kind": "mark",
+              "no": 16,
+              "category": "vocab",
+              "choices": [
+                "limit",
+                "spread",
+                "delay",
+                "copy"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（spread）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。"
+            },
+            {
+              "id": "m17",
+              "kind": "mark",
+              "no": 17,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (17)?",
+              "choices": [
+                "Because the system worked so smoothly, it had no spare capacity to cope with disruption.",
+                "Because shipping had become cheap, companies stopped caring about efficiency.",
+                "Because ports were efficient, the pandemic had little effect on trade.",
+                "Because containers were attractive, more ships were built than were needed."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "無駄な遅れを徹底的に取り除いた仕組みは、予期せぬ遅れを吸収する余地がない（直前の A system designed ... absorb an unexpected one）。効率性こそが脆さの原因でもあった＝1。"
+            },
+            {
+              "id": "m18",
+              "kind": "mark",
+              "no": 18,
+              "category": "detail",
+              "prompt": "According to the fourth paragraph, why did the container not succeed immediately?",
+              "choices": [
+                "Dockworkers refused to lift the boxes.",
+                "The boxes were too heavy for most ships.",
+                "Firms used boxes of different sizes and were reluctant to change them.",
+                "Shipping lines did not believe McLean's cost figures."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "第4段落: 各社が異なるサイズの箱を使い、設備の交換が高くつくため自社の寸法を好んだ＝3。"
+            },
+            {
+              "id": "m19",
+              "kind": "mark",
+              "no": 19,
+              "category": "detail",
+              "prompt": "Which of the following is true according to the passage?",
+              "choices": [
+                "McLean's main goal was to make dockwork safer.",
+                "Reliable delivery encouraged firms to keep smaller stocks of parts.",
+                "Labor unions succeeded in stopping the use of containers in some ports.",
+                "Since 2020, companies have bought more parts from distant suppliers."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第6段落: 部品が予定通り届くようになり、予備部品の在庫は無駄とみなされ、数日分だけ持つようになった＝2。3 は「止められなかった」、4 は「より近い供給元から買い始めた」に反する。"
+            }
           ]
         }
       ]
     },
     {
       "label": "III",
-      "instruction": "次の英文を読み、設問に答えなさい。解答はマーク解答用紙の 21 から 28 の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（20）〜（29）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "passage": {
         "paragraphs": [
-          "For decades, governments and employers tried to encourage people to save for retirement mainly by explaining why it mattered. Workers received brochures, attended seminars, and were shown charts of how small monthly contributions could grow over forty years. The results were disappointing. Many people agreed that they ought to save more, fully intended to do so, and then did nothing. The problem, it turned out, was not a lack of information but a {{b:21}} of action.",
-          "Behavioral economists offered an explanation. People tend to stick with whatever option requires no decision — what researchers call the \"default.\" When joining a retirement plan required filling out forms, most new employees put it off, often indefinitely. In one now-famous study, researchers examined a company that changed its rules so that new employees were enrolled automatically unless they chose to {{b:22}}. Participation in the plan jumped from under half of new workers to nearly ninety percent, even though nothing about the plan's benefits had changed.",
-          "Findings like this gave rise to the idea of the \"nudge,\" popularized by the economist Richard Thaler and the legal scholar Cass Sunstein. A nudge is any feature of the way choices are presented that predictably changes behavior without forbidding any option or significantly changing financial incentives. Placing fruit at eye level in a school cafeteria is a nudge; banning sweets is not. {{u:24|The appeal to policymakers was obvious}}: nudges were cheap, and they appeared to respect individual freedom while still improving outcomes.",
-          "More recent research has added important qualifications. Automatic enrollment raises the number of people who save, but many of them remain at the low default contribution rate chosen by their employer, which may be {{b:23}} too small to provide a comfortable retirement. Some studies also suggest that workers who are enrolled automatically borrow more on credit cards, partly offsetting their new savings. And a large review of nudge experiments found that the effects reported in academic journals tended to be bigger than those observed when the same ideas were tested on a large scale by governments.",
-          "None of this means that nudges are useless. It means that the choice of a default is itself a decision with consequences, and that someone must take responsibility for making it well. A carefully designed plan might begin with a modest contribution and raise it automatically each time a worker receives a pay increase — an approach that takes advantage of people's tendency to accept the status quo while gradually moving them toward a more adequate level of saving."
+          "For decades, governments and employers tried to encourage people to save for retirement mainly by explaining why it mattered. Workers received brochures, attended seminars, and were shown charts of how small monthly contributions could grow over forty years. The results were disappointing. Many people agreed that they ought to save more, fully intended to do so, and then did nothing. The problem, it turned out, was not a lack of information but a {{b:20}} of action.",
+          "Behavioral economists offered an explanation. People tend to stick with whatever option requires no decision — what researchers call the \"default.\" When joining a retirement plan required filling out forms, most new employees put it off, often indefinitely. In one now-famous study, researchers examined a company that changed its rules so that new employees were enrolled automatically unless they chose to {{b:21}}. Participation in the plan jumped from under half of new workers to nearly ninety percent, even though nothing about the plan's benefits had changed.",
+          "The power of defaults is not limited to money. Countries in which citizens are presumed to be organ donors unless they register an objection report far higher rates of consent than countries in which people must actively sign up, although the number of transplants actually carried out depends on many other factors, such as the number of hospitals equipped to perform them and the willingness of families to agree. Similar patterns have been found in choices as varied as energy suppliers, insurance plans, and the privacy settings of smartphones. In each case, the option that requires no effort tends to win, whatever its merits.",
+          "Findings like this gave rise to the idea of the \"nudge,\" popularized by the economist Richard Thaler and the legal scholar Cass Sunstein. A nudge is any feature of the way choices are presented that predictably changes behavior without forbidding any option or significantly changing financial incentives. Placing fruit at eye level in a school cafeteria is a nudge; banning sweets is not. {{u:23|The appeal to policymakers was obvious}}: nudges were cheap, and they appeared to respect individual freedom while still improving outcomes. Within a few years, governments in Britain, the United States, and elsewhere had set up special teams to apply the idea to everything from tax collection to organ donation.",
+          "More recent research has added important qualifications. Automatic enrollment raises the number of people who save, but many of them remain at the low default contribution rate chosen by their employer, which may be {{b:22}} too small to provide a comfortable retirement. Some studies also suggest that workers who are enrolled automatically borrow more on credit cards, partly offsetting their new savings. And a large review of nudge experiments found that the effects reported in academic journals tended to be bigger than those observed when the same ideas were tested on a large scale by governments. Part of the gap, the reviewers suggested, arose because studies that found no effect were less likely to be published at all.",
+          "Other critics have raised a more basic objection. If a nudge works precisely because people do not stop to think, they ask, how is it different from manipulation? A default that serves the saver is welcome, but the same techniques can be used to keep customers paying for subscriptions they no longer want, or to make cancelling a service deliberately confusing. Some researchers have begun to call such obstacles \"sludge,\" and they argue that removing {{u:24|sludge}} may do more good than adding new nudges. Filling out a twenty-page form to claim a benefit, for example, discourages exactly the people who need help most.",
+          "Defenders of the approach reply that there is no neutral way to present a choice. A form must list its options in some order, and a plan must specify what happens to those who do nothing. {{u:25|Someone has to decide, whether or not they admit it}}. The real question, therefore, is not whether choices will be shaped but whether they will be shaped openly, for the benefit of the people making them, and in a way that allows anyone to choose differently at little cost.",
+          "None of this means that nudges are useless. It means that the choice of a default is itself a decision with consequences, and that someone must take responsibility for making it well. A carefully designed plan might begin with a modest contribution and raise it automatically each time a worker receives a pay increase — an approach that takes advantage of people's tendency to accept the status quo while gradually moving them toward a more adequate level of saving. Such a plan does not force anyone to save more; workers remain free to leave or to lower their contributions at any time. But it recognizes that, for most people, the hardest step is not deciding what is right but actually getting around to doing it."
         ],
-        "notes": ["contribution 拠出金、掛け金", "offset 相殺する", "status quo 現状"]
+        "notes": [
+          "contribution 拠出金、掛け金",
+          "offset 相殺する",
+          "status quo 現状"
+        ]
       },
       "groups": [
         {
-          "instruction": "設問A　空所（21）〜（23）に入る最も適切な語を、それぞれ選択肢 1〜4 から1つ選びなさい。",
+          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
           "questions": [
-            { "id": "m21", "kind": "mark", "no": 21, "category": "vocab", "choices": ["failure", "surplus", "fear", "cost"], "points": 4, "answer": 1, "explanation": "「貯蓄すべきと分かっていても何もしなかった」ので、問題は情報不足ではなく行動の「欠如・失敗（failure）」。" },
-            { "id": "m22", "kind": "mark", "no": 22, "category": "vocab", "choices": ["join", "opt out", "retire", "complain"], "points": 4, "answer": 2, "explanation": "「自分で〜しない限り自動的に加入」→ unless they chose to opt out（脱退を選ばない限り）。デフォルト（初期設定）の話。" },
-            { "id": "m23", "kind": "mark", "no": 23, "category": "grammar", "choices": ["far", "very", "such", "so"], "points": 4, "answer": 1, "explanation": "too + 形容詞 を強めるのは far / much。very too は不可。" }
-          ]
-        },
-        {
-          "instruction": "設問B　下線部（24）について、筆者がこのように述べる理由として最も適切なものを、選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m24", "kind": "mark", "no": 24, "category": "paraphrase", "choices": ["Nudges cost little and still left people free to choose.", "Nudges allowed governments to ban unhealthy products.", "Nudges required large financial incentives.", "Nudges were popular among school children."], "points": 4, "answer": 1, "explanation": "コロン以下「ナッジは安価で、個人の自由を尊重しつつ成果を改善するように見えた」。" }
-          ]
-        },
-        {
-          "instruction": "設問C　本文の内容に照らして、（25）〜（28）の英文を完成させる、または質問に答えるのに最も適切なものを、それぞれ選択肢 1〜4 から1つ選びなさい。",
-          "questions": [
-            { "id": "m25", "kind": "mark", "no": 25, "category": "detail", "prompt": "According to the first paragraph, earlier efforts to encourage saving were disappointing because", "choices": ["workers could not understand the charts they were shown.", "people did not act even when they knew that saving was important.", "employers stopped offering retirement plans.", "the brochures contained false information."], "points": 4, "answer": 2, "explanation": "「もっと貯蓄すべきだと同意し、そのつもりでいながら、何もしなかった」。" },
-            { "id": "m26", "kind": "mark", "no": 26, "category": "detail", "prompt": "Which of the following would NOT be considered a nudge according to the passage?", "choices": ["Placing healthy foods where they are easiest to see.", "Enrolling workers in a savings plan unless they decide otherwise.", "Prohibiting the sale of sugary drinks in schools.", "Sending people a reminder message before a deadline."], "points": 4, "answer": 3, "explanation": "ナッジは「どの選択肢も禁止しない」ものと定義されている。販売の禁止（banning sweets と同種）はナッジではない。" },
-            { "id": "m27", "kind": "mark", "no": 27, "category": "detail", "prompt": "According to the fourth paragraph, which is a limitation of automatic enrollment?", "choices": ["It reduces the number of people who join retirement plans.", "It is not permitted by law in most countries.", "Many enrolled workers continue saving at a low rate.", "It cannot be tested on a large scale."], "points": 4, "answer": 3, "explanation": "「多くの人は雇用主が設定した低い初期拠出率のまま」。2 と 4 は本文に記述なし（大規模な検証は実際に行われている）。" },
-            { "id": "m28", "kind": "mark", "no": 28, "category": "main-idea", "prompt": "Which best describes the author's overall view?", "choices": ["Nudges are a complete solution to the problem of low saving.", "Nudges have no measurable effect and should be abandoned.", "Nudges can be useful, but defaults must be designed with care.", "Governments should rely only on financial incentives."], "points": 4, "answer": 3, "explanation": "最終段落「ナッジが無用なわけではない。初期設定の選び方自体が結果を伴う決定であり、誰かが責任を持つ必要がある」。" }
+            {
+              "id": "m20",
+              "kind": "mark",
+              "no": 20,
+              "category": "vocab",
+              "choices": [
+                "failure",
+                "surplus",
+                "fear",
+                "cost"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "not A but B の対比。「情報不足ではなく、行動の『欠如・不履行』」。a failure of action「行動しないこと」。直前の「意図はあったが何もしなかった」と一致。"
+            },
+            {
+              "id": "m21",
+              "kind": "mark",
+              "no": 21,
+              "category": "vocab",
+              "choices": [
+                "join",
+                "opt out",
+                "retire",
+                "complain"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "自動加入にした上で「〜を選ばない限り」なので、自ら脱退する opt out が入る。join では自動加入と矛盾する。"
+            },
+            {
+              "id": "m22",
+              "kind": "mark",
+              "no": 22,
+              "category": "vocab",
+              "choices": [
+                "far",
+                "very",
+                "such",
+                "so"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "比較級・too を強める副詞は far / much。far too small「あまりにも小さすぎる」。very too とは言わない。"
+            },
+            {
+              "id": "m23",
+              "kind": "mark",
+              "no": 23,
+              "category": "paraphrase",
+              "prompt": "Why does the author say underlined (23)?",
+              "choices": [
+                "Nudges cost little and still left people free to choose.",
+                "Nudges allowed governments to ban unhealthy products.",
+                "Nudges required large financial incentives.",
+                "Nudges were popular among school children."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "コロン以下が理由の説明「安価で、個人の自由を尊重しつつ成果を上げるように見えた」＝1。2・3 はナッジの定義（禁止しない・金銭的誘因を大きく変えない）に反する。"
+            },
+            {
+              "id": "m24",
+              "kind": "mark",
+              "no": 24,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses what underlined (24) refers to?",
+              "choices": [
+                "rules that forbid people from choosing certain options",
+                "unnecessary difficulties that discourage people from acting in their own interest",
+                "financial rewards offered to people who save more",
+                "information that is too simple to be useful"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "sludge はナッジの悪用例として挙げられた「解約をわざと分かりにくくする」などの障害。直後の「20ページの申請書が困っている人ほど遠ざける」も例＝2。"
+            },
+            {
+              "id": "m25",
+              "kind": "mark",
+              "no": 25,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (25)?",
+              "choices": [
+                "People should be allowed to make every decision for themselves.",
+                "Whoever designs a choice inevitably influences the result, even if they deny it.",
+                "Governments should avoid making decisions about retirement plans.",
+                "It is impossible to know who designed a particular form."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直前で「選択肢を中立に示す方法はない（順番や何もしない人の扱いを必ず決める必要がある）」と述べている。設計者は認めるかどうかに関わらず結果に影響を与える＝2。"
+            },
+            {
+              "id": "m26",
+              "kind": "mark",
+              "no": 26,
+              "category": "detail",
+              "prompt": "According to the first paragraph, earlier efforts to encourage saving were disappointing because",
+              "choices": [
+                "workers could not understand the charts they were shown.",
+                "people did not act even when they knew that saving was important.",
+                "employers stopped offering retirement plans.",
+                "the brochures contained false information."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第1段落「貯蓄すべきだと同意し、そのつもりもあったが何もしなかった」＝2。"
+            },
+            {
+              "id": "m27",
+              "kind": "mark",
+              "no": 27,
+              "category": "detail",
+              "prompt": "According to the fourth paragraph, why were the effects of nudges smaller when tested by governments?",
+              "choices": [
+                "Governments used different nudges from those studied by researchers.",
+                "Journals had tended to publish studies that found effects rather than those that did not.",
+                "Workers had learned to ignore nudges by the time governments used them.",
+                "Large-scale tests always produce bigger effects than small ones."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "効果がなかった研究は発表されにくかった（出版バイアス）ため、論文上の効果が大きく見えた＝2。"
+            },
+            {
+              "id": "m28",
+              "kind": "mark",
+              "no": 28,
+              "category": "detail",
+              "prompt": "Which of the following is true according to the passage?",
+              "choices": [
+                "Thaler and Sunstein argued that sweets should be banned in schools.",
+                "Automatic enrollment had no effect on the number of workers who saved.",
+                "Critics worry that the techniques used in nudges can also be used against people's interests.",
+                "The author believes that choices can always be presented in a neutral way."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "第5段落: 同じ手法が、不要なサブスクを払い続けさせる等に使われうると批判者は懸念＝3。4 は第6段落（中立な提示方法はない）に反する。"
+            },
+            {
+              "id": "m29",
+              "kind": "mark",
+              "no": 29,
+              "category": "main-idea",
+              "prompt": "Which of the following is the most appropriate title for the passage?",
+              "choices": [
+                "Why Information Campaigns Always Fail",
+                "The Promise and Limits of Nudging",
+                "How to Retire Early",
+                "The End of Behavioral Economics"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "ナッジの有効性（自動加入の成功）と限界・批判の両方を論じ、慎重な設計を求めて締めくくる＝2。"
+            }
           ]
         }
       ]
     },
     {
       "label": "IV",
-      "instruction": "次の（29）〜（38）の英文の空所に入る最も適切な語句を、それぞれ選択肢 1〜4 から1つ選び、マーク解答用紙の 29 から 38 の解答欄にマークしなさい。",
+      "instruction": "次の（30）〜（36）の英文の空所に入れるのに最も適切な語句を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "groups": [
         {
           "instruction": "",
           "questions": [
-            { "id": "m29", "kind": "mark", "no": 29, "category": "grammar", "prompt": "The new regulations, (   ) take effect next April, will affect most small retailers.", "choices": ["that", "which", "what", "where"], "points": 2, "answer": 2, "explanation": "カンマで挟まれた非制限用法の関係代名詞。非制限用法で that は使えない。" },
-            { "id": "m30", "kind": "mark", "no": 30, "category": "grammar", "prompt": "Hardly (   ) the meeting started when the fire alarm went off.", "choices": ["did", "was", "had", "has"], "points": 2, "answer": 3, "explanation": "Hardly had S p.p. when ... 「〜するとすぐに…」。否定語句の文頭で倒置。" },
-            { "id": "m31", "kind": "mark", "no": 31, "category": "grammar", "prompt": "I'd rather you (   ) tell anyone about the merger until it is officially announced.", "choices": ["don't", "didn't", "won't", "haven't"], "points": 2, "answer": 2, "explanation": "would rather + S + 過去形（仮定法過去）で「〜してほしい」。現在・未来のことでも過去形を使う。" },
-            { "id": "m32", "kind": "mark", "no": 32, "category": "grammar", "prompt": "It was not (   ) a customer complained that the manager noticed the error.", "choices": ["by", "since", "until", "for"], "points": 2, "answer": 3, "explanation": "It is not until ... that ~「…して初めて〜する」。" },
-            { "id": "m33", "kind": "mark", "no": 33, "category": "grammar", "prompt": "The company's profits this year are three times (   ) they were five years ago.", "choices": ["as large as", "larger as", "as larger than", "so large as"], "points": 2, "answer": 1, "explanation": "倍数表現: X times as + 原級 + as。" },
-            { "id": "m34", "kind": "mark", "no": 34, "category": "grammar", "prompt": "(   ) the bad weather, the shipment arrived on time.", "choices": ["Although", "Despite", "Even", "However"], "points": 2, "answer": 2, "explanation": "直後が名詞句なので前置詞 Despite。Although は接続詞なので節が続く。" },
-            { "id": "m35", "kind": "mark", "no": 35, "category": "grammar", "prompt": "After ten years in sales, she is used to (   ) with clients from overseas.", "choices": ["deal", "dealt", "dealing", "be dealt"], "points": 2, "answer": 3, "explanation": "be used to -ing「〜するのに慣れている」。この to は前置詞。" },
-            { "id": "m36", "kind": "mark", "no": 36, "category": "grammar", "prompt": "Had the central bank lowered interest rates last year, more firms (   ) money to expand.", "choices": ["would borrow", "will have borrowed", "would have borrowed", "had borrowed"], "points": 2, "answer": 3, "explanation": "If が省略された倒置の仮定法過去完了（Had S p.p.）。帰結節は would have p.p.。" },
-            { "id": "m37", "kind": "mark", "no": 37, "category": "grammar", "prompt": "The unit price of the product varies (   ) the size of the order.", "choices": ["according to", "instead of", "in spite of", "regardless"], "points": 2, "answer": 1, "explanation": "vary according to ~「〜に応じて変わる」。regardless は of が必要で、意味も逆。" },
-            { "id": "m38", "kind": "mark", "no": 38, "category": "grammar", "prompt": "Not until the 1990s (   ) widely available to ordinary households.", "choices": ["the internet became", "did the internet become", "the internet did become", "became the internet"], "points": 2, "answer": 2, "explanation": "Not until ... が文頭に出ると主節は疑問文の語順（倒置）になる。" }
+            {
+              "id": "m30",
+              "kind": "mark",
+              "no": 30,
+              "category": "grammar",
+              "prompt": "The new regulations, (   ) take effect next April, will affect most small retailers.",
+              "choices": [
+                "that",
+                "which",
+                "what",
+                "where"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "カンマで挟まれた非制限用法の関係代名詞。非制限用法で that は使えない。"
+            },
+            {
+              "id": "m31",
+              "kind": "mark",
+              "no": 31,
+              "category": "grammar",
+              "prompt": "Investors were impressed by the (   ) of the start-up's business plan.",
+              "choices": [
+                "simple",
+                "simplicity",
+                "simply",
+                "simplify"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "the (   ) of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。"
+            },
+            {
+              "id": "m32",
+              "kind": "mark",
+              "no": 32,
+              "category": "grammar",
+              "prompt": "The company failed to (   ) the demand for its new phone, and many stores ran out of stock.",
+              "choices": [
+                "meet",
+                "see",
+                "hold",
+                "take"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "meet demand「需要を満たす」（多義語 meet ＝ satisfy）。在庫切れになったのは需要を満たせなかったから。"
+            },
+            {
+              "id": "m33",
+              "kind": "mark",
+              "no": 33,
+              "category": "grammar",
+              "prompt": "The committee recommended that the plan (   ) postponed until further notice.",
+              "choices": [
+                "is",
+                "be",
+                "will be",
+                "being"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "recommend that S (should) 原形 ― 提案・要求を表す動詞に続く that 節では仮定法現在（原形）を使う。"
+            },
+            {
+              "id": "m34",
+              "kind": "mark",
+              "no": 34,
+              "category": "grammar",
+              "prompt": "I'd rather you (   ) tell anyone about the merger until it is officially announced.",
+              "choices": [
+                "don't",
+                "didn't",
+                "won't",
+                "haven't"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "would rather + S + 過去形（仮定法過去）で「Sに〜してほしい」。現在・未来のことでも過去形を使う。"
+            },
+            {
+              "id": "m35",
+              "kind": "mark",
+              "no": 35,
+              "category": "grammar",
+              "prompt": "(   ) the bad weather, the shipment arrived on time.",
+              "choices": [
+                "Although",
+                "Despite",
+                "Even",
+                "However"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "直後が名詞句（the bad weather）なので前置詞 Despite。Although は接続詞なので後に節が続く。"
+            },
+            {
+              "id": "m36",
+              "kind": "mark",
+              "no": 36,
+              "category": "grammar",
+              "prompt": "Had the central bank lowered interest rates last year, more firms (   ) money to expand.",
+              "choices": [
+                "would borrow",
+                "will have borrowed",
+                "would have borrowed",
+                "had borrowed"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "If が省略された倒置の仮定法過去完了（Had S p.p.）。last year の事実に反する仮定なので、帰結節は would have p.p.。"
+            }
           ]
         }
       ]
     },
     {
       "label": "V",
-      "instruction": "次の会話文を読み、空所（39）〜（43）に入る最も適切なものを、下の選択肢 1〜8 からそれぞれ1つ選び、マーク解答用紙の 39 から 43 の解答欄にマークしなさい。ただし、同じ選択肢を2回以上用いてはいけません。",
+      "instruction": "次の英文の空所（37）〜（42）に入れるのに最も適切な語を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "passage": {
-        "dialogue": true,
         "paragraphs": [
-          "Ken: Have you seen the sales figures for our first week?",
-          "Maria: I have. {{b:39}}",
-          "Ken: Better than I expected, honestly. But the reviews keep mentioning the price.",
-          "Maria: {{b:40}} We spent months deciding on that number.",
-          "Ken: I know. Maybe the problem is how we present it, not the price itself.",
-          "Maria: What do you have in mind?",
-          "Ken: We could offer a monthly plan as well as the annual one. {{b:41}}",
-          "Maria: That's true, though we'd earn less from each customer.",
-          "Ken: Not necessarily. {{b:42}}",
-          "Maria: Fair point. Let's bring it up at Monday's meeting. {{b:43}}",
-          "Ken: Sure. I'll put some slides together over the weekend."
+          "Almost every streaming service, software company, and online newspaper now offers a free trial. The logic seems straightforward: let people try the product, and the good ones will {{b:37}} for themselves. But the real power of the free trial lies less in the product than in the psychology of the customer. Once people have started using a service, they begin to think of it as something they already own, and giving it up feels like a {{b:38}} rather than a decision not to buy.",
+          "Firms are well aware of this. Many trials ask for credit-card details at the start and switch to paid billing automatically when the trial ends. A customer who meant to cancel after a month may simply forget, and the company quietly {{b:39}} from that inattention. Consumer groups argue that this turns a fair offer into a trap, and some governments now require firms to send a reminder before the first payment is {{b:40}}.",
+          "Not every company benefits from such tactics, however. Customers who feel tricked into paying are more likely to cancel later and to warn their friends. Some firms have found that trials which end without automatic billing attract fewer subscribers at first but keep them longer. In a market where switching to a {{b:41}} takes only a few clicks, a reputation for honesty may be worth more than a few months of forgotten payments. The free trial, in other words, works best when it is {{b:42}} what it claims to be: a chance to try before you buy."
         ]
       },
       "groups": [
         {
           "instruction": "",
-          "choices": [
-            "Could you prepare a few numbers before then?",
-            "They're not bad for a product nobody had heard of a month ago.",
-            "People who start with a monthly plan often switch to the annual one later.",
-            "That's a little frustrating to hear.",
-            "Paying less up front might feel less risky to new users.",
-            "I've never looked at them, to be honest.",
-            "Why don't we cancel the launch?",
-            "The meeting has been moved to Friday."
-          ],
           "questions": [
-            { "id": "m39", "kind": "mark", "no": 39, "category": "dialogue", "points": 3, "answer": 2, "explanation": "「見た」と答えた直後で、Ken が「正直、予想より良い」と応じるので、売上への評価を述べる 2。6 は I have. と矛盾。" },
-            { "id": "m40", "kind": "mark", "no": 40, "category": "dialogue", "points": 3, "answer": 4, "explanation": "レビューで価格が指摘されることへの反応。「何か月もかけて決めた」と続くので、不満を表す 4。" },
-            { "id": "m41", "kind": "mark", "no": 41, "category": "dialogue", "points": 3, "answer": 5, "explanation": "月額プランを提案する理由。Maria の「それはそうだが、1人あたりの収益は減る」につながる 5。" },
-            { "id": "m42", "kind": "mark", "no": 42, "category": "dialogue", "points": 3, "answer": 3, "explanation": "「収益が減るとは限らない」の根拠として、月額から年額への移行を挙げる 3。" },
-            { "id": "m43", "kind": "mark", "no": 43, "category": "dialogue", "points": 3, "answer": 1, "explanation": "月曜の会議に向けた依頼。Ken の「週末にスライドを作る」という返事と合う 1。8 は Monday's meeting と矛盾。" }
+            {
+              "id": "m37",
+              "kind": "mark",
+              "no": 37,
+              "category": "vocab",
+              "choices": [
+                "speak",
+                "pay",
+                "care",
+                "stand"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "speak for oneself「（説明しなくても）自ら良さを物語る」。良い製品は使えば価値が分かる、という意味。"
+            },
+            {
+              "id": "m38",
+              "kind": "mark",
+              "no": 38,
+              "category": "vocab",
+              "choices": [
+                "gift",
+                "loss",
+                "habit",
+                "risk"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "すでに自分の物だと感じているので、手放すことは『損失』のように感じられる（保有効果・損失回避）。rather than「買わないという決定」との対比。"
+            },
+            {
+              "id": "m39",
+              "kind": "mark",
+              "no": 39,
+              "category": "vocab",
+              "choices": [
+                "suffers",
+                "escapes",
+                "profits",
+                "recovers"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "profit from ~「〜から利益を得る」。解約し忘れた客の不注意から企業が利益を得る。"
+            },
+            {
+              "id": "m40",
+              "kind": "mark",
+              "no": 40,
+              "category": "vocab",
+              "choices": [
+                "charged",
+                "refused",
+                "earned",
+                "spent"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "the first payment is charged「最初の支払いが請求される」。請求される前に通知を送るよう義務づける。"
+            },
+            {
+              "id": "m41",
+              "kind": "mark",
+              "no": 41,
+              "category": "vocab",
+              "choices": [
+                "supplier",
+                "competitor",
+                "partner",
+                "colleague"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "乗り換え先は『競合他社』。数クリックで他社に移れる市場なので、正直さの評判が重要になる。"
+            },
+            {
+              "id": "m42",
+              "kind": "mark",
+              "no": 42,
+              "category": "vocab",
+              "choices": [
+                "hardly",
+                "exactly",
+                "partly",
+                "seldom"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "exactly what it claims to be「まさにうたっている通りのもの」。hardly / seldom では文意が逆になる。"
+            }
           ]
         }
       ]
     },
     {
       "label": "VI",
-      "instruction": "次の（1）〜（7）の英文の空所に、括弧内の語を適切な形に変えて1語で記入しなさい。ただし、括弧内の語をそのまま用いる場合もある。解答は記述解答用紙の所定の欄に記入しなさい。",
+      "instruction": "次の（43）〜（46）の英文を読み、それぞれの英文から推測できる内容として最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
       "groups": [
         {
           "instruction": "",
+          "passage": {
+            "paragraphs": [
+              "Loyalty programs are often described as a reward for faithful customers, but their main value to retailers may lie elsewhere. Every time a member shows a card or scans an app at the checkout, the store learns what that person bought, when, and at what price. Over months, this record reveals patterns that no survey could capture: which products are bought together, which discounts actually change behavior, and which customers are drifting away. Some retailers now earn more by analyzing this information, or by selling insights based on it to manufacturers, than they spend on the points and coupons they give away. For many shoppers, the discount is real but small; for the store, the data may be the main product."
+            ]
+          },
           "questions": [
-            { "id": "w1", "kind": "write", "no": 1, "category": "word-form", "prompt": "The (          ) of the two banks was announced yesterday. (merge)", "points": 4, "answer": ["merger"], "explanation": "冠詞 The と of の間なので名詞。merge の名詞形は merger（合併）。" },
-            { "id": "w2", "kind": "write", "no": 2, "category": "word-form", "prompt": "Consumers have become increasingly (          ) of how their personal data is used. (suspect)", "points": 4, "answer": ["suspicious"], "explanation": "become + 形容詞。be suspicious of ~「〜を疑っている」。" },
-            { "id": "w3", "kind": "write", "no": 3, "category": "word-form", "prompt": "The firm plans to (          ) its range of products to attract younger customers. (broad)", "points": 4, "answer": ["broaden"], "explanation": "to 不定詞なので動詞。broad の動詞形は broaden（広げる）。" },
-            { "id": "w4", "kind": "write", "no": 4, "category": "word-form", "prompt": "The price of raw materials has risen (          ) over the past decade. (steady)", "points": 4, "answer": ["steadily"], "explanation": "動詞 has risen を修飾する副詞。y → ily。" },
-            { "id": "w5", "kind": "write", "no": 5, "category": "word-form", "prompt": "The new policy had a number of (          ) consequences that nobody had predicted. (intend)", "points": 4, "answer": ["unintended"], "explanation": "「誰も予想しなかった」から否定の意味。unintended consequences「意図せざる結果」。接頭辞 un- をつける点に注意。" },
-            { "id": "w6", "kind": "write", "no": 6, "category": "word-form", "prompt": "Online reviews now play a central role in consumers' purchasing (          ). (decide)", "points": 4, "answer": ["decisions", "decision"], "explanation": "所有格 consumers' purchasing に続く名詞。purchasing decisions「購買決定」。単数形も可とする。" },
-            { "id": "w7", "kind": "write", "no": 7, "category": "word-form", "prompt": "The manager insisted that the contract (          ) signed before the end of the month. (be)", "points": 4, "answer": ["be"], "explanation": "insist that S (should) 原形 の仮定法現在。was ではなく原形 be。" }
+            {
+              "id": "m43",
+              "kind": "mark",
+              "no": 43,
+              "category": "inference",
+              "prompt": "Which of the following can be inferred from the passage above?",
+              "choices": [
+                "Most customers join loyalty programs in order to protect their privacy.",
+                "The points given to members can cost a retailer less than the information it gains.",
+                "Surveys are a more reliable source of information than purchase records.",
+                "Retailers have begun to abandon loyalty programs because they are too expensive."
+              ],
+              "points": 4,
+              "answer": 2,
+              "explanation": "最後の文「付与するポイントやクーポンの費用より、情報の分析・販売で得る額のほうが大きい小売業者もいる」から、ポイントの費用は得られる情報の価値より小さくなりうる＝2。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "passage": {
+            "paragraphs": [
+              "In a famous experiment, shoppers at a grocery store were offered free samples of jam. On some days the display contained six flavors; on others, twenty-four. The larger display attracted more visitors, but shoppers who saw only six flavors were far more likely to buy a jar. The researchers suggested that too many options can make choosing feel so difficult that people put off the decision altogether. Later studies, however, have found the effect only under certain conditions, such as when the options are hard to compare or when shoppers have no clear preference to begin with. When people already know what they like, a wide selection seems to do little harm."
+            ]
+          },
+          "questions": [
+            {
+              "id": "m44",
+              "kind": "mark",
+              "no": 44,
+              "category": "inference",
+              "prompt": "Which of the following can be inferred from the passage above?",
+              "choices": [
+                "Shoppers always buy more when they are offered fewer options.",
+                "The larger display failed to attract the attention of shoppers.",
+                "Whether more options discourage buying may depend on the situation.",
+                "The original experiment was found to contain serious errors."
+              ],
+              "points": 4,
+              "answer": 3,
+              "explanation": "後の研究では『特定の条件下でのみ』効果が見られた、とある。選択肢の多さが購買を妨げるかは状況次第＝3。1 は always が言い過ぎ、2 は本文と逆（多くの客を引きつけた）、4 は本文にない。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "passage": {
+            "paragraphs": [
+              "When a company announces that it will move its headquarters to a smaller city, local officials often celebrate the jobs it will bring. Economists urge caution. A new employer raises demand not only for workers but also for housing, and if the supply of homes cannot expand quickly, rents rise for everyone in the area, including residents who do not work for the company. Whether a town gains overall depends largely on how easily it can build — a question of zoning rules and available land rather than of the company's own plans. Two towns attracting the same employer may therefore end up with very different results."
+            ]
+          },
+          "questions": [
+            {
+              "id": "m45",
+              "kind": "mark",
+              "no": 45,
+              "category": "inference",
+              "prompt": "Which of the following can be inferred from the passage above?",
+              "choices": [
+                "Economists believe that companies should never move to smaller cities.",
+                "Residents who do not work for the new company may be worse off in some respects.",
+                "Local officials are usually responsible for the decisions of companies.",
+                "Rents in smaller cities are generally lower than the cost of building new homes."
+              ],
+              "points": 4,
+              "answer": 2,
+              "explanation": "住宅供給がすぐ増えないと、会社で働かない住民も含めて家賃が上がる。つまり会社と無関係な住民はある面で不利益を被りうる＝2。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "passage": {
+            "paragraphs": [
+              "Several companies that tested a four-day working week reported that productivity stayed the same or even improved, while employees said they felt less stressed. Critics point out that the firms which volunteered for such trials were probably those most likely to succeed — businesses whose work could be reorganized easily and whose managers were already enthusiastic. A hospital or a factory running around the clock, they argue, faces very different constraints. The results may therefore say more about what is possible for certain kinds of organizations than about what would happen if the policy were adopted everywhere. Larger and more varied trials will be needed before firm conclusions can be drawn."
+            ]
+          },
+          "questions": [
+            {
+              "id": "m46",
+              "kind": "mark",
+              "no": 46,
+              "category": "inference",
+              "prompt": "Which of the following can be inferred from the passage above?",
+              "choices": [
+                "A four-day week has been shown to fail in hospitals and factories.",
+                "Employees in the trials worked longer hours on each of the four days.",
+                "The trial results cannot simply be applied to every type of workplace.",
+                "Managers who volunteered for the trials were opposed to the idea."
+              ],
+              "points": 4,
+              "answer": 3,
+              "explanation": "参加企業は成功しやすい企業だった可能性があり、結果は特定の組織で可能なことを示すにとどまる＝3。1 は「失敗が示された」とは書かれていない。4 は already enthusiastic に反する。"
+            }
           ]
         }
       ]
     },
     {
       "label": "VII",
-      "instruction": "次の（8）〜（12）の日本語の意味になるように、空所に与えられた文字で始まる最も適切な英語1語を記入しなさい。解答は記述解答用紙の所定の欄に、与えられた文字も含めて記入しなさい。",
+      "instruction": "次の英文の空所（a）〜（f）に入れるのに最も適切な語を下の語群から選び、必要に応じて適切な形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使うこと。また、解答は1語とする。",
+      "passage": {
+        "paragraphs": [
+          "Few industries have {{w:a}} as many changes in a single generation as the music business. In the 1990s, record companies earned most of their income from compact discs, and the idea that people would one day pay a monthly fee to hear almost any song ever recorded would have been {{w:b}} as fantasy. When file-sharing websites appeared around the turn of the century, sales {{w:c}} sharply, and many executives responded by suing the very customers they depended on.",
+          "Streaming services eventually offered a legal alternative, and revenue began to grow again. Yet new problems have {{w:d}}. Musicians complain that the fees paid for each play are tiny, and that the system rewards artists who are already famous. Some have {{w:e}} their work from the major platforms in protest, while others, {{w:f}} a closer relationship with their fans, sell recordings and concert tickets directly through their own websites."
+        ]
+      },
       "groups": [
         {
           "instruction": "",
+          "wordBox": [
+            "arise",
+            "dismiss",
+            "fall",
+            "seek",
+            "undergo",
+            "withdraw"
+          ],
           "questions": [
-            { "id": "w8", "kind": "write", "no": 8, "category": "vocab-write", "prompt": "その会社は昨年、多額の負債を抱えて倒産した。\nThe company went (b          ) last year with huge debts.", "points": 5, "answer": ["bankrupt"], "explanation": "go bankrupt「倒産する」。" },
-            { "id": "w9", "kind": "write", "no": 9, "category": "vocab-write", "prompt": "その製品は需要が供給を上回っている。\nDemand for the product (e          ) supply.", "points": 5, "answer": ["exceeds"], "explanation": "exceed「〜を上回る」。主語が三人称単数・現在なので exceeds。" },
-            { "id": "w10", "kind": "write", "no": 10, "category": "vocab-write", "prompt": "彼女はその提案に強く反対した。\nShe expressed strong (o          ) to the proposal.", "points": 5, "answer": ["opposition", "objection"], "explanation": "opposition to ~「〜への反対」。objection to ~ も可。" },
-            { "id": "w11", "kind": "write", "no": 11, "category": "vocab-write", "prompt": "私たちは顧客の期待に応えなければならない。\nWe must (m          ) our customers' expectations.", "points": 5, "answer": ["meet"], "explanation": "meet expectations「期待に応える」。" },
-            { "id": "w12", "kind": "write", "no": 12, "category": "vocab-write", "prompt": "その政策は長期的には経済に利益をもたらすだろう。\nThe policy will (b          ) the economy in the long run.", "points": 5, "answer": ["benefit"], "explanation": "benefit は動詞で「〜に利益をもたらす」。" }
+            {
+              "id": "w1",
+              "kind": "write",
+              "no": 1,
+              "label": "a",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "undergone"
+              ],
+              "explanation": "have + 過去分詞（現在完了）。undergo – underwent – undergone「（変化などを）経験する」。"
+            },
+            {
+              "id": "w2",
+              "kind": "write",
+              "no": 2,
+              "label": "b",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "dismissed"
+              ],
+              "explanation": "would have been + 過去分詞（受動態・仮定法過去完了）。dismiss A as B「AをBとして退ける」。"
+            },
+            {
+              "id": "w3",
+              "kind": "write",
+              "no": 3,
+              "label": "c",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "fell"
+              ],
+              "explanation": "around the turn of the century の出来事なので過去形。fall – fell – fallen。自動詞なので受動態にはならない。"
+            },
+            {
+              "id": "w4",
+              "kind": "write",
+              "no": 4,
+              "label": "d",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "arisen"
+              ],
+              "explanation": "have + 過去分詞。arise – arose – arisen「（問題が）生じる」。自動詞。"
+            },
+            {
+              "id": "w5",
+              "kind": "write",
+              "no": 5,
+              "label": "e",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "withdrawn"
+              ],
+              "explanation": "have + 過去分詞。withdraw – withdrew – withdrawn「（作品を）引き揚げる」。"
+            },
+            {
+              "id": "w6",
+              "kind": "write",
+              "no": 6,
+              "label": "f",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "seeking"
+              ],
+              "explanation": "others を意味上の主語とする分詞構文（能動）。seek – sought – sought だが、ここは「〜を求めて」の現在分詞 seeking。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "VIII",
+      "instruction": "次の英文の空所（a）〜（e）に入れるのに最も適切な語を下の語群から選び、適切な名詞形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使い、名詞形の単数・複数にも注意すること。また、解答は1語とする。",
+      "passage": {
+        "paragraphs": [
+          "Every new business rests on a set of {{w:a}} about what customers want, and the most dangerous of these are the ones that founders never think to question. A start-up may spend years building a product before learning that nobody needs it. To avoid this, many investors now encourage founders to test their ideas early, with simple versions of the product and real customers. The {{w:b}} of a company's early plans, in this view, is not a sign of failure but of learning.",
+          "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a team honest enough to point out which is which."
+        ]
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "wordBox": [
+            "assume",
+            "deny",
+            "maintain",
+            "persist",
+            "revise"
+          ],
+          "questions": [
+            {
+              "id": "w7",
+              "kind": "write",
+              "no": 7,
+              "label": "a",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "assumptions"
+              ],
+              "explanation": "a set of + 複数名詞。assume → assumption（綴りの変化 -ume → -umption に注意）。複数形 assumptions。"
+            },
+            {
+              "id": "w8",
+              "kind": "write",
+              "no": 8,
+              "label": "b",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "revision"
+              ],
+              "explanation": "The + 名詞 + of ...。revise → revision「修正」。早期の計画の修正は失敗ではなく学習の証。"
+            },
+            {
+              "id": "w9",
+              "kind": "write",
+              "no": 9,
+              "label": "c",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "persistence"
+              ],
+              "explanation": "their + 名詞。persist → persistence「粘り強さ」（-ance ではなく -ence）。直後の determination と対応。"
+            },
+            {
+              "id": "w10",
+              "kind": "write",
+              "no": 10,
+              "label": "d",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "denial"
+              ],
+              "explanation": "前置詞 for の後なので名詞。deny → denial「（現実の）否認」。警告を無視した創業者が、失敗すれば現実否認だと批判される。"
+            },
+            {
+              "id": "w11",
+              "kind": "write",
+              "no": 11,
+              "label": "e",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "maintenance"
+              ],
+              "explanation": "the + 名詞 + of ...。maintain → maintenance「維持」（ai が消える綴りに注意）。"
+            }
           ]
         }
       ]

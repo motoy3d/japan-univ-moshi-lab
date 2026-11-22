@@ -22,9 +22,9 @@ test("満点の解答は200点", () => {
 test("記述の正規化（大文字・空白・全角・末尾ピリオド）", () => {
   assert.equal(normalizeWritten("  Merger. "), "merger");
   assert.equal(normalizeWritten("ｍｅｒｇｅｒ"), "merger");
-  const w1 = allQuestions(exam).find((q) => q.id === "w10")!;
-  assert.ok(isCorrect(w1, "Objection"));
-  assert.ok(!isCorrect(w1, "object"));
+  const w1 = allQuestions(exam).find((q) => q.id === "w1")!;
+  assert.ok(isCorrect(w1, " Undergone."));
+  assert.ok(!isCorrect(w1, "undergo"));
 });
 
 test("偏差値: 平均で50、+1SDで60", () => {
@@ -63,7 +63,7 @@ test("API: 正解は受験前に返さない・提出→結果→統計", async 
 
   const review = (await route(repo, "GET", `/api/attempts/${attemptId}`, "u3", undefined)).body as AttemptReview;
   assert.equal(review.stats.count, 3);
-  assert.equal(review.attempt.score, 112);
+  assert.equal(review.attempt.score, 120); // I(42) + II(39) + III の (20)〜(28)(39)
   assert.ok(review.currentDeviation !== null);
   assert.equal(review.attempt.counted, true);
 

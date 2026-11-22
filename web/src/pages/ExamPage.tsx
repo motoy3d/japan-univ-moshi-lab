@@ -57,11 +57,13 @@ export function ExamPage() {
   );
 }
 
-function sectionKind(s: { passage?: { dialogue?: boolean }; groups: { questions: { kind: string; category: string }[] }[] }) {
-  const q = s.groups[0].questions[0];
-  if (s.passage?.dialogue) return "会話文（空所補充）";
-  if (s.passage) return "長文読解";
-  if (q.category === "word-form") return "語形変化（記述）";
-  if (q.kind === "write") return "語彙（記述）";
-  return "文法・語法（空所補充）";
+function sectionKind(s: { groups: { questions: { kind: string; category: string }[] }[] }) {
+  const qs = s.groups.flatMap((g) => g.questions);
+  const has = (c: string) => qs.some((q) => q.category === c);
+  if (has("verb-form")) return "中文空所補充（記述・動詞の語形変化）";
+  if (has("noun-form")) return "中文空所補充（記述・名詞形）";
+  if (has("inference")) return "短文の内容推測（4題）";
+  if (has("grammar")) return "文法・語法（空所補充）";
+  if (has("paraphrase")) return "長文読解（空所補充・下線部内容説明・内容一致）";
+  return "中文空所補充";
 }

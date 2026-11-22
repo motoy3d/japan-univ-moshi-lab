@@ -2,28 +2,26 @@
 
 /** 設問の分野タグ。成績分析の集計単位になる */
 export type Category =
-  | "vocab" // 空所補充（語彙）
-  | "logic" // 空所補充（論理・接続）
-  | "paraphrase" // 下線部の言い換え・内容説明
-  | "reference" // 指示内容
-  | "detail" // 内容把握
-  | "main-idea" // 主旨・表題・筆者の主張
+  | "logic" // 長文の空所補充（文脈・論理）
+  | "vocab" // 空所補充（語彙・語法）
+  | "paraphrase" // 下線部の内容説明
+  | "detail" // 内容一致
+  | "main-idea" // 表題・要旨
+  | "inference" // 短文の内容推測
   | "grammar" // 文法・語法
-  | "dialogue" // 会話文
-  | "word-form" // 語形変化（記述）
-  | "vocab-write"; // 語彙（記述）
+  | "verb-form" // 語形変化：動詞（記述）
+  | "noun-form"; // 派生語：名詞形（記述）
 
 export const CATEGORY_LABELS: Record<Category, string> = {
-  vocab: "空所補充（語彙）",
-  logic: "空所補充（論理・接続）",
-  paraphrase: "下線部の意味・言い換え",
-  reference: "指示内容",
-  detail: "内容把握",
-  "main-idea": "主旨・表題",
+  logic: "空所補充（文脈・論理）",
+  vocab: "空所補充（語彙・語法）",
+  paraphrase: "下線部の内容説明",
+  detail: "内容一致",
+  "main-idea": "表題・要旨",
+  inference: "短文の内容推測",
   grammar: "文法・語法",
-  dialogue: "会話文",
-  "word-form": "語形変化（記述）",
-  "vocab-write": "語彙（記述）",
+  "verb-form": "語形変化：動詞（記述）",
+  "noun-form": "派生語：名詞形（記述）",
 };
 
 /** マーク式（選択）か記述式か */
@@ -35,6 +33,8 @@ export interface Question {
   kind: QuestionKind;
   /** 解答番号（マークは 1..N、記述は 記述1..M） */
   no: number;
+  /** 表示用の番号（記述の (a)〜(f) など）。省略時は no */
+  label?: string;
   category: Category;
   /** 設問文（空所補充など本文中に問題がある場合は省略可） */
   prompt?: string;
@@ -55,14 +55,18 @@ export interface QuestionWithKey extends Question, AnswerKey {}
 export interface QuestionGroup<Q = Question> {
   /** 設問指示（例: 「空所（1）〜（4）に入る最も適切な語を…」） */
   instruction: string;
-  /** グループ共通の選択肢（会話文の空所補充など） */
+  /** グループ共通の選択肢 */
   choices?: string[];
+  /** 語群（記述の語形変化で使う語の一覧） */
+  wordBox?: string[];
+  /** グループ固有の本文（短文の内容推測など、設問ごとに英文があるとき） */
+  passage?: Passage;
   questions: Q[];
 }
 
 export interface Passage {
   title?: string;
-  /** 段落。{{b:N}} = 空所（解答番号N）、{{u:N|text}} = 下線部（番号N） */
+  /** 段落。{{b:N}} = 空所（マーク番号N）、{{u:N|text}} = 下線部（番号N）、{{w:a}} = 記述の空所（ラベル a） */
   paragraphs: string[];
   /** 本文の語注 */
   notes?: string[];

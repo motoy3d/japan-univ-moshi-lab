@@ -5,6 +5,7 @@ import { fmtDate, fmtDuration, useAsync } from "../hooks";
 import { Histogram, PartBars } from "../components/Charts";
 import { CountUp, Ring, cheer, opportunities } from "../components/Motivation";
 import { RELIABLE_POPULATION, scoreForDeviation } from "../../../shared/stats";
+import { questionLabel } from "../../../shared/scoring";
 import type { AttemptReview, AttemptSummary, Profile, QuestionWithKey } from "../../../shared/types";
 
 export function ResultPage() {
@@ -174,7 +175,7 @@ function Result({ review, history, profile }: { review: AttemptReview; history: 
                 <div className="review-q" key={q.id}>
                   <div>
                     <span className={`mark ${res?.correct ? "o" : "x"}`}>{res?.correct ? "○" : "×"}</span>
-                    <b>{q.kind === "write" ? "記述" : ""}({q.no})</b>
+                    <b>{q.kind === "write" ? "記述" : ""}({questionLabel(q)})</b>
                     <span className="badge" style={{ marginLeft: 8 }}>{q.points}点</span>
                   </div>
                   {q.prompt && <div className="q-prompt" style={{ fontSize: 15, margin: "4px 0" }}>{q.prompt}</div>}

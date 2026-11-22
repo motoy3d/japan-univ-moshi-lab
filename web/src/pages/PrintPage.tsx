@@ -3,8 +3,8 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
 import { useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
-import { allQuestions } from "../../../shared/scoring";
-import type { Exam, Question, QuestionGroup } from "../../../shared/types";
+import { allQuestions, questionLabel } from "../../../shared/scoring";
+import type { Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
 type Paper = "A4" | "B5";
 const PARTS = [
@@ -23,6 +23,7 @@ export function pageCss(paper: Paper) {
   @bottom-center { content: "— " counter(page) " —"; font-family: "Tinos", "Times New Roman", serif; font-size: 9pt; } }
 @page :first { @bottom-center { content: none; } }
 @page answer-sheet { @bottom-center { content: none; } }
+@page mark-sheet { size: ${paper} landscape; margin: 8mm; @bottom-center { content: none; } }
 `;
 }
 
@@ -85,7 +86,7 @@ export function PrintPage() {
           <div className="sheet"><Booklet exam={e} /></div>
         )}
         {parts.has("mark") && (
-          <div className="sheet"><MarkSheet exam={e} /></div>
+          <div className="sheet landscape"><MarkSheet exam={e} /></div>
         )}
         {parts.has("write") && (
           <div className="sheet"><WriteSheet exam={e} /></div>
@@ -131,26 +132,7 @@ function Booklet({ exam }: { exam: Exam }) {
             <span className="b-roman">{s.label}</span>
             <span className="b-instruction">{s.instruction}</span>
           </div>
-          {s.passage && (
-            <>
-              <div className={`b-passage ${s.passage.dialogue ? "dialogue" : ""}`}>
-                {s.passage.title && <p style={{ textAlign: "center", textIndent: 0, fontWeight: 700 }}>{s.passage.title}</p>}
-                {s.passage.paragraphs.map((para, i) => {
-                  const sp = s.passage!.dialogue ? splitSpeaker(para) : null;
-                  return (
-                    <p key={i}>
-                      {sp ? <><span style={{ display: "inline-block", width: "4.2em" }}>{sp[0]}:</span>{renderMarkup(sp[1])}</> : renderMarkup(para)}
-                    </p>
-                  );
-                })}
-              </div>
-              {s.passage.notes && (
-                <div className="b-notes">
-                  （注）{s.passage.notes.map((n) => <span key={n}>{n}</span>)}
-                </div>
-              )}
-            </>
-          )}
+          {s.passage && <BookletPassage passage={s.passage} />}
           {s.groups.map((g, gi) => (
             <BookletGroup key={gi} group={g} />
           ))}
@@ -158,6 +140,29 @@ function Booklet({ exam }: { exam: Exam }) {
       ))}
       <div className="b-end">— 以　上 —</div>
     </div>
+  );
+}
+
+function BookletPassage({ passage }: { passage: Passage }) {
+  return (
+    <>
+      <div className={`b-passage ${passage.dialogue ? "dialogue" : ""}`}>
+        {passage.title && <p style={{ textAlign: "center", textIndent: 0, fontWeight: 700 }}>{passage.title}</p>}
+        {passage.paragraphs.map((para, i) => {
+          const sp = passage.dialogue ? splitSpeaker(para) : null;
+          return (
+            <p key={i}>
+              {sp ? <><span style={{ display: "inline-block", width: "4.2em" }}>{sp[0]}:</span>{renderMarkup(sp[1])}</> : renderMarkup(para)}
+            </p>
+          );
+        })}
+      </div>
+      {passage.notes && (
+        <div className="b-notes">
+          （注）{passage.notes.map((n) => <span key={n}>{n}</span>)}
+        </div>
+      )}
+    </>
   );
 }
 
@@ -172,6 +177,12 @@ function BookletGroup({ group }: { group: QuestionGroup }) {
   return (
     <div className="b-group">
       {group.instruction && <div className="b-group-inst">{group.instruction}</div>}
+      {group.passage && <BookletPassage passage={group.passage} />}
+      {group.wordBox && (
+        <div className="word-box print">
+          {group.wordBox.map((w) => <span key={w}>{w}</span>)}
+        </div>
+      )}
       {group.choices && (
         <div className="b-shared">
           {group.choices.map((c, i) => (
@@ -179,7 +190,7 @@ function BookletGroup({ group }: { group: QuestionGroup }) {
           ))}
         </div>
       )}
-      {!group.choices && group.questions.map((q) => <BookletQuestion key={q.id} q={q} />)}
+      {!group.choices && group.questions.filter((q) => q.kind === "mark").map((q) => <BookletQuestion key={q.id} q={q} />)}
     </div>
   );
 }
@@ -188,7 +199,7 @@ function BookletQuestion({ q }: { q: Question }) {
   const isJp = q.prompt ? /[぀-ヿ一-龯]/.test(q.prompt.split("\n")[0]) : false;
   return (
     <div className="b-q">
-      <span className="no">({q.no})</span>
+      <span className="no">({questionLabel(q)})</span>
       <div>
         {q.prompt && <div className={`prompt ${isJp ? "jp" : ""}`}>{q.prompt}</div>}
         {q.choices && (
@@ -203,67 +214,80 @@ function BookletQuestion({ q }: { q: Question }) {
   );
 }
 
-/* ---------------- マーク解答用紙 ---------------- */
-const OVALS = 9; // 1〜9 の解答欄（実際のマークシートに合わせて全行同じ列数）
+/* ---------------- マーク解答用紙 ----------------
+   大学が公表している様式（見本）に合わせ、解答番号を横に並べ、各列に縦に 1〜9・0・− の楕円を置く。
+   1ブロック35列 × 2ブロック。 */
+const COLS_PER_BLOCK = 35;
+const BLOCKS = 2;
+const DIGITS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-"];
 
 export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number, number> }) {
-  const marks = allQuestions(exam).filter((q) => q.kind === "mark");
-  const perCol = Math.ceil(marks.length / 3);
-  const cols = [0, 1, 2].map((c) => marks.slice(c * perCol, (c + 1) * perCol));
+  const used = allQuestions(exam).filter((q) => q.kind === "mark").length;
   return (
     <div className="ms">
-      <div className="ms-head">
-        <div className="ms-title">英語　マーク解答用紙<small>{exam.edition} {exam.university} {exam.faculty}</small></div>
-        <div>{exam.durationMin}分</div>
+      <div className="ms-top">
+        <div className="ms-box ms-name">
+          <div className="h">氏　　　名</div>
+          <div className="b" />
+        </div>
+        <div className="ms-box ms-mid">
+          <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試</span>
+          <b>英　語</b>
+        </div>
+        <div className="ms-notes">
+          <div>［注意事項］</div>
+          <div>1. マークにはＨＢの黒色鉛筆を使用してください。</div>
+          <div>2. 折り曲げたり、汚したりしてはいけません。</div>
+          <div>3. 訂正は消しゴムできれいに消し、消しくずを残してはいけません。</div>
+          <div>4. 氏名・受験番号・解答欄以外にはマークしたり記入したりしてはいけません。</div>
+          <div className="ex">
+            マーク例　よい例 <span className="oval filled" />
+            　悪い例 <span className="oval check">✓</span><span className="oval cross">×</span><span className="oval thin" /><span className="oval dot">•</span>
+          </div>
+        </div>
       </div>
-      <div className="ms-info">
-        <div className="ms-idgrid" aria-label="受験番号">
-          <div className="h">受 験 番 号</div>
-          {Array.from({ length: 5 }, (_, i) => <div className="write" key={`w${i}`} />)}
-          {Array.from({ length: 5 }, (_, c) => (
-            <div className="col" key={c}>
-              {Array.from({ length: 10 }, (_, d) => <span className="oval" key={d}>{d}</span>)}
+      <div className="ms-main">
+        <div className="ms-left">
+          <div className="ms-box ms-id" aria-label="受験番号">
+            <div className="h">受　験　番　号</div>
+            <div className="write-row">{Array.from({ length: 5 }, (_, i) => <div key={i} />)}</div>
+            <div className="digit-row">
+              {Array.from({ length: 5 }, (_, c) => (
+                <div className="col" key={c}>
+                  {DIGITS.slice(0, c === 0 ? 9 : 10).map((d) => <span className="oval" key={d}>{d}</span>)}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="ms-box ms-nomark">
+            <div className="h">この欄にはマークしないこと</div>
+            <div className="b" />
+          </div>
+        </div>
+        <div className="ms-blocks">
+          {Array.from({ length: BLOCKS }, (_, b) => (
+            <div className="ms-box ms-block" key={b}>
+              <div className="h">解　　　　答　　　　欄</div>
+              <div className="ms-qcols">
+                {Array.from({ length: COLS_PER_BLOCK }, (_, c) => {
+                  const no = b * COLS_PER_BLOCK + c + 1;
+                  return (
+                    <div className={`ms-qcol ${no > used ? "unused" : ""}`} key={no}>
+                      <span className="qno">({no})</span>
+                      {DIGITS.map((d, i) => (
+                        <span key={d} className={`cell ${d === "0" ? "zero" : ""}`}>
+                          <span className={`oval ${filled?.[no] === i + 1 ? "filled" : ""}`}>{d}</span>
+                        </span>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
-        </div>
-        <div>
-          <div className="ms-namebox">
-            <div className="lab">フリガナ</div>
-            <div className="blank" />
-            <div className="lab">氏　　名</div>
-            <div className="blank" style={{ minHeight: "16mm" }} />
-          </div>
-          <div className="ms-caution" style={{ marginTop: "3mm" }}>
-            <span>
-              HBの黒鉛筆で、○の中を正確にぬりつぶすこと。<br />
-              訂正は消しゴムできれいに消すこと。<br />
-              所定の欄以外には何も書かないこと。
-            </span>
-            <span className="ex">良い例 <span className="oval filled">　</span></span>
-            <span className="ex">悪い例 <span className="oval" style={{ background: "linear-gradient(45deg,transparent 45%,#222 45% 55%,transparent 55%)" }}> </span>
-              <span className="oval" style={{ borderStyle: "dashed" }}> </span></span>
-          </div>
+          <div className="ms-foot">解答番号（{used + 1}）以降の欄は使用しません。記述式（VII・VIII）は記述解答用紙に記入すること。</div>
         </div>
       </div>
-      <div className="ms-cols">
-        {cols.map((col, ci) => (
-          <div className="ms-col" key={ci} style={{ ["--nc" as string]: OVALS }}>
-            <div className="hrow">
-              <span>解答<br />番号</span>
-              <span style={{ gridColumn: `2 / span ${OVALS}` }}>解　答　欄</span>
-            </div>
-            {col.map((q) => (
-              <div className="arow" key={q.id}>
-                <span className="no">{q.no}</span>
-                {Array.from({ length: OVALS }, (_, i) => (
-                  <span key={i} className={`oval ${filled?.[q.no] === i + 1 ? "filled" : ""}`}>{i + 1}</span>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="ms-foot">解答番号 {marks.length + 1} 以降の欄は使用しません。</div>
     </div>
   );
 }
@@ -287,16 +311,13 @@ function WriteSheet({ exam }: { exam: Exam }) {
             <h4>{s.label}</h4>
             <table className="ws-table">
               <tbody>
-                {qs.map((q) => {
-                  const first = q.prompt?.match(/\(([a-z])\s{2,}\)/)?.[1];
-                  return (
-                    <tr key={q.id}>
-                      <td className="no">({q.no})</td>
-                      <td className="ans">{first && <span className="ws-first">{first}</span>}</td>
-                      <td className="score" />
-                    </tr>
-                  );
-                })}
+                {qs.map((q) => (
+                  <tr key={q.id}>
+                    <td className="no">({questionLabel(q)})</td>
+                    <td className="ans" />
+                    <td className="score" />
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
