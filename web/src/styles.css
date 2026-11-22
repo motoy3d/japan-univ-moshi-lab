@@ -678,3 +678,4 @@ input[type="date"] { font: inherit; min-height: 44px; padding: 8px 12px; border-
 .legal h2 { font-size: 17px; margin-top: 28px; }
 .legal ol, .legal ul { padding-left: 1.4em; }
 .legal li { margin: 4px 0; }
+.demo-banner { background: var(--accent-soft); color: var(--fg, inherit); font-size: 12px; line-height: 1.5; padding: 6px max(16px, env(safe-area-inset-left, 0px)); text-align: center; }
