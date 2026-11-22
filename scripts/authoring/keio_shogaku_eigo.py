@@ -217,3 +217,54 @@ def finalize(sections, exam_id, edition, seed):
         print(f"{s['label']:>4}: {words:4d} words, {len(qs):2d} 問, {sum(q['points'] for q in qs):3d} 点")
     print("mark", n_mark, "write", n_write, "total", sum(q["points"] for s in sections for g in s["groups"] for q in g["questions"]))
     return exam
+
+
+PRACTICE_DISCLAIMER = "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。"
+
+
+def finalize_practice(sections, practice_id, title, practice_type, minutes, seed):
+    """大問演習を content/practice/<practice_id>.json に書き出す。
+    番号は 1 から振り直す（本文の {{b:N}} などは演習内の番号で書く）。正解の位置は模試と同じく均等化する"""
+    n_mark = n_write = 0
+    for sec in sections:
+        for g in sec["groups"]:
+            for q in g["questions"]:
+                if q["kind"] == "mark":
+                    n_mark += 1
+                    q["id"], q["no"] = f"m{n_mark}", n_mark
+                else:
+                    n_write += 1
+                    q["id"], q["no"] = f"w{n_write}", n_write
+    marks = [q for sec in sections for g in sec["groups"] for q in g["questions"] if q["kind"] == "mark"]
+    targets = ([1, 2, 3, 4] * (len(marks) // 4 + 1))[: len(marks)]
+    random.Random(seed).shuffle(targets)
+    for q, t in zip(marks, targets):
+        a = q["answer"]
+        if a != t:
+            ch = q["choices"]
+            ch[a - 1], ch[t - 1] = ch[t - 1], ch[a - 1]
+            q["answer"] = t
+            q["explanation"] = _swap_numbers(q["explanation"], a, t)
+    total = sum(q["points"] for s in sections for g in s["groups"] for q in g["questions"])
+    exam = {
+        "id": practice_id,
+        "kind": "practice",
+        "practiceType": practice_type,
+        "profile": "keio-shogaku-eigo",
+        "university": "慶應義塾大学",
+        "faculty": "商学部",
+        "subject": "英語",
+        "title": title,
+        "edition": "大問演習",
+        "durationMin": minutes,
+        "totalPoints": total,
+        "coverNotes": ["解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。", "問題冊子の余白は下書きに用いてよい。"],
+        "disclaimer": PRACTICE_DISCLAIMER,
+        "sections": sections,
+    }
+    out = ROOT / "content/practice" / f"{practice_id}.json"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(json.dumps(exam, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    words = sum(len(re.sub(r"\{\{[buw]:\w+\|?|\}\}", " ", " ".join(s.get("passage", {}).get("paragraphs", []) + [p for g in s["groups"] for p in g.get("passage", {}).get("paragraphs", [])])).split()) for s in sections)
+    print(f"{practice_id}: {practice_type} {minutes}分 マーク{n_mark} 記述{n_write} {total}点 本文{words}語")
+    return exam

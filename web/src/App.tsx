@@ -1,6 +1,10 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Link, NavLink, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { currentUser } from "./auth";
+import { trackPage } from "./analytics";
+import { importLocalResults } from "./guest";
+import { PhotoPage } from "./pages/PhotoPage";
+import { LocalResultPage } from "./pages/ResultPage";
 import { CallbackPage, LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
 import { ExamPage } from "./pages/ExamPage";
@@ -18,18 +22,32 @@ function RequireAuth({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+/** 画面遷移の計測と、ログイン直後の端末内の結果の取り込み */
+function Effects() {
+  const loc = useLocation();
+  useEffect(() => trackPage(loc.pathname), [loc.pathname]);
+  const user = currentUser();
+  useEffect(() => {
+    if (user) void importLocalResults();
+  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  return null;
+}
+
 function Shell({ children }: { children: ReactNode }) {
   const user = currentUser();
+  const loc = useLocation();
   return (
     <>
       <header className="app-header no-print">
         <Link to="/" className="brand"><span className="logo" aria-hidden>模</span>模試ラボ</Link>
-        {user && (
+        {user ? (
           <nav className="top-nav">
             <NavLink to="/" end>ホーム</NavLink>
             <NavLink to="/history">成績分析</NavLink>
             <NavLink to="/settings">志望校・目標</NavLink>
           </nav>
+        ) : (
+          loc.pathname !== "/login" && <Link className="header-login" to={`/login?next=${encodeURIComponent(loc.pathname)}`}>ログイン</Link>
         )}
       </header>
       <main className={`container ${user ? "with-tabbar" : ""}`}>{children}</main>
@@ -58,23 +76,29 @@ function TabIcon({ d }: { d: string }) {
 }
 
 const authed = (el: ReactNode, shell = true) => <RequireAuth>{shell ? <Shell>{el}</Shell> : el}</RequireAuth>;
+const open = (el: ReactNode, shell = true) => (shell ? <Shell>{el}</Shell> : el);
 
 export function App() {
   return (
+    <>
+    <Effects />
     <Routes>
       <Route path="/login" element={<Shell><LoginPage /></Shell>} />
       <Route path="/callback" element={<Shell><CallbackPage /></Shell>} />
       <Route path="/terms" element={<Shell><TermsPage /></Shell>} />
       <Route path="/privacy" element={<Shell><PrivacyPage /></Shell>} />
-      <Route path="/" element={authed(<HomePage />)} />
-      <Route path="/exams/:id" element={authed(<ExamPage />)} />
-      <Route path="/exams/:id/take" element={authed(<TakePage />, false)} />
-      <Route path="/exams/:id/print" element={authed(<PrintPage />, false)} />
+      <Route path="/" element={open(<HomePage />)} />
+      <Route path="/exams/:id" element={open(<ExamPage />)} />
+      <Route path="/exams/:id/take" element={open(<TakePage />, false)} />
+      <Route path="/exams/:id/print" element={open(<PrintPage />, false)} />
+      <Route path="/exams/:id/photo" element={authed(<PhotoPage />)} />
+      <Route path="/results/local/:id" element={open(<LocalResultPage />)} />
       <Route path="/results/:id" element={authed(<ResultPage />)} />
       <Route path="/results/:id/print" element={authed(<AnswerKeyPrintPage />, false)} />
       <Route path="/history" element={authed(<HistoryPage />)} />
       <Route path="/settings" element={authed(<SettingsPage />)} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
+    </>
   );
 }

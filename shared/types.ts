@@ -100,6 +100,10 @@ export interface Section<Q = Question> {
 
 export interface ExamMeta {
   id: string;
+  /** mock: フル模試 / practice: 大問演習（模試とは別の問題。模試には再掲しない） */
+  kind?: "mock" | "practice";
+  /** 大問演習の種類（一覧の表示名。例: 長文（論説）） */
+  practiceType?: string;
   /** 準拠する入試プロファイル（content/profiles/<id>.json）。validate が形式を検査する */
   profile?: string;
   university: string;
@@ -131,6 +135,64 @@ export interface SubmitAttemptRequest {
   answers: Answers;
   durationSec: number;
   mode: AttemptMode;
+  /** ログイン前（端末内）の受験を取り込む。偏差値の母集団には入れない */
+  imported?: boolean;
+  /** 取り込み時の元の受験日時 */
+  createdAt?: string;
+}
+
+/** 登録なし受験の提出（端末ごとの匿名ID付き） */
+export interface GuestSubmitRequest extends SubmitAttemptRequest {
+  clientId: string;
+}
+
+/** 問題への意見・満足度 */
+export interface FeedbackRequest {
+  type: "question" | "rating";
+  examId: string;
+  /** 受験の参照（ゲストは端末内のID） */
+  attemptRef?: string;
+  questionId?: string;
+  reason?: FeedbackReason;
+  /** 「また受けたいか」1〜5 */
+  rating?: number;
+  text?: string;
+  clientId?: string;
+}
+
+export type FeedbackReason = "explanation" | "answer" | "typo" | "difficulty" | "other";
+
+export const FEEDBACK_REASONS: Record<FeedbackReason, string> = {
+  explanation: "解説が分かりにくい",
+  answer: "正解に納得できない",
+  typo: "問題文・選択肢の誤字",
+  difficulty: "難しさについて",
+  other: "その他",
+};
+
+/** 撮影採点 */
+export interface PhotoJobRequest {
+  examId: string;
+  /** JPEG の Base64（data: なし）。解答用紙A・B の順。1〜2枚 */
+  images: string[];
+}
+
+export type Confidence = "high" | "low";
+
+export interface PhotoReadResult {
+  marks: { no: number; choice: number | null; confidence: Confidence }[];
+  writes: { label: string; text: string; confidence: Confidence }[];
+  /** 読み取りについての注意（日本語、任意） */
+  note?: string;
+}
+
+export interface PhotoJob {
+  jobId: string;
+  examId: string;
+  status: "PENDING" | "DONE" | "FAILED";
+  createdAt: string;
+  result?: PhotoReadResult;
+  error?: string;
 }
 
 export interface PartScore {

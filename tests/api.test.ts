@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { BOT_GUARD, route } from "../api/src/app";
+import { BOT_GUARD, PHOTO_DAILY_LIMIT, route } from "../api/src/app";
 import { MemoryRepo } from "../api/src/repo-memory";
 import { findExam } from "../content/index";
 import { allQuestions, isCorrect, normalizeWritten, scoreExam, stripAnswers } from "../shared/scoring";
@@ -28,7 +28,8 @@ test("記述の正規化（大文字・空白・全角・末尾ピリオド）",
 });
 
 test("偏差値: 平均で50、+1SDで60", () => {
-  const stats = toExamStats("x", 200, { count: 4, sum: 400, sumSq: 100 ** 2 * 2 + 80 ** 2 + 120 ** 2, buckets: {}, sectionSums: {} });
+  // 40人（100点×20、80点×10、120点×10）
+  const stats = toExamStats("x", 200, { count: 40, sum: 4000, sumSq: (100 ** 2 * 2 + 80 ** 2 + 120 ** 2) * 10, buckets: {}, sectionSums: {} });
   assert.equal(stats.mean, 100);
   assert.ok(Math.abs(stats.sd - Math.sqrt(200)) < 1e-9);
   assert.equal(deviationScore(100, stats), 50);
@@ -36,7 +37,7 @@ test("偏差値: 平均で50、+1SDで60", () => {
 });
 
 test("上位%の推定", () => {
-  const stats = toExamStats("x", 200, { count: 10, sum: 1000, sumSq: 110000, buckets: { 5: 5, 15: 5 }, sectionSums: {} });
+  const stats = toExamStats("x", 200, { count: 40, sum: 4000, sumSq: 440000, buckets: { 5: 20, 15: 20 }, sectionSums: {} });
   assert.equal(topPercent(100, stats), 50); // 150点台の5人だけが上
   assert.equal(topPercent(155, stats), 25); // 帯の中央 → 帯の半分が上
   assert.equal(topPercent(200, stats), 0.1);
@@ -44,8 +45,9 @@ test("上位%の推定", () => {
 
 test("API: 正解は受験前に返さない・提出→結果→統計", async () => {
   const repo = new MemoryRepo();
-  const unauth = await route(repo, "GET", "/api/exams", undefined, undefined);
-  assert.equal(unauth.status, 401);
+  // 一覧と問題は登録なしで見られるが、履歴は見られない
+  assert.equal((await route(repo, "GET", "/api/exams", undefined, undefined)).status, 200);
+  assert.equal((await route(repo, "GET", "/api/attempts", undefined, undefined)).status, 401);
 
   const ex = (await route(repo, "GET", "/api/exams/keio-shogaku-eigo-01", "u1", undefined)).body as Exam;
   const q = ex.sections[0].groups[0].questions[0] as unknown as Record<string, unknown>;
@@ -64,7 +66,7 @@ test("API: 正解は受験前に返さない・提出→結果→統計", async 
   const review = (await route(repo, "GET", `/api/attempts/${attemptId}`, "u3", undefined)).body as AttemptReview;
   assert.equal(review.stats.count, 2); // u2 は白紙なので母集団に含めない
   assert.equal(review.attempt.score, 120); // I(42) + II(39) + III の (20)〜(28)(39)
-  assert.ok(review.currentDeviation !== null);
+  assert.equal(review.currentDeviation, null); // 30人未満は偏差値を出さない
   assert.equal(review.attempt.counted, true);
 
   // 他人の受験記録は見られない
@@ -137,4 +139,58 @@ test("受験前の問題データに採点専用の語形一覧を含めない",
   const json = JSON.stringify(stripAnswers(exam));
   assert.ok(!json.includes("wordForms"));
   assert.ok(!json.includes("assumptions"));
+});
+
+test("登録なし受験: 採点結果と正解・解説を返し、母集団は端末IDで1回だけ", async () => {
+  const repo = new MemoryRepo();
+  const post = (clientId: string, answers: Answers) =>
+    route(repo, "POST", "/api/guest/attempts", undefined, JSON.stringify({ examId: exam.id, answers, durationSec: 4000, mode: "paper", clientId }));
+  const r = (await post("device-0001", perfect)).body as AttemptReview;
+  assert.equal(r.attempt.score, 200);
+  assert.equal(r.attempt.counted, true);
+  assert.equal(r.attempt.mode, "paper");
+  const q = r.exam.sections[0].groups[0].questions[0];
+  assert.ok(q.explanation.length > 0);
+  const again = (await post("device-0001", {})).body as AttemptReview;
+  assert.equal(again.attempt.counted, false);
+  assert.equal(again.stats.count, 1);
+  assert.equal((await post("x", perfect)).status, 400); // 端末IDの形式
+});
+
+test("ログイン後の取り込みは母集団に入れず、元の日時を残す", async () => {
+  const repo = new MemoryRepo();
+  const createdAt = "2026-01-15T10:00:00.000Z";
+  const r = (await route(repo, "POST", "/api/attempts", "u1", JSON.stringify({ examId: exam.id, answers: perfect, durationSec: 4000, mode: "web", imported: true, createdAt }))).body as { attemptId: string };
+  const rv = (await route(repo, "GET", `/api/attempts/${r.attemptId}`, "u1", undefined)).body as AttemptReview;
+  assert.equal(rv.attempt.counted, false);
+  assert.equal(rv.attempt.createdAt, createdAt);
+  assert.equal(rv.stats.count, 0);
+});
+
+test("意見・満足度: 入力を検証して保存", async () => {
+  const repo = new MemoryRepo();
+  const post = (body: unknown) => route(repo, "POST", "/api/feedback", undefined, JSON.stringify(body));
+  assert.equal((await post({ type: "rating", examId: exam.id, rating: 5, text: "また受けたい" })).status, 200);
+  assert.equal((await post({ type: "rating", examId: exam.id, rating: 9 })).status, 400);
+  assert.equal((await post({ type: "question", examId: exam.id, questionId: "m3", reason: "answer", text: "x".repeat(900) })).status, 200);
+  assert.equal((await post({ type: "question", examId: exam.id, questionId: "zzz" })).status, 400);
+  const saved = (repo as unknown as { data: { feedback: { text?: string }[] } }).data.feedback;
+  assert.equal(saved.length, 2);
+  assert.equal(saved[1].text!.length, 500);
+});
+
+test("撮影採点: ログイン必須・回数制限・この環境で使えないときは 503", async () => {
+  const repo = new MemoryRepo();
+  const body = JSON.stringify({ examId: exam.id, images: ["QUJD"] });
+  assert.equal((await route(repo, "POST", "/api/photo-jobs", undefined, body)).status, 401);
+  assert.equal((await route(repo, "POST", "/api/photo-jobs", "u1", body)).status, 503);
+  const started: string[] = [];
+  const services = { photo: { start: async (_u: string, job: { jobId: string }) => void started.push(job.jobId) } };
+  for (let i = 0; i < PHOTO_DAILY_LIMIT; i++) assert.equal((await route(repo, "POST", "/api/photo-jobs", "u1", body, services)).status, 200);
+  assert.equal((await route(repo, "POST", "/api/photo-jobs", "u1", body, services)).status, 429);
+  assert.equal(started.length, PHOTO_DAILY_LIMIT);
+  const job = (await route(repo, "GET", `/api/photo-jobs/${started[0]}`, "u1", undefined)).body as { status: string };
+  assert.equal(job.status, "PENDING");
+  assert.equal((await route(repo, "GET", `/api/photo-jobs/${started[0]}`, "u2", undefined)).status, 404);
+  assert.equal((await route(repo, "POST", "/api/photo-jobs", "u2", JSON.stringify({ examId: exam.id, images: [] }), services)).status, 400);
 });

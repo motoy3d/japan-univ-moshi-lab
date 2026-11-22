@@ -164,9 +164,13 @@ python3 scripts/simulate/score.py report /tmp/sim/res/*.json --md docs/quality/s
 
 公開前に、正解を知らない人（大学生・講師など）に紙で90分通して解いてもらい、時間・難しさ・誤植・曖昧さの指摘を受ける。指摘は5章の観点で直す。（未実施の回はレポートにその旨を書く。）
 
+## 大問演習（模試とは別の問題）
+
+大問1つ（または同じ種類の2つ）の演習は `scripts/build-keio-shogaku-practice.py` に書き、`finalize_practice()` で `content/practice/` に出力する。番号は 1 から振る。演習の英文は模試に再掲しない（`npm run validate` が本文と選択肢の8語連続一致で検査する）。各大問はプロファイルの同じ大問の形式（設問数・語数・(i)/(ii) の構成）に合わせる。手順は模試と同じく 4〜6 章を通す。
+
 ## 8. 公開
 
-1. `content/index.ts` の `EXAMS` と、`content/admissions.ts` の該当学部の `mockExamIds` に追加。
+1. `content/index.ts` に追加（模試は `MOCKS`、演習は `PRACTICE`）。模試は `content/admissions.ts` の該当学部の `mockExamIds` にも追加。
 2. 4章の検査をすべて実行。
 3. 印刷見本を更新（`docs/samples/`）。デモを使う場合は `npm -w web run build:demo` → `node scripts/build-demo-artifact.mjs <出力.html>`。
 4. 品質レポート（`docs/quality/review-<id>.md`）に、形式・数値・修正した設問・試し解きの結果を残す。

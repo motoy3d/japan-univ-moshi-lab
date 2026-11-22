@@ -1,0 +1,197 @@
+{
+  "id": "keio-shogaku-eigo-p02",
+  "kind": "practice",
+  "practiceType": "長文（物語・歴史）",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習2 長文（物語・歴史）レジスターの発明",
+  "edition": "大問演習",
+  "durationMin": 25,
+  "totalPoints": 39,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "II",
+      "instruction": "次の英文を読み、（1）〜（9）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（9）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "In the late 1870s, James Ritty ran a saloon in Dayton, Ohio, and he had a problem that many shopkeepers of his time would have recognized: he suspected that some of his employees were keeping part of the money they took from customers. Like most small business owners of the period, he kept his accounts by hand, and the cash in his drawer at closing time rarely matched what he believed he had sold. Without a reliable record of each sale, there was no way to prove anything. Ritty could {{b:1}} his staff closely when he was present, but he could not be in the saloon every hour it was open.",
+          "The solution, according to the story usually told, came to him on a voyage to Europe. Touring the engine room of the steamship, he became fascinated by a device that counted how many times the ship's propeller turned. If a machine could keep an exact record of the revolutions of a propeller, he reasoned, {{u:4|it could surely keep a record of the money that passed across a counter}}.",
+          "Back in Dayton, Ritty and his brother John built a series of machines. The version they patented in 1879 displayed the amount of each sale on a dial that customers could see, and it kept a running total inside the machine. The device did not make theft impossible, but it made it far more difficult, because the owner could compare the total recorded by the machine with the money in the drawer at the end of the day. Ritty called his invention, with some optimism, an incorruptible cashier.",
+          "Commercially, however, the machine was {{b:2}}. Shopkeepers were reluctant to spend money on an expensive device, and many employees resented a machine whose purpose was to check their honesty. Ritty, who had a saloon to run, soon lost interest in the business and sold it. It passed through several owners before it was bought in 1884 by John Henry Patterson, a businessman who had used one of the machines in his own store and had been impressed by the difference it made.",
+          "Patterson's genius lay less in engineering than in selling. He renamed the business the National Cash Register Company and built one of the first modern sales organizations. Salesmen were given scripts to memorize, assigned territories, and set targets; those who met them were rewarded, and those who did not were replaced. Patterson also understood that {{u:5|he was not really selling a machine at all}}. What a shopkeeper bought was confidence: the knowledge that the day's takings would match the day's sales.",
+          "Training was only part of the system. Patterson sent his salesmen to observe shops before they visited them, so that they could point out how much money a particular owner was likely to be losing. He insisted that they demonstrate the machine rather than describe it, and he collected their experiences into a manual of answers to every objection a shopkeeper might raise. {{u:6|Some of these methods, which seem obvious today, were new at the time}}.",
+          "The machines changed as well. A bell that rang whenever the drawer opened alerted the owner to every transaction. Printed paper rolls created a permanent record, and later models produced receipts that customers could take away. Each improvement made the register more useful not only for preventing theft but for understanding the business: which goods sold best, at what times of day, and with what profit. By the early twentieth century, the cash register had become a fixture of shops throughout the United States and was spreading abroad.",
+          "Patterson's methods were not always admired. His company was accused of aggressive tactics against competitors, and in 1913 he and several of his managers were convicted of violating antitrust law, although the conviction was later overturned. {{b:3}}, the sales techniques developed at his company were widely copied, and many of the men he trained went on to lead other firms. The device that began as one saloon keeper's answer to petty theft thus left a mark on the history of business that went far beyond the counter."
+        ],
+        "notes": [
+          "saloon 酒場",
+          "propeller （船の）スクリュー",
+          "antitrust law 独占禁止法"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "vocab",
+              "choices": [
+                "watch",
+                "dismiss",
+                "praise",
+                "ignore"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "watch O closely「Oを注意して見張る」。店にいる間は見張れるが、いつもいられるわけではない、という流れ。dismiss（解雇する）・praise（ほめる）・ignore（無視する）は closely と合わず、文脈にも合わない。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "vocab",
+              "choices": [
+                "a disappointment",
+                "a legal requirement",
+                "an instant success",
+                "a family secret"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "Commercially, however,「しかし商売としては」の逆接と、直後の「高価で買い渋られ、従業員にも嫌われ、Ritty は手放した」から a disappointment（期待外れ）。an instant success は逆。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "logic",
+              "choices": [
+                "As a result",
+                "In other words",
+                "For instance",
+                "Nevertheless"
+              ],
+              "points": 3,
+              "answer": 4,
+              "explanation": "前文は「彼のやり方は称賛されず、有罪判決も受けた」。空所の後は「それでも彼の販売手法は広く真似された」。逆接の Nevertheless。As a result（その結果）・For instance・In other words は前後の対立を表せない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "paraphrase",
+              "prompt": "Underlined (4) describes Ritty's idea that ___.",
+              "choices": [
+                "ships should carry cash registers for their passengers",
+                "propellers could be used to power machines in shops",
+                "a mechanical counter could be adapted to record sales in a shop",
+                "employees could be trained to count money more accurately"
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "スクリューの回転数を正確に記録できる機械があるなら、店の売上も記録できるはずだ、という着想。3 が一致。2 は動力の話にすり替え、1・4 は本文にない。"
+            },
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (5)?",
+              "choices": [
+                "the machines were given away to shopkeepers free of charge",
+                "the company earned most of its money from repairs",
+                "he sold training courses rather than cash registers",
+                "the real value customers paid for was the assurance that their money was recorded accurately"
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "直後の What a shopkeeper bought was confidence（安心）と一致する 4。1・2・3 は本文にない。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (6)?",
+              "choices": [
+                "Sales techniques that are now common were innovative when Patterson introduced them.",
+                "Patterson's sales methods are no longer used by any company today.",
+                "The methods were so obvious that no other company bothered to copy them.",
+                "Shopkeepers of the time found the cash register easy to understand."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "今では当たり前に見える手法も、当時は新しかったという意味。1 が一致。最終段落「広く真似された」とも合う。2・3 はそれと矛盾し、4 は販売手法の話ではない。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "detail",
+              "prompt": "Why were shopkeepers at first unwilling to buy the machine?",
+              "choices": [
+                "It was too large to fit on a counter.",
+                "It was expensive, and employees disliked being checked by it.",
+                "It often recorded the wrong amounts.",
+                "The law did not allow it to be used in saloons."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第4段落「高価な機械に金を出し渋り、従業員の多くは正直さを確かめる機械に反感を持った」。2 が一致。1・3・4 は本文にない。"
+            },
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "detail",
+              "prompt": "According to the passage, how did later models of the cash register help owners?",
+              "choices": [
+                "They automatically ordered new stock from suppliers.",
+                "They showed which goods sold best and when.",
+                "They calculated the wages of each employee.",
+                "They prevented customers from paying with paper money."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第7段落「どの商品がいつ、どれだけの利益で売れたかを理解するのに役立った」。2 が一致。1・3・4 は本文にない。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "detail",
+              "prompt": "Which one of the following is true according to the passage?",
+              "choices": [
+                "Patterson's conviction in 1913 was never reversed.",
+                "Ritty became wealthy by running the cash register business for many years.",
+                "Patterson had used one of the machines in his own store before buying the business.",
+                "The first patented machine printed receipts for customers."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "第4段落 a businessman who had used one of the machines in his own store と一致する 3。2 は「すぐに関心を失い手放した」と矛盾、1 は「後に覆された」と矛盾、4 は受け取りを出すのは後の型。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

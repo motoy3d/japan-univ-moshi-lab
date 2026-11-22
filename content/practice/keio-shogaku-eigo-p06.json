@@ -1,0 +1,211 @@
+{
+  "id": "keio-shogaku-eigo-p06",
+  "kind": "practice",
+  "practiceType": "長文（学術）",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習6 長文（学術）数値への信頼",
+  "edition": "大問演習",
+  "durationMin": 25,
+  "totalPoints": 42,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "I",
+      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（10）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "Modern institutions display a striking confidence in numbers. Governments evaluate schools by examination results, hospitals by waiting times, and universities by rankings that compress a vast range of activities into a single figure. This reliance on quantification is frequently presented as a triumph of objectivity over prejudice: a number, it is assumed, cannot favor its friends, and few would wish to return to a world in which such decisions depended entirely on the impressions of individual officials. {{b:1}} the historical record suggests a more complicated story, in which the authority of numbers derives less from their accuracy than from the particular social circumstances in which they are produced and used.",
+          "Historians of science have observed that reliance on quantitative rules tends to flourish precisely where trust in personal judgment is weak. An official whose decisions are open to challenge by powerful outsiders has every incentive to {{b:2}} discretion in favor of procedures that can be applied mechanically and defended publicly. {{u:5|A rule followed to the letter protects the person who follows it}}, even when it produces results that an experienced practitioner would recognize as foolish. Quantification, on this account, is not so much a method of discovering truth as a strategy of self-defense adopted by those who lack the standing to be believed on their own authority.",
+          "This interpretation helps to explain a pattern that might otherwise seem paradoxical. Elite professions with secure social prestige, such as medicine and law in many countries, long resisted attempts to reduce their expertise to explicit formulae, relying instead on the cultivated judgment of their members. By contrast, newer or more exposed occupations, such as engineers in public service, actuaries, and accountants, embraced standardized methods with enthusiasm. {{b:3}} their calculations could be checked by anyone with the appropriate training, their conclusions acquired a kind of impersonal authority that no individual reputation could supply.",
+          "The spread of cost-benefit analysis in public administration illustrates the same dynamic. Agencies required to justify large investments to skeptical legislatures and courts found that a monetary comparison of costs and benefits, however rough its underlying assumptions, was far easier to defend than an appeal to the experience of their staff. Over time, techniques that had been adopted as a shield came to be regarded as the very definition of rational decision-making, and the judgments embedded in them, such as the value assigned to a saved hour or a prevented injury, became difficult to see, let alone to question.",
+          "The consequences of this shift have not been uniformly positive. When a measure becomes the basis for rewards and penalties, those being measured adapt their behavior to the measure rather than to the purpose it was meant to serve. Schools may concentrate on the skills that examinations test; hospitals may reduce reported waiting times by redefining the moment at which a wait is said to begin. {{u:6|The number improves while the reality it was supposed to represent remains unchanged, or deteriorates}}. Economists have described this tendency in various forms, but its core insight is simple: an indicator that is used to control behavior gradually loses its value as a description of that behavior.",
+          "None of this implies that numbers should be abandoned. Quantitative indicators make it possible to compare institutions across great distances, to detect problems that individual observers would miss, and to hold powerful actors to account in ways that personal testimony cannot. The difficulty lies in forgetting that every measure embodies choices about what to count, how to count it, and what to leave out, and that these choices are made by people with interests of their own. {{b:4}} such choices are made visible and open to debate, quantification can strengthen public deliberation; when they are concealed behind an appearance of technical neutrality, it tends to replace deliberation altogether.",
+          "The question, then, is not whether to trust numbers but how. A society that treats figures as self-interpreting facts surrenders a portion of its judgment to whoever designs the measures. One that understands numbers as the products of social agreement can use them as instruments of accountability while remaining alert to what they obscure. The authority of quantification, in short, is something that must be continually earned rather than simply assumed."
+        ],
+        "notes": [
+          "discretion 裁量",
+          "actuary 保険数理士",
+          "cost-benefit analysis 費用便益分析"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "logic",
+              "choices": [
+                "Yet",
+                "Moreover",
+                "Similarly",
+                "Hence"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "前は「数値は客観性の勝利だと考えられている」という通念、空所の後は「歴史はもっと複雑な話を示す」。通念に対する逆接の Yet。Hence（それゆえ）・Moreover（さらに）・Similarly（同様に）は通念を補強する側で、転換にならない。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "vocab",
+              "choices": [
+                "exercise",
+                "renounce",
+                "expand",
+                "celebrate"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "renounce O in favor of ~「〜のためにOを放棄する」。攻撃されやすい役人は、機械的に適用でき公に弁護できる手続きを選んで、自分の裁量（discretion）を捨てる。exercise discretion（裁量を行使する）は in favor of procedures と逆の意味になる。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "logic",
+              "choices": [
+                "Unless",
+                "Whereas",
+                "Lest",
+                "Because"
+              ],
+              "points": 3,
+              "answer": 4,
+              "explanation": "計算を誰でも検証できる『ので』、その結論は個人の評判では得られない非人格的な権威を得た。因果の Because。Whereas（一方）は対比、Unless（〜しない限り）・Lest（〜しないように）は文意が通らない。"
+            },
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "logic",
+              "choices": [
+                "Unless",
+                "Where",
+                "Although",
+                "Lest"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "Where such choices are made visible ..., ~; when they are concealed ..., ~ の対比。『〜する場合には』の Where が、後半の when と対応する。Unless では意味が逆になり、Although・Lest は文意が通らない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "Which one of the following best explains underlined (5)?",
+              "choices": [
+                "Rules are always more accurate than human judgment.",
+                "Experienced practitioners seldom make foolish decisions.",
+                "Officials who apply fixed procedures are less exposed to criticism for their decisions.",
+                "People who break rules are rarely punished for doing so."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "規則を文字どおり守れば、結果が愚かでも守った本人は守られる。つまり、決まった手続きに従う役人は決定を批判されにくい。3 が一致。直前の『攻撃されうる役人は機械的な手続きを選ぶ』、直後の『自己防衛の戦略』とも合う。1 は always が言い過ぎで、本文は正確さより社会的事情を強調している。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "paraphrase",
+              "prompt": "Underlined (6) suggests that ___.",
+              "choices": [
+                "hospitals deliberately make patients wait longer in order to improve their figures",
+                "numbers tend to become more accurate the longer they are used",
+                "an indicator can be manipulated so that it no longer reflects what it was designed to measure",
+                "schools should stop testing their students altogether"
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "数値は改善するのに、本来表すはずの実態は変わらないか悪化する。指標が操作され、測るはずのものを反映しなくなるという意味で 3。1 は病院の例をねじ曲げている（待ち時間を長くするのではなく、待ち時間の数え始めを変える）。2・4 は本文にない。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "detail",
+              "prompt": "According to the passage, why did some newer occupations embrace standardized methods?",
+              "choices": [
+                "Because checkable calculations gave them an authority their individual reputations could not.",
+                "Because they enjoyed more prestige than doctors and lawyers.",
+                "Because standardized methods were always more accurate than judgment.",
+                "Because the law required them to use fixed formulae."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "第3段落「計算を誰でも検証できるので、個人の評判では得られない非人格的な権威を得た」。1 が一致。2 は逆（地位が不安定な職業）。4・3 は本文にない。"
+            },
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "detail",
+              "prompt": "Which one of the following does the author present as a benefit of quantitative indicators?",
+              "choices": [
+                "They remove the need for human choices in measurement.",
+                "They make it possible to compare institutions that are far apart.",
+                "They guarantee that the institutions being measured will improve.",
+                "They make public debate unnecessary."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第6段落「遠く離れた機関を比較できる」。2 が一致。1 は「すべての指標は人の選択を含む」と矛盾、3 は第5段落と矛盾、4 は「議論を強めうる」と逆。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "detail",
+              "prompt": "Which one of the following is NOT stated in the passage?",
+              "choices": [
+                "Cost-benefit analysis was first developed by doctors to justify treatments.",
+                "Measures used for rewards and penalties can change the behavior of those measured.",
+                "Some established professions long resisted reducing their expertise to formulae.",
+                "Every measure reflects choices about what to count and what to leave out."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "費用便益分析は行政機関が議会や裁判所に投資を正当化するために広めたもので、医師が開発したとは書かれていない。1 が述べられていない。3 は第3段落、2 は第5段落、4 は第6段落。"
+            },
+            {
+              "id": "m10",
+              "kind": "mark",
+              "no": 10,
+              "category": "main-idea",
+              "prompt": "Which one of the following titles best captures the main idea of the passage?",
+              "choices": [
+                "Why Numbers Never Lie: The Triumph of Objectivity",
+                "How Hospitals Reduce Their Reported Waiting Times",
+                "The Decline of Judgment in the Medical Profession",
+                "Trusting Numbers: The Social Foundations of Quantitative Authority"
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "数値の権威は正確さより社会的事情に由来し、その選択を見えるようにして使うべきだ、という全体の主張に合う 4。1 は筆者が疑問視する通念。2・3 は一部の例にすぎない。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

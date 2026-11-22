@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
+import { currentUser } from "../auth";
+import { track } from "../analytics";
+import { bumpAttemptCount, clientId, saveLocalResult } from "../guest";
+import { getConfig } from "../config";
 import { store, useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
 import { allQuestions, questionLabel } from "../../../shared/scoring";
@@ -31,9 +35,23 @@ function useSubmit(exam: Exam, mode: "web" | "paper", draftKey: string) {
     setBusy(true);
     setError(undefined);
     try {
-      const r = await api.submit({ examId: exam.id, answers, durationSec, mode });
+      const req = { examId: exam.id, answers, durationSec, mode };
+      let to: string;
+      let rate: number | undefined;
+      if (currentUser()) {
+        const r = await api.submit(req);
+        to = `/results/${r.attemptId}`;
+      } else {
+        // 登録なし: 採点結果を端末に保存して表示する
+        const review = await api.guestSubmit({ ...req, clientId: clientId() });
+        rate = review.attempt.score / review.attempt.maxScore;
+        to = `/results/local/${saveLocalResult(review)}`;
+      }
+      track("exam_submit", { exam_id: exam.id, kind: exam.kind ?? "mock", mode, attempt_number: bumpAttemptCount(), ...(rate !== undefined ? { score_rate: Math.round(rate * 100) } : {}) });
       store.del(draftKey);
-      nav(`/results/${r.attemptId}`, { replace: true });
+      store.del(`moshi.photo.low.${exam.id}`);
+      store.del(`moshi.photo.filled.${exam.id}`);
+      nav(to, { replace: true });
     } catch (e) {
       setError((e as Error).message);
       setBusy(false);
@@ -115,7 +133,7 @@ function WebExam({ exam }: { exam: Exam }) {
             <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。</li>
           </ol>
           <div className="row" style={{ marginTop: 16 }}>
-            <button className="btn btn-primary" onClick={() => setDraft((d) => ({ ...d, startedAt: Date.now() }))}>試験を開始する</button>
+            <button className="btn btn-primary" onClick={() => { track("exam_start", { exam_id: exam.id, kind: exam.kind ?? "mock", mode: "web" }); setDraft((d) => ({ ...d, startedAt: Date.now() })); }}>試験を開始する</button>
             <Link className="btn" to={`/exams/${exam.id}`}>戻る</Link>
           </div>
         </div>
@@ -338,6 +356,10 @@ function PaperEntry({ exam }: { exam: Exam }) {
   const [answers, setAnswers] = useState<Answers>(() => store.get<Draft>(draftKey)?.answers ?? {});
   const [minutes, setMinutes] = useState<string>(String(exam.durationMin));
   const { submit, busy, error } = useSubmit(exam, "paper", draftKey);
+  // 撮影採点で読み取った答えのうち、AI が自信のないもの（確認を促すため色を付ける）
+  const [low] = useState<string[]>(() => store.get<string[]>(`moshi.photo.low.${exam.id}`) ?? []);
+  const fromPhoto = store.get<boolean>(`moshi.photo.filled.${exam.id}`);
+  const canPhoto = !!getConfig().photoGrading;
   useEffect(() => store.set(draftKey, { answers, startedAt: 0, section: 0 }), [answers, draftKey]);
 
   const rows = exam.sections.flatMap((s) =>
@@ -358,7 +380,17 @@ function PaperEntry({ exam }: { exam: Exam }) {
         </button>
       </div>
       <div className="container">
-        <p className="small muted">マーク解答用紙・記述解答用紙に書いた答えをそのまま入力してください。</p>
+        {fromPhoto ? (
+          <p className="notice small">
+            撮影した解答用紙から読み取った答えを入れました。<b>用紙と見比べて確認し、違っていれば直してから</b>採点してください。
+            {low.length > 0 && <> 読み取りに自信のない {low.length} 問に<span className="low-mark">色</span>を付けています。</>}
+          </p>
+        ) : (
+          <p className="small muted">
+            解答用紙に書いた答えをそのまま入力してください。
+            {canPhoto && <> 解答用紙を<Link to={`/exams/${exam.id}/photo`}>撮影して読み取る</Link>こともできます（ログインが必要）。</>}
+          </p>
+        )}
         {error && <p className="error">{error}</p>}
         <label className="row small" style={{ marginBottom: 16 }}>
           かかった時間
@@ -367,7 +399,7 @@ function PaperEntry({ exam }: { exam: Exam }) {
         <h2>マーク（1〜{marks.length}）</h2>
         <div className="sheet-grid">
           {marks.map(({ q, n }) => (
-            <div className="sheet-row" key={q.id}>
+            <div className={`sheet-row ${low.includes(q.id) ? "low" : ""}`} key={q.id}>
               <span className="no">{q.no}</span>
               {Array.from({ length: n }, (_, i) => (
                 <button key={i} className={`num-btn ${answers[q.id] === i + 1 ? "selected" : ""}`} onClick={() => pick(q.id, i + 1)} aria-label={`${q.no}番に${i + 1}`}>
@@ -380,7 +412,7 @@ function PaperEntry({ exam }: { exam: Exam }) {
         <h2>記述（{writes.length}問）</h2>
         <div className="sheet-grid">
           {writes.map(({ q, s }) => (
-            <label className="sheet-row" key={q.id}>
+            <label className={`sheet-row ${low.includes(q.id) ? "low" : ""}`} key={q.id}>
               <span className="no" style={{ width: "auto", minWidth: 48 }}>{s} ({questionLabel(q)})</span>
               <input
                 type="text"

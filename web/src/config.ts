@@ -4,6 +4,10 @@ export interface AppConfig {
   cognitoDomain?: string; // 例: https://moshi-lab.auth.ap-northeast-1.amazoncognito.com
   clientId?: string;
   googleEnabled?: boolean;
+  /** Google アナリティクス（GA4）の測定ID。無ければ計測しない */
+  gaId?: string;
+  /** 撮影採点が使えるか */
+  photoGrading?: boolean;
 }
 
 let config: AppConfig = { authMode: "local" };

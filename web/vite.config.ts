@@ -9,11 +9,12 @@ import react from "@vitejs/plugin-react";
  */
 const CSP = [
   "default-src 'self'",
-  "script-src 'self'",
+  // Google アナリティクス（GA4）: gtag.js と計測の送信先
+  "script-src 'self' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
-  "connect-src 'self' https://*.amazoncognito.com",
+  "img-src 'self' data: blob: https://*.google-analytics.com https://www.googletagmanager.com",
+  "connect-src 'self' https://*.amazoncognito.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "base-uri 'self'",
   "form-action 'self' https://*.amazoncognito.com",
   "object-src 'none'",

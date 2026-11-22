@@ -7,3 +7,4 @@ cdk.out/
 !.env.example
 dist-demo/
 .local/
+__pycache__/

@@ -2,8 +2,8 @@ import type { ExamStats } from "./types";
 
 export const BUCKET_SIZE = 10;
 
-/** 偏差値を出すのに必要な最小人数（これ未満は参考値扱い） */
-export const MIN_POPULATION_FOR_DEVIATION = 2;
+/** 偏差値・順位を表示する最小人数。少人数の偏差値は意味がなく信頼を損なうため、これ未満は出さない */
+export const MIN_POPULATION_FOR_DEVIATION = 30;
 /** 偏差値を「信頼できる」と表示する人数の目安 */
 export const RELIABLE_POPULATION = 30;
 

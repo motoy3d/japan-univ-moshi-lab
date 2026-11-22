@@ -1,0 +1,268 @@
+{
+  "id": "keio-shogaku-eigo-p05",
+  "kind": "practice",
+  "practiceType": "記述（語形・名詞形）",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習5 記述（動詞の語形・名詞形）",
+  "edition": "大問演習",
+  "durationMin": 15,
+  "totalPoints": 33,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "VII",
+      "instruction": "次の英文を読み、空所（a）〜（f）に入る、文脈の上で最も適した動詞を下記の語群から選び、必要に応じて語形を変えて解答用紙Bの解答欄に記入しなさい。ただし、各解答欄に記入する語は一語のみとし、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "sheetNotice": "ここからは解答用紙Bを使用しなさい。",
+      "passage": {
+        "paragraphs": [
+          "The first machines that resembled bicycles appeared in the early nineteenth century. They had no pedals and {{w:a}} entirely on the rider's feet, which pushed against the ground. Pedals attached to the front wheel were added in the 1860s, and makers soon {{w:b}} that a larger front wheel would carry the rider farther with each turn. The result was the high-wheeled bicycle, which was fast but dangerous: a rider who struck a stone could be {{w:c}} over the handlebars.",
+          "The so-called safety bicycle, with two wheels of equal size and a chain driving the rear wheel, eventually {{w:d}} the high-wheeler in popularity. Combined with air-filled tires, it made cycling comfortable enough for ordinary people, and in the 1890s a cycling boom {{w:e}} across Europe and North America. Many historians argue that the bicycle {{w:f}} an important part in changing social customs, giving women in particular a new freedom of movement."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "wordBox": [
+            "conclude",
+            "fling",
+            "overtake",
+            "play",
+            "rely",
+            "sweep"
+          ],
+          "wordForms": {
+            "conclude": [
+              "conclude",
+              "concludes",
+              "concluded",
+              "concluding"
+            ],
+            "fling": [
+              "fling",
+              "flings",
+              "flung",
+              "flinging"
+            ],
+            "overtake": [
+              "overtake",
+              "overtakes",
+              "overtook",
+              "overtaken",
+              "overtaking"
+            ],
+            "play": [
+              "play",
+              "plays",
+              "played",
+              "playing"
+            ],
+            "rely": [
+              "rely",
+              "relies",
+              "relied",
+              "relying"
+            ],
+            "sweep": [
+              "sweep",
+              "sweeps",
+              "swept",
+              "sweeping"
+            ]
+          },
+          "questions": [
+            {
+              "id": "w1",
+              "kind": "write",
+              "no": 1,
+              "label": "a",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "relied"
+              ],
+              "explanation": "主語 They（初期の自転車）の過去の性質なので過去形。rely on ~「〜に頼る」。足で地面を蹴って進むしかなかった。"
+            },
+            {
+              "id": "w2",
+              "kind": "write",
+              "no": 2,
+              "label": "b",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "concluded"
+              ],
+              "explanation": "makers soon ___ that ~ の過去形。conclude that ~「〜と結論づける」。"
+            },
+            {
+              "id": "w3",
+              "kind": "write",
+              "no": 3,
+              "label": "c",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "flung"
+              ],
+              "explanation": "could be + 過去分詞（受動態）。fling – flung – flung「投げ出す」。石に当たると、ハンドルの上から投げ出されかねなかった。"
+            },
+            {
+              "id": "w4",
+              "kind": "write",
+              "no": 4,
+              "label": "d",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "overtook"
+              ],
+              "explanation": "eventually（やがて）の過去の出来事なので過去形。overtake – overtook – overtaken「追い越す」。人気で前輪の大きな型を追い越した。"
+            },
+            {
+              "id": "w5",
+              "kind": "write",
+              "no": 5,
+              "label": "e",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "swept"
+              ],
+              "explanation": "in the 1890s の過去の出来事。sweep across ~「〜を席巻する」。sweep – swept – swept。"
+            },
+            {
+              "id": "w6",
+              "kind": "write",
+              "no": 6,
+              "label": "f",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "played"
+              ],
+              "explanation": "play a part in ~「〜で役割を果たす」。歴史家の見方として過去の出来事を述べるので過去形。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "VIII",
+      "instruction": "次の英文を読み、空所（a）〜（e）に入る、文脈の上で最も適した名詞を解答用紙Bの解答欄に記入しなさい。下記の動詞の最も適切な名詞形のみを使用すること。ただし、〜ing 形は使用してはいけない。また、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "example": "例： permit → permission",
+      "passage": {
+        "paragraphs": [
+          "Most people find speaking in public difficult, and the fear is not entirely irrational. An audience can see every hesitation, and a single {{w:a}}, such as a forgotten word or a slide in the wrong order, may seem enormous to the speaker, even if no one else notices it.",
+          "Experienced speakers rely less on talent than on {{w:b}}. They rehearse aloud, often several times, and they ask colleagues for honest {{w:c}} of their talks. Their {{w:d}} on stage comes not from the absence of nerves but from the knowledge that they are ready. Above all, they remember that the purpose of a talk is not to display the speaker but to help the audience; a speaker who concentrates on the {{w:e}} of a clear message is less likely to worry about being judged."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "wordBox": [
+            "compose",
+            "criticize",
+            "deliver",
+            "err",
+            "repeat"
+          ],
+          "wordForms": {
+            "compose": [
+              "composure",
+              "composition",
+              "compositions"
+            ],
+            "criticize": [
+              "criticism",
+              "criticisms"
+            ],
+            "deliver": [
+              "delivery",
+              "deliveries",
+              "deliverance"
+            ],
+            "err": [
+              "error",
+              "errors"
+            ],
+            "repeat": [
+              "repetition",
+              "repetitions"
+            ]
+          },
+          "questions": [
+            {
+              "id": "w7",
+              "kind": "write",
+              "no": 7,
+              "label": "a",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "error"
+              ],
+              "explanation": "a single + 単数名詞。err → error「誤り」。忘れた単語、順番を間違えたスライドがその例。"
+            },
+            {
+              "id": "w8",
+              "kind": "write",
+              "no": 8,
+              "label": "b",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "repetition"
+              ],
+              "explanation": "rely ... on + 名詞。repeat → repetition「繰り返し」。直後の「何度も声に出して練習する」と対応。"
+            },
+            {
+              "id": "w9",
+              "kind": "write",
+              "no": 9,
+              "label": "c",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "criticism"
+              ],
+              "explanation": "honest + 名詞 + of ~。criticize → criticism「批評」。同僚に率直な批評を求める。"
+            },
+            {
+              "id": "w10",
+              "kind": "write",
+              "no": 10,
+              "label": "d",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "composure"
+              ],
+              "explanation": "Their + 名詞。compose → composure「落ち着き」（composition は「構成・作文」で文脈に合わない）。準備ができているという自覚から来る落ち着き。"
+            },
+            {
+              "id": "w11",
+              "kind": "write",
+              "no": 11,
+              "label": "e",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "delivery"
+              ],
+              "explanation": "the + 名詞 + of ~。deliver → delivery「（話の）伝え方・伝達」。明確なメッセージを伝えることに集中する。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

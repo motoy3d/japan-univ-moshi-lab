@@ -1,0 +1,253 @@
+{
+  "id": "keio-shogaku-eigo-p03",
+  "kind": "practice",
+  "practiceType": "文法・語法／中文空所",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習3 文法・語法と中文の空所補充",
+  "edition": "大問演習",
+  "durationMin": 15,
+  "totalPoints": 26,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "IV",
+      "instruction": "次の英文（1）〜（7）の空所に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（7）にマークしなさい。",
+      "groups": [
+        {
+          "instruction": "",
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "grammar",
+              "prompt": "The number of students who study abroad _____ increased steadily over the past decade.",
+              "choices": [
+                "has",
+                "have",
+                "are",
+                "were"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "主語は The number of ~「〜の数」で単数。over the past decade（この10年で）なので現在完了 has increased。A number of ~（多くの〜）なら複数扱いになるので区別する。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "grammar",
+              "prompt": "I'm looking forward to _____ you at the conference next month.",
+              "choices": [
+                "see",
+                "seeing",
+                "be seen",
+                "have seen"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "look forward to -ing「〜するのを楽しみにする」。to は前置詞なので後ろは動名詞。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "grammar",
+              "prompt": "She is one of the few people _____ opinions the committee always respects.",
+              "choices": [
+                "whose",
+                "which",
+                "that",
+                "whom"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "先行詞 people と opinions が「〜の意見」の所有関係なので whose。whom・that・which では後ろの opinions とつながらない。"
+            },
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "grammar",
+              "prompt": "The bridge, _____ in 1890, is still used by thousands of cars every day.",
+              "choices": [
+                "built",
+                "building",
+                "having built",
+                "to build"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "橋は『建てられた』側なので過去分詞 built（= which was built）。having built では橋が何かを建てたことになる。"
+            },
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "grammar",
+              "prompt": "You had better _____ your umbrella; it looks like rain.",
+              "choices": [
+                "take",
+                "to take",
+                "taking",
+                "took"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "had better + 動詞の原形「〜したほうがよい」。to 不定詞や -ing にしない。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "grammar",
+              "prompt": "Not a single word _____ during the entire meeting.",
+              "choices": [
+                "he said",
+                "said he",
+                "did he say",
+                "he did say"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "否定語句 Not a single word が文頭に出ると、疑問文の語順（倒置）になる: did + S + 原形。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "grammar",
+              "prompt": "The new policy had a _____ effect on sales, which rose by 20 percent.",
+              "choices": [
+                "considerate",
+                "considering",
+                "considerable",
+                "considered"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "considerable「かなりの」。considerate は「思いやりのある」で人について使う。considering・considered は形容詞として effect を修飾しない。紛らわしい派生語の区別。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "V",
+      "instruction": "次の英文の空所（8）〜（13）に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（8）〜（13）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "Few experiences are as universally {{b:8}} as waiting in line. Yet research on queues suggests that the length of a wait matters less than how it feels. People tend to overestimate the time they spend waiting, especially when they have nothing to do, and an unexplained delay seems far longer than one whose cause is known.",
+          "Businesses have learned to {{b:9}} this. Elevators are surrounded by mirrors partly so that people have something to look at while they wait. Theme parks post estimated waiting times that are slightly longer than the real ones, so that visitors are pleasantly surprised when they reach the front sooner than {{b:10}}. Some airports have moved arrival gates farther from baggage claim, so that passengers spend more time walking and less time standing beside an empty belt; complaints fell, even though the total time was the same.",
+          "Fairness also matters. A single line that feeds several counters feels fairer than separate lines in front of each counter, because no one has to watch a neighboring line move faster. People will {{b:11}} a longer wait if they believe that everyone is being treated equally, but even a short delay can cause anger if someone appears to {{b:12}} the line.",
+          "None of these techniques makes the wait itself shorter. What they change is the experience of waiting, which, for the person standing in line, is the only thing that {{b:13}}."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "questions": [
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "vocab",
+              "choices": [
+                "admired",
+                "anticipated",
+                "disliked",
+                "rewarded"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "直後の Yet 以下で「待ち時間は長さより感じ方」と、待つことの不快さを前提に話が進む。as universally disliked as ~「〜ほど誰もが嫌うものはない」。admired（称賛される）・rewarded（報われる）は逆、anticipated（待ち望まれる）も合わない。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "vocab",
+              "choices": [
+                "deny",
+                "exploit",
+                "forbid",
+                "resent"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "exploit「（性質などを）うまく利用する」。人が待ち時間を長く感じるという性質を、企業は利用することを学んだ。具体例（鏡・待ち時間の表示）がその利用法。deny（否定する）・forbid（禁じる）・resent（腹を立てる）は合わない。"
+            },
+            {
+              "id": "m10",
+              "kind": "mark",
+              "no": 10,
+              "category": "vocab",
+              "choices": [
+                "deserved",
+                "expected",
+                "ordered",
+                "allowed"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "sooner than expected「予想より早く」。実際より長めの待ち時間を表示しておくので、予想より早く着いて喜ぶ。"
+            },
+            {
+              "id": "m11",
+              "kind": "mark",
+              "no": 11,
+              "category": "vocab",
+              "choices": [
+                "resist",
+                "postpone",
+                "regret",
+                "tolerate"
+              ],
+              "points": 2,
+              "answer": 4,
+              "explanation": "tolerate「我慢する、許容する」。皆が平等に扱われていると思えば、長い待ち時間も我慢できる。but 以下の「短い遅れでも怒る」との対比。resist（抵抗する）・regret（後悔する）・postpone（延期する）は合わない。"
+            },
+            {
+              "id": "m12",
+              "kind": "mark",
+              "no": 12,
+              "category": "vocab",
+              "choices": [
+                "join",
+                "leave",
+                "form",
+                "jump"
+              ],
+              "points": 2,
+              "answer": 4,
+              "explanation": "jump the line「列に割り込む」。誰かが割り込めば、短い遅れでも怒りを招く。公平さの話の流れに合う。join（並ぶ）・leave（列を離れる）・form（列を作る）は怒りの原因にならない。"
+            },
+            {
+              "id": "m13",
+              "kind": "mark",
+              "no": 13,
+              "category": "vocab",
+              "choices": [
+                "lasts",
+                "waits",
+                "fails",
+                "matters"
+              ],
+              "points": 2,
+              "answer": 4,
+              "explanation": "the only thing that matters「唯一重要なこと」。待ち時間自体は変わらないが、並んでいる人にとって大事なのは待つ体験だけ、という結論。lasts（続く）・fails（失敗する）・waits は文意が通らない。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

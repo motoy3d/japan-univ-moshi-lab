@@ -68,6 +68,33 @@ const fail = (examId: string, msg: string) => {
   console.error(`✗ [${examId}] ${msg}`);
 };
 
+/** 大問演習: 各大問がプロファイルの同じ大問の形式に合っているか（設問数・語数・(i)/(ii) の構成） */
+function checkPracticeProfile(exam: (typeof EXAMS)[number]) {
+  const file = path.join(here, "../content/profiles", `${exam.profile}.json`);
+  if (!fs.existsSync(file)) return fail(exam.id, `プロファイル ${exam.profile} が見つからない`);
+  const pr: Profile = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (!exam.practiceType) fail(exam.id, "practiceType（一覧の表示名）がない");
+  for (const s of exam.sections) {
+    const ps = pr.sections.find((x) => x.label === s.label);
+    if (!ps) {
+      fail(exam.id, `大問${s.label} がプロファイルにない`);
+      continue;
+    }
+    const sq = s.groups.flatMap((g) => g.questions);
+    const m = sq.filter((q) => q.kind === "mark").length, w = sq.filter((q) => q.kind === "write").length;
+    if (!inRange(m, ps.mark) || w !== ps.write) fail(exam.id, `大問${s.label} の設問数 ${m}/${w}（基準 ${ps.mark.join("〜")}/${ps.write}）`);
+    if (ps.kind === "long") {
+      const wc = countWords(s.passage?.paragraphs);
+      if (!inRange(wc, pr.longPassages.wordsEach)) fail(exam.id, `大問${s.label} の語数 ${wc}（基準 ${pr.longPassages.wordsEach.join("〜")}）`);
+      if (s.groups.length !== 2 || s.groups[0].questions.some((q) => q.prompt) || s.groups[1].questions.some((q) => !q.prompt))
+        fail(exam.id, `大問${s.label} は (i) 空所 → (ii) その他 の2グループにする`);
+    }
+    if (ps.words && !inRange(countWords(s.passage?.paragraphs), ps.words)) fail(exam.id, `大問${s.label} の語数が基準外`);
+    if (ps.wordsEach) for (const g of s.groups) if (!inRange(countWords(g.passage?.paragraphs), ps.wordsEach)) fail(exam.id, `大問${s.label} の短文の語数が基準外（${countWords(g.passage?.paragraphs)}語）`);
+  }
+  console.log(`  ↳ 大問演習（${exam.practiceType}）: プロファイル ${exam.profile} の大問 ${exam.sections.map((s) => s.label).join("・")} に適合`);
+}
+
 for (const exam of EXAMS) {
   const qs = allQuestions(exam);
   const ids = new Set<string>();
@@ -148,7 +175,8 @@ for (const exam of EXAMS) {
     if (new Set(allMarkTokens).size !== allMarkTokens.length) fail(exam.id, `大問${section.label}: 本文の番号が重複`);
   }
   // 入試プロファイルへの適合（content/profiles/<profile>.json）
-  if (exam.profile) checkProfile(exam, qs);
+  if (exam.profile && exam.kind === "practice") checkPracticeProfile(exam);
+  else if (exam.profile) checkProfile(exam, qs);
 
   // 正解の位置の偏り（4択で一つの番号に集中すると、当て推量で点が取れてしまう）
   const four = qs.filter((q) => q.kind === "mark" && (q.choices?.length ?? 0) === 4);
@@ -157,6 +185,38 @@ for (const exam of EXAMS) {
     fail(exam.id, `正解の位置が偏っている（1〜4: ${counts.join(" / ")}）`);
   console.log(`✓ ${exam.id}: マーク ${qs.filter((q) => q.kind === "mark").length} 問 / 記述 ${qs.filter((q) => q.kind === "write").length} 問 / ${total} 点`);
 }
+// 模試と大問演習の重複: 同じ英文（本文・選択肢）が別の試験に出ていないか（演習で解いた英文が模試に再掲されると初見でなくなる）
+{
+  const N = 8;
+  const grams = new Map<string, string>();
+  const textOf = (e: (typeof EXAMS)[number]) =>
+    e.sections.flatMap((s) => [
+      ...(s.passage?.paragraphs ?? []),
+      // 設問文（Which one of the following ... などの定型）は除き、本文と選択肢を比べる
+      ...s.groups.flatMap((g) => [...(g.passage?.paragraphs ?? []), ...g.questions.flatMap((q) => q.choices ?? [])]),
+    ]);
+  for (const e of EXAMS) {
+    const words = textOf(e)
+      .join(" ")
+      .replace(/\{\{[buw]:\w+\|?/g, " ")
+      .toLowerCase()
+      .replace(/[^a-z' ]+/g, " ")
+      .split(/\s+/)
+      .filter(Boolean);
+    const seen = new Set<string>();
+    let reported = 0;
+    for (let i = 0; i + N <= words.length; i++) {
+      const g = words.slice(i, i + N).join(" ");
+      if (seen.has(g)) continue;
+      seen.add(g);
+      const other = grams.get(g);
+      if (other && other !== e.id && reported++ < 3) fail(e.id, `${other} と同じ英文が出ている: 「${g}」`);
+      if (!other) grams.set(g, e.id);
+    }
+  }
+  console.log(`✓ 試験間の重複なし（${EXAMS.length}件、${N}語連続一致で検査）`);
+}
+
 // 志望校データ: 日付の形式・模試 ID の存在・年度切れ
 const DATE = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2})?$/;
 const today = new Date().toISOString().slice(0, 10);

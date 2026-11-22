@@ -1,13 +1,16 @@
 // デモ版: API の永続化層をブラウザの localStorage に置き換える（端末内だけに保存）
-import type { AttemptDetail, Profile } from "../../../shared/types";
+import type { AttemptDetail, PhotoJob, Profile } from "../../../shared/types";
 import type { RawStats } from "../../../shared/stats";
-import type { Repo } from "../../../api/src/repo";
+import type { FeedbackRecord, Repo } from "../../../api/src/repo";
 
 interface Data {
   attempts: Record<string, AttemptDetail[]>;
   firsts: Record<string, string>;
   stats: Record<string, RawStats>;
   profiles: Record<string, Profile>;
+  guests?: { clientId: string; attempt: AttemptDetail }[];
+  feedback?: FeedbackRecord[];
+  photoJobs?: Record<string, PhotoJob[]>;
   seeded?: number;
 }
 
@@ -67,5 +70,26 @@ export class BrowserRepo implements Repo {
   async putProfile(userId: string, profile: Profile) {
     this.data.profiles[userId] = profile;
     this.save();
+  }
+  async putGuestAttempt(clientId: string, attempt: AttemptDetail) {
+    (this.data.guests ??= []).push({ clientId, attempt });
+    this.save();
+  }
+  async putFeedback(item: FeedbackRecord) {
+    (this.data.feedback ??= []).push(item);
+    this.save();
+  }
+  async putPhotoJob(userId: string, job: PhotoJob) {
+    const list = ((this.data.photoJobs ??= {})[userId] ??= []);
+    const i = list.findIndex((j) => j.jobId === job.jobId);
+    if (i >= 0) list[i] = job;
+    else list.push(job);
+    this.save();
+  }
+  async getPhotoJob(userId: string, jobId: string) {
+    return this.data.photoJobs?.[userId]?.find((j) => j.jobId === jobId);
+  }
+  async countPhotoJobs(userId: string, since: string) {
+    return (this.data.photoJobs?.[userId] ?? []).filter((j) => j.createdAt >= since).length;
   }
 }

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { api } from "../api";
 import { currentUser } from "../auth";
+import { localResults } from "../guest";
 import { fmtDate, useAsync } from "../hooks";
+import type { AttemptSummary, ExamListItem } from "../../../shared/types";
 import { Ring, daysUntil, opportunities } from "../components/Motivation";
 import { deviationScore, scoreForDeviation } from "../../../shared/stats";
 import { jpDate, jpDateTime, nextDeadline, primaryExamDate, targetName } from "../targets";
@@ -11,11 +13,105 @@ function greeting() {
   return h < 5 ? "遅くまでお疲れさまです" : h < 11 ? "おはようございます" : h < 18 ? "こんにちは" : "こんばんは";
 }
 
+/** 模試と大問演習の一覧（ログインしていなくても見られる） */
+function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: AttemptSummary[]; error?: string }) {
+  const mocks = exams?.filter((e) => e.kind !== "practice") ?? [];
+  const practice = exams?.filter((e) => e.kind === "practice") ?? [];
+  const resultLink = (a: AttemptSummary) => (currentUser() ? `/results/${a.attemptId}` : `/results/local/${a.attemptId}`);
+  return (
+    <>
+      {error && <p className="error">{error}</p>}
+      <h2 id="practice">大問演習 <small className="muted">15〜25分・大問1つ</small></h2>
+      <p className="small muted section-lead">模試とは別の問題です。演習で解いた英文が模試に出ることはありません。</p>
+      <div className="grid grid-3">
+        {practice.map((e) => {
+          const mine = list.filter((a) => a.examId === e.id);
+          return (
+            <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card practice-card">
+              <div className="exam-card-top">
+                <span className="badge">{e.practiceType}</span>
+                <span className={`status ${mine.length ? "done" : ""}`}>{mine.length ? `済 ${Math.max(...mine.map((a) => a.score))}/${e.totalPoints}` : `${e.durationMin}分`}</span>
+              </div>
+              <h3>{e.title.replace(/^大問演習\d+\s*/, "")}</h3>
+              <div className="meta">{e.questionCount}問 ・ {e.totalPoints}点</div>
+            </Link>
+          );
+        })}
+      </div>
+
+      <h2 id="mocks">模試 <small className="muted">本番と同じ90分・大問8題</small></h2>
+      <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。解答用紙は撮影して採点できます。</p>
+      <div className="grid grid-2">
+        {mocks.map((e) => {
+          const mine = list.filter((a) => a.examId === e.id);
+          const top = mine.length ? Math.max(...mine.map((a) => a.score)) : 0;
+          return (
+            <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card">
+              <div className="exam-card-top">
+                <span className="badge">{e.edition}</span>
+                <span className={`status ${mine.length ? "done" : ""}`}>{mine.length ? `受験済み ${mine.length}回` : "未受験"}</span>
+              </div>
+              <h3>{e.university}<br /><span>{e.faculty}　{e.subject}</span></h3>
+              <div className="meta">{e.durationMin}分 ・ {e.totalPoints}点満点 ・ {e.questionCount}問</div>
+              <div className="exam-progress" aria-label={`自己ベスト ${top}点`}>
+                <span style={{ width: `${(top / e.totalPoints) * 100}%` }} />
+              </div>
+              <div className="meta">{mine.length ? `自己ベスト ${top} / ${e.totalPoints}点` : "時間を計って1回"}</div>
+            </Link>
+          );
+        })}
+      </div>
+
+      {list.length > 0 && (
+        <>
+          <h2>最近の受験</h2>
+          <div className="recent">
+            {list.slice(0, 5).map((a) => (
+              <Link key={a.attemptId} to={resultLink(a)} className="recent-row">
+                <span className="recent-date">{fmtDate(a.createdAt)}</span>
+                <span className="recent-title">{a.examTitle}</span>
+                <span className="recent-score">{a.score}<small>/{a.maxScore}</small></span>
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  );
+}
+
 export function HomePage() {
+  return currentUser() ? <MemberHome /> : <GuestHome />;
+}
+
+/** ログインしていない人のホーム: 説明は2行、入口は「大問演習」と「模試」の2つ */
+function GuestHome() {
+  const exams = useAsync(() => api.exams(), []);
+  const list = localResults().map((r) => r.review.attempt);
+  const firstPractice = exams.data?.find((e) => e.kind === "practice");
+  const firstMock = exams.data?.find((e) => e.kind !== "practice");
+  return (
+    <>
+      <section className="hero hero-guest">
+        <div className="hero-main">
+          <h1 className="hero-title">慶應義塾大学 商学部 英語の予想模試</h1>
+          <p className="hero-sub">本番と同じ形式・同じ90分。登録なし・無料ですぐ受けられます。印刷して紙で解き、撮影して採点することもできます。</p>
+          <div className="row" style={{ marginTop: 14 }}>
+            {firstPractice && <a className="btn btn-hero" href="#practice">大問演習（15〜25分）</a>}
+            {firstMock && <Link className="btn btn-ghost" to={`/exams/${firstMock.id}`}>模試（90分）</Link>}
+          </div>
+        </div>
+      </section>
+      <ExamLists exams={exams.data} list={list} error={exams.error} />
+    </>
+  );
+}
+
+function MemberHome() {
   const exams = useAsync(() => api.exams(), []);
   const attempts = useAsync(() => api.attempts(), []);
   const me = useAsync(() => api.me(), []);
-  const firstExamId = exams.data?.[0]?.id;
+  const firstExamId = exams.data?.find((e) => e.kind !== "practice")?.id;
   const stats = useAsync(() => (firstExamId ? api.stats(firstExamId) : Promise.resolve(undefined)), [firstExamId]);
   const user = currentUser();
   const name = me.data?.nickname || user?.name;
@@ -92,54 +188,7 @@ export function HomePage() {
         <div className="kpi"><span>最新の偏差値</span><b>{latestDev?.toFixed(1) ?? "—"}</b></div>
       </div>
 
-      <h2>模試</h2>
-      {exams.error && <p className="error">{exams.error}</p>}
-      <div className="grid grid-2">
-        {exams.data?.map((e) => {
-          const mine = list.filter((a) => a.examId === e.id);
-          const top = mine.length ? Math.max(...mine.map((a) => a.score)) : 0;
-          return (
-            <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card">
-              <div className="exam-card-top">
-                <span className="badge">{e.edition}</span>
-                <span className={`status ${mine.length ? "done" : ""}`}>{mine.length ? `受験済み ${mine.length}回` : "未受験"}</span>
-              </div>
-              <h3>{e.university}<br /><span>{e.faculty}　{e.subject}</span></h3>
-              <div className="meta">{e.durationMin}分 ・ {e.totalPoints}点満点 ・ {e.questionCount}問</div>
-              <div className="exam-progress" aria-label={`自己ベスト ${top}点`}>
-                <span style={{ width: `${(top / e.totalPoints) * 100}%` }} />
-              </div>
-              <div className="meta">{mine.length ? `自己ベスト ${top} / ${e.totalPoints}点` : "まずは時間を計って1回"}</div>
-            </Link>
-          );
-        })}
-        <div className="card exam-card coming">
-          <div className="exam-card-top"><span className="badge">準備中</span></div>
-          <h3>続々追加予定<br /><span>商学部 第2回 ／ 経済・法・文学部 ／ 共通テスト</span></h3>
-        </div>
-      </div>
-
-      {list.length > 0 && (
-        <>
-          <h2>最近の受験</h2>
-          <div className="recent">
-            {list.slice(0, 5).map((a, i) => {
-              const prev = list[i + 1];
-              const delta = prev && prev.examId === a.examId ? a.score - prev.score : null;
-              return (
-                <Link key={a.attemptId} to={`/results/${a.attemptId}`} className="recent-row">
-                  <span className="recent-date">{fmtDate(a.createdAt)}</span>
-                  <span className="recent-title">{a.examTitle}</span>
-                  <span className="recent-score">
-                    {a.score}<small>/{a.maxScore}</small>
-                    {delta !== null && delta !== 0 && <em className={delta > 0 ? "up" : "down"}>{delta > 0 ? `+${delta}` : delta}</em>}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </>
-      )}
+      <ExamLists exams={exams.data} list={list} error={exams.error} />
     </>
   );
 }

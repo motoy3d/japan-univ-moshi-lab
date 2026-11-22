@@ -1,0 +1,54 @@
+# AWS へのデプロイ（手動実行）。認証は GitHub OIDC（長期のアクセスキーは使わない）。
+# 初回の準備は docs/deploy.md を参照。
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      photo_grading:
+        description: "撮影採点を有効にする（Secrets Manager に Anthropic の APIキーが必要）"
+        type: boolean
+        default: false
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build # validate + web build
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ap-northeast-1
+      - name: cdk deploy
+        working-directory: infra
+        env:
+          DOMAIN_PREFIX: ${{ vars.COGNITO_DOMAIN_PREFIX }}
+          GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+          GA_ID: ${{ vars.GA_ID }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          PHOTO_GRADING: ${{ inputs.photo_grading }}
+        run: |
+          args=(-c "domainPrefix=$DOMAIN_PREFIX" -c "photoGrading=$PHOTO_GRADING")
+          [ -n "$GOOGLE_CLIENT_ID" ] && args+=(-c "googleClientId=$GOOGLE_CLIENT_ID")
+          [ -n "$GA_ID" ] && args+=(-c "gaId=$GA_ID")
+          [ -n "$ALERT_EMAIL" ] && args+=(-c "alertEmail=$ALERT_EMAIL")
+          npx cdk deploy --require-approval never "${args[@]}" --outputs-file ../cdk-outputs.json
+      - name: 出力
+        run: cat cdk-outputs.json

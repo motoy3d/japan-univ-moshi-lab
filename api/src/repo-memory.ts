@@ -1,18 +1,21 @@
 import fs from "node:fs";
-import type { AttemptDetail, Profile } from "../../shared/types";
+import type { AttemptDetail, PhotoJob, Profile } from "../../shared/types";
 import type { RawStats } from "../../shared/stats";
-import type { Repo } from "./repo";
+import type { FeedbackRecord, Repo } from "./repo";
 
 interface Data {
   attempts: Record<string, AttemptDetail[]>;
   firsts: Record<string, string>;
   stats: Record<string, RawStats>;
   profiles: Record<string, Profile>;
+  guests?: { clientId: string; attempt: AttemptDetail }[];
+  feedback?: FeedbackRecord[];
+  photoJobs?: Record<string, PhotoJob[]>;
 }
 
 /** ローカル開発・テスト用。file を渡すと JSON に保存して再起動後も残す */
 export class MemoryRepo implements Repo {
-  private data: Data = { attempts: {}, firsts: {}, stats: {}, profiles: {} };
+  data: Data = { attempts: {}, firsts: {}, stats: {}, profiles: {} };
   constructor(private file?: string) {
     if (file && fs.existsSync(file)) this.data = { ...this.data, ...JSON.parse(fs.readFileSync(file, "utf8")) };
   }
@@ -51,5 +54,26 @@ export class MemoryRepo implements Repo {
   async putProfile(userId: string, profile: Profile) {
     this.data.profiles[userId] = profile;
     this.save();
+  }
+  async putGuestAttempt(clientId: string, attempt: AttemptDetail) {
+    (this.data.guests ??= []).push({ clientId, attempt });
+    this.save();
+  }
+  async putFeedback(item: FeedbackRecord) {
+    (this.data.feedback ??= []).push(item);
+    this.save();
+  }
+  async putPhotoJob(userId: string, job: PhotoJob) {
+    const list = ((this.data.photoJobs ??= {})[userId] ??= []);
+    const i = list.findIndex((j) => j.jobId === job.jobId);
+    if (i >= 0) list[i] = job;
+    else list.push(job);
+    this.save();
+  }
+  async getPhotoJob(userId: string, jobId: string) {
+    return this.data.photoJobs?.[userId]?.find((j) => j.jobId === jobId);
+  }
+  async countPhotoJobs(userId: string, since: string) {
+    return (this.data.photoJobs?.[userId] ?? []).filter((j) => j.createdAt >= since).length;
   }
 }

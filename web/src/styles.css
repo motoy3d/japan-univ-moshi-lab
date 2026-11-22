@@ -691,3 +691,33 @@ input[type="date"] { font: inherit; min-height: 44px; padding: 8px 12px; border-
 .b-plabel { font-family: var(--font-en); margin-right: 0.6em; }
 .b-sheet-notice { text-align: center; font-weight: 700; font-size: 12pt; letter-spacing: 0.08em; border-top: 1.2pt solid #000; padding-top: 2mm; margin-bottom: 5mm; }
 .b-example { font-size: 10pt; margin: -1mm 0 2mm 13mm; }
+
+/* ---------- 検証版: 登録なし受験・大問演習・意見・撮影採点 ---------- */
+.header-login { margin-left: auto; font-size: 14px; font-weight: 600; color: var(--accent); text-decoration: none; padding: 6px 10px; border-radius: 8px; }
+.header-login:hover { background: var(--accent-soft); }
+.hero-guest .hero-title { font-size: 24px; }
+.grid-3 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.section-lead { margin: -4px 0 10px; }
+h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
+.practice-card h3 { font-size: 16px; margin: 6px 0; }
+
+.rating { margin-top: 16px; display: grid; gap: 8px; }
+.rating-q { margin: 0; font-weight: 600; }
+.rating-scale { display: flex; gap: 8px; }
+.rating-btn { flex: 1; min-height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
+.rating-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rating-legend { display: flex; justify-content: space-between; }
+
+.review-q { position: relative; }
+.qfb { display: flex; flex-direction: column; align-items: flex-end; margin-top: 4px; }
+.qfb-icon { border: 0; background: none; color: var(--muted); opacity: 0.55; padding: 6px; border-radius: 8px; cursor: pointer; line-height: 0; }
+.qfb-icon:hover, .qfb-icon:focus-visible, .qfb-icon[aria-expanded="true"] { opacity: 1; background: var(--surface-2); }
+.qfb-form { display: grid; gap: 6px; width: min(100%, 360px); margin-top: 4px; }
+.qfb-form textarea, .qfb-form select { width: 100%; font: inherit; font-size: 14px; }
+.qfb-thanks { text-align: right; margin: 4px 0 0; }
+
+.photo-slot { display: grid; gap: 6px; padding: 10px; border: 1px dashed var(--line); border-radius: 10px; }
+.photo-slot span { font-weight: 600; }
+.photo-slot img { max-width: 100%; max-height: 220px; object-fit: contain; border-radius: 6px; }
+.sheet-row.low { background: color-mix(in srgb, var(--warn) 14%, transparent); }
+.low-mark { background: color-mix(in srgb, var(--warn) 22%, transparent); padding: 0 4px; border-radius: 4px; }

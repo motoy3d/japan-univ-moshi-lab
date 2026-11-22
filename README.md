@@ -118,6 +118,8 @@ npm 12 以降は、依存パッケージのインストールスクリプトを�
 
 ## AWS にデプロイする
 
+通常は GitHub Actions（`.github/workflows/deploy.yml`、OIDC 認証）からデプロイする。初回の準備と手順は [docs/deploy.md](docs/deploy.md)。以下は手元の端末から `cdk deploy` する場合の手順。
+
 前提: AWS CLI の認証設定、Node.js 26。
 
 ```bash

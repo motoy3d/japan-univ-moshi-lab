@@ -1,4 +1,4 @@
-import type { AttemptDetail, Profile } from "../../shared/types";
+import type { AttemptDetail, FeedbackRequest, PhotoJob, Profile } from "../../shared/types";
 import type { RawStats } from "../../shared/stats";
 
 /** 永続化層の抽象。本番は DynamoDB、ローカルはメモリ（JSONファイル保存） */
@@ -21,6 +21,18 @@ export interface Repo {
   getStats(examId: string): Promise<RawStats>;
   getProfile(userId: string): Promise<Profile>;
   putProfile(userId: string, profile: Profile): Promise<void>;
+  /** 登録なし受験の匿名記録（KPI・設問の分析用） */
+  putGuestAttempt(clientId: string, attempt: AttemptDetail): Promise<void>;
+  putFeedback(item: FeedbackRecord): Promise<void>;
+  putPhotoJob(userId: string, job: PhotoJob): Promise<void>;
+  getPhotoJob(userId: string, jobId: string): Promise<PhotoJob | undefined>;
+  /** since（ISO）以降に作った撮影採点のジョブ数 */
+  countPhotoJobs(userId: string, since: string): Promise<number>;
+}
+
+export interface FeedbackRecord extends FeedbackRequest {
+  createdAt: string;
+  userId?: string;
 }
 
 /** 時刻順に並ぶ受験ID（ソートキーにそのまま使える） */

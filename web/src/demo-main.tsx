@@ -5,7 +5,6 @@ import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
 import { App } from "./App";
 import { loadConfig } from "./config";
-import { currentUser, localLogin } from "./auth";
 import { route } from "../../api/src/app";
 import { BrowserRepo } from "./demo/browser-repo";
 import { EXAMS } from "../../content/index";
@@ -52,13 +51,12 @@ window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
 function DemoBanner() {
   return (
     <div className="demo-banner no-print">
-      デモ版：データはこの端末のブラウザ内だけに保存されます。偏差値の比較相手は架空の受験者{SEED_USERS}人です。
+      デモ版：データはこの端末のブラウザ内だけに保存されます。偏差値の比較相手は架空の受験者{SEED_USERS}人です。ログインは画面右上から（任意の名前で試せます）。
     </div>
   );
 }
 
 Promise.all([loadConfig(), seed()]).then(() => {
-  if (!currentUser()) localLogin("ゲスト");
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <MemoryRouter>

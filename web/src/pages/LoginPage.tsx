@@ -17,16 +17,16 @@ export function LoginPage() {
   return (
     <div className="login-wrap">
       <div className="login-pitch">
-        <h1>本番そっくりの模試で、<br />合格までの距離を測る。</h1>
+        <h1>受験の記録を残す</h1>
         <ul>
-          <li>志望学部の出題形式を再現したオリジナル問題</li>
-          <li>スマホで90分本番演習。紙に印刷してマークシートでも</li>
-          <li>偏差値・分野別の伸びしろ・目標までの残り点数を表示</li>
+          <li>受験は登録なしでもできます。ログインすると、結果が履歴に残り、前回と比べられます</li>
+          <li>解答用紙を撮影して採点する機能が使えます</li>
+          <li>この端末で登録なしで受けた結果も、ログイン後に履歴へ取り込みます</li>
         </ul>
       </div>
       <div className="card grid" style={{ gap: 12 }}>
         <h2 style={{ margin: 0 }}>ログイン / 新規登録</h2>
-        <p className="muted small" style={{ margin: 0 }}>受験記録と成績分析を保存するためにログインします。</p>
+        <p className="muted small" style={{ margin: 0 }}>無料です。受験記録を保存するためだけに使います。</p>
         <p className="muted small" style={{ margin: 0 }}>
           ログイン・新規登録により、<Link to="/terms">利用規約</Link>と<Link to="/privacy">プライバシーポリシー</Link>に同意したものとみなします。未成年の方は保護者の同意を得てご利用ください。
         </p>

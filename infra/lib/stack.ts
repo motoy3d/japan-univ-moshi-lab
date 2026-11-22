@@ -18,6 +18,7 @@ import * as cwActions from "aws-cdk-lib/aws-cloudwatch-actions";
 import * as sns from "aws-cdk-lib/aws-sns";
 import * as subs from "aws-cdk-lib/aws-sns-subscriptions";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
+import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -27,6 +28,11 @@ export interface MoshiLabProps extends StackProps {
   googleSecretName?: string;
   /** エラー通知の送信先メールアドレス（デプロイ時に -c alertEmail=... で指定。リポジトリには書かない） */
   alertEmail?: string;
+  /** GA4 の測定ID（G-XXXX）。config.json 経由でフロントに渡す */
+  gaId?: string;
+  /** 撮影採点を有効にする（Anthropic の APIキーを Secrets Manager に置いてから） */
+  photoGrading?: boolean;
+  anthropicSecretName?: string;
 }
 
 /** ログの保管期間（約3か月） */
@@ -64,6 +70,14 @@ export class MoshiLabStack extends Stack {
     });
 
     // ---------- API ----------
+    const bundling = {
+      format: OutputFormat.ESM,
+      minify: true,
+      target: "node26",
+      externalModules: ["@aws-sdk/*"], // ランタイム同梱の SDK v3 を使う
+      banner: "import{createRequire}from'module';const require=createRequire(import.meta.url);",
+    };
+    let photoWorker: NodejsFunction | undefined;
     const fn = new NodejsFunction(this, "Api", {
       entry: path.join(root, "api/src/lambda.ts"),
       handler: "handler",
@@ -75,17 +89,50 @@ export class MoshiLabStack extends Stack {
       logGroup: new logs.LogGroup(this, "ApiLogs", { retention: LOG_RETENTION, removalPolicy: RemovalPolicy.DESTROY }),
       loggingFormat: lambda.LoggingFormat.JSON,
       applicationLogLevelV2: lambda.ApplicationLogLevel.INFO,
-      bundling: {
-        format: OutputFormat.ESM,
-        minify: true,
-        target: "node26",
-        externalModules: ["@aws-sdk/*"], // ランタイム同梱の SDK v3 を使う
-        banner: "import{createRequire}from'module';const require=createRequire(import.meta.url);",
-      },
+      bundling,
       depsLockFilePath: path.join(root, "package-lock.json"),
       projectRoot: root,
     });
     table.grantReadWriteData(fn);
+
+    // ---------- 撮影採点（任意） ----------
+    // 画像は S3 に一時保存（1日で自動削除）→ 読み取り用 Lambda（最長2分）が Claude で読み取り、結果を DynamoDB へ
+    if (props.photoGrading) {
+      const photoBucket = new s3.Bucket(this, "PhotoUploads", {
+        blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+        enforceSSL: true,
+        encryption: s3.BucketEncryption.S3_MANAGED,
+        lifecycleRules: [{ expiration: Duration.days(1) }],
+        removalPolicy: RemovalPolicy.DESTROY,
+        autoDeleteObjects: true,
+      });
+      const anthropicSecret = secretsmanager.Secret.fromSecretNameV2(this, "AnthropicKey", props.anthropicSecretName ?? "moshi-lab/anthropic");
+      const worker = new NodejsFunction(this, "PhotoReader", {
+        entry: path.join(root, "api/src/photo-worker.ts"),
+        handler: "handler",
+        runtime: lambda.Runtime.NODEJS_26_X,
+        architecture: lambda.Architecture.ARM_64,
+        memorySize: 1024,
+        timeout: Duration.minutes(2),
+        retryAttempts: 0, // 失敗したら利用者に撮り直してもらう（同じ画像で二重に課金しない）
+        environment: { TABLE_NAME: table.tableName, PHOTO_BUCKET: photoBucket.bucketName, ANTHROPIC_SECRET: anthropicSecret.secretName },
+        logGroup: new logs.LogGroup(this, "PhotoReaderLogs", { retention: LOG_RETENTION, removalPolicy: RemovalPolicy.DESTROY }),
+        loggingFormat: lambda.LoggingFormat.JSON,
+        applicationLogLevelV2: lambda.ApplicationLogLevel.INFO,
+        bundling,
+        depsLockFilePath: path.join(root, "package-lock.json"),
+        projectRoot: root,
+      });
+      table.grantReadWriteData(worker);
+      photoBucket.grantRead(worker);
+      photoBucket.grantDelete(worker);
+      anthropicSecret.grantRead(worker);
+      photoBucket.grantPut(fn);
+      worker.grantInvoke(fn);
+      fn.addEnvironment("PHOTO_BUCKET", photoBucket.bucketName);
+      fn.addEnvironment("PHOTO_WORKER", worker.functionName);
+      photoWorker = worker;
+    }
 
     const httpApi = new apigw.HttpApi(this, "HttpApi", {});
 
@@ -185,12 +232,18 @@ export class MoshiLabStack extends Stack {
     });
     if (google) client.node.addDependency(google);
 
-    // ---------- ルート（JWT 認証付き） ----------
+    // ---------- ルート ----------
+    // 登録なしで使えるルート（JWT 認証なし）。HTTP API は具体的なルートを優先するので、
+    // 残りの /api/{proxy+}（JWT 認証付き）より先に当たる。
     const authorizer = new HttpJwtAuthorizer("Jwt", `https://cognito-idp.${this.region}.amazonaws.com/${userPool.userPoolId}`, {
       jwtAudience: [client.userPoolClientId],
     });
     const integration = new HttpLambdaIntegration("ApiInt", fn);
     httpApi.addRoutes({ path: "/api/health", methods: [apigw.HttpMethod.GET], integration });
+    httpApi.addRoutes({ path: "/api/exams", methods: [apigw.HttpMethod.GET], integration });
+    httpApi.addRoutes({ path: "/api/exams/{proxy+}", methods: [apigw.HttpMethod.GET], integration });
+    httpApi.addRoutes({ path: "/api/guest/attempts", methods: [apigw.HttpMethod.POST], integration });
+    httpApi.addRoutes({ path: "/api/feedback", methods: [apigw.HttpMethod.POST], integration });
     httpApi.addRoutes({ path: "/api/{proxy+}", methods: [apigw.HttpMethod.GET, apigw.HttpMethod.POST, apigw.HttpMethod.PUT], integration, authorizer });
 
     // 濫用対策のスロットリング（デフォルトステージ）
@@ -235,6 +288,7 @@ export class MoshiLabStack extends Stack {
       defaultValue: 0,
     });
     alarms.push(["AppErrors", appErrors.metric({ period: fiveMin, statistic: "Sum" }), 1, "アプリケーションのエラーログが出力されました"]);
+    if (photoWorker) alarms.push(["PhotoReaderErrors", photoWorker.metricErrors({ period: fiveMin, statistic: "Sum" }), 1, "撮影採点の読み取りで未処理の例外が発生しました"]);
     for (const [id, metric, threshold, description] of alarms) {
       const alarm = new cloudwatch.Alarm(this, id, {
         metric,
@@ -257,6 +311,8 @@ export class MoshiLabStack extends Stack {
           cognitoDomain: domain.baseUrl(),
           clientId: client.userPoolClientId,
           googleEnabled: !!google,
+          ...(props.gaId ? { gaId: props.gaId } : {}),
+          photoGrading: !!props.photoGrading,
         }),
       ],
       distribution,
