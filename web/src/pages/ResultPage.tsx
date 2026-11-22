@@ -53,7 +53,7 @@ function Result({ review, history, profile }: { review: AttemptReview; history: 
     <>
       <p className="muted small" style={{ margin: 0 }}>
         {fmtDate(a.createdAt)} ／ {a.mode === "paper" ? "紙で受験" : "Web受験"}
-        {!a.counted && " ／ 2回目以降（偏差値の母集団には含まれません）"}
+        {!a.counted && (a.excludedReason ? ` ／ ${a.excludedReason}、偏差値の母集団には含まれません` : " ／ 2回目以降（偏差値の母集団には含まれません）")}
       </p>
       <h1>{a.examTitle}</h1>
 

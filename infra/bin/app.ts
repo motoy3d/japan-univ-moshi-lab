@@ -10,4 +10,6 @@ new MoshiLabStack(app, "MoshiLab", {
   // クライアントシークレットは Secrets Manager の googleSecretName に {"clientSecret":"..."} で保存しておく
   googleClientId: app.node.tryGetContext("googleClientId") || undefined,
   googleSecretName: app.node.tryGetContext("googleSecretName"),
+  // エラー通知の送信先: -c alertEmail=you@example.com （個人情報なので cdk.json やリポジトリには書かない）
+  alertEmail: app.node.tryGetContext("alertEmail") || undefined,
 });

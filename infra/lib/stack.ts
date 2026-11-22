@@ -13,6 +13,10 @@ import { HttpJwtAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import * as s3 from "aws-cdk-lib/aws-s3";
 import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
+import * as cloudwatch from "aws-cdk-lib/aws-cloudwatch";
+import * as cwActions from "aws-cdk-lib/aws-cloudwatch-actions";
+import * as sns from "aws-cdk-lib/aws-sns";
+import * as subs from "aws-cdk-lib/aws-sns-subscriptions";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
@@ -21,13 +25,23 @@ export interface MoshiLabProps extends StackProps {
   domainPrefix?: string;
   googleClientId?: string;
   googleSecretName?: string;
+  /** エラー通知の送信先メールアドレス（デプロイ時に -c alertEmail=... で指定。リポジトリには書かない） */
+  alertEmail?: string;
 }
+
+/** ログの保管期間（約3か月） */
+const LOG_RETENTION = logs.RetentionDays.THREE_MONTHS;
 
 /**
  * 低コスト構成（小規模ならほぼ無料枠内）
  *   CloudFront ─┬─ S3（SPA 静的ファイル）
  *               └─ /api/* → API Gateway HTTP API（JWT 認証）→ Lambda（arm64）→ DynamoDB（オンデマンド）
  *   認証: Cognito User Pool（Lite プラン）+ Hosted UI（Google / メール）
+ *   監視: Lambda / API のエラー → CloudWatch アラーム → SNS → メール
+ *
+ * CloudFront は AWS 管理のキャッシュ／オリジンリクエスト／レスポンスヘッダーポリシーだけを使う。
+ * こうしておくと、デプロイ後にコンソールから定額の Free プラン（WAF・IP レート制限込み、月額 $0）に
+ * 加入できる（Free / Pro プランはカスタムポリシー不可）。CSP は index.html の meta タグで指定する。
  */
 export class MoshiLabStack extends Stack {
   constructor(scope: Construct, id: string, props: MoshiLabProps) {
@@ -53,16 +67,18 @@ export class MoshiLabStack extends Stack {
     const fn = new NodejsFunction(this, "Api", {
       entry: path.join(root, "api/src/lambda.ts"),
       handler: "handler",
-      runtime: lambda.Runtime.NODEJS_22_X,
+      runtime: lambda.Runtime.NODEJS_26_X, // Node.js 26（Active LTS、Lambda のサポートは 2029年4月まで）
       architecture: lambda.Architecture.ARM_64,
       memorySize: 512,
       timeout: Duration.seconds(10),
       environment: { TABLE_NAME: table.tableName },
-      logGroup: new logs.LogGroup(this, "ApiLogs", { retention: logs.RetentionDays.ONE_MONTH, removalPolicy: RemovalPolicy.DESTROY }),
+      logGroup: new logs.LogGroup(this, "ApiLogs", { retention: LOG_RETENTION, removalPolicy: RemovalPolicy.DESTROY }),
+      loggingFormat: lambda.LoggingFormat.JSON,
+      applicationLogLevelV2: lambda.ApplicationLogLevel.INFO,
       bundling: {
         format: OutputFormat.ESM,
         minify: true,
-        target: "node22",
+        target: "node26",
         externalModules: ["@aws-sdk/*"], // ランタイム同梱の SDK v3 を使う
         banner: "import{createRequire}from'module';const require=createRequire(import.meta.url);",
       },
@@ -75,38 +91,9 @@ export class MoshiLabStack extends Stack {
 
     // ---------- CloudFront ----------
     const apiOrigin = new origins.HttpOrigin(`${httpApi.apiId}.execute-api.${this.region}.amazonaws.com`);
-    // API 用: Authorization ヘッダをキャッシュキーに含めないと、CloudFront は GET/HEAD で
-    // Authorization をオリジンに転送しない（＝本番で 401 になる）。TTL は 0（API 側も no-store）。
-    const apiCachePolicy = new cloudfront.CachePolicy(this, "ApiCache", {
-      defaultTtl: Duration.seconds(0),
-      minTtl: Duration.seconds(0),
-      maxTtl: Duration.seconds(1),
-      headerBehavior: cloudfront.CacheHeaderBehavior.allowList("Authorization"),
-      queryStringBehavior: cloudfront.CacheQueryStringBehavior.all(),
-      cookieBehavior: cloudfront.CacheCookieBehavior.none(),
-    });
-    const securityHeaders = new cloudfront.ResponseHeadersPolicy(this, "SecurityHeaders", {
-      securityHeadersBehavior: {
-        contentTypeOptions: { override: true },
-        frameOptions: { frameOption: cloudfront.HeadersFrameOption.DENY, override: true },
-        referrerPolicy: { referrerPolicy: cloudfront.HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN, override: true },
-        strictTransportSecurity: { accessControlMaxAge: Duration.days(365), includeSubdomains: true, override: true },
-        contentSecurityPolicy: {
-          contentSecurityPolicy: [
-            "default-src 'self'",
-            "script-src 'self'",
-            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-            "font-src 'self' https://fonts.gstatic.com",
-            "img-src 'self' data:",
-            "connect-src 'self' https://*.amazoncognito.com",
-            "frame-ancestors 'none'",
-            "base-uri 'self'",
-            "form-action 'self' https://*.amazoncognito.com",
-          ].join("; "),
-          override: true,
-        },
-      },
-    });
+    // API: キャッシュしない（CachingDisabled）＋ Host 以外の全ヘッダを転送（AllViewerExceptHostHeader）。
+    // Authorization ヘッダはこの管理ポリシーで転送される（キャッシュしないので認可済みレスポンスの共有も起きない）。
+    // 静的ファイルのセキュリティヘッダは管理ポリシー SECURITY_HEADERS（HSTS・nosniff・X-Frame-Options 等）。
 
     // SPA ルーティング: 拡張子のないパスは index.html を返す（/api/* には適用しない）
     const spaRewrite = new cloudfront.Function(this, "SpaRewrite", {
@@ -116,14 +103,15 @@ export class MoshiLabStack extends Stack {
       ),
     });
 
+    const siteOrigin = origins.S3BucketOrigin.withOriginAccessControl(siteBucket);
     const distribution = new cloudfront.Distribution(this, "Cdn", {
       defaultRootObject: "index.html",
       priceClass: cloudfront.PriceClass.PRICE_CLASS_200, // 日本を含み、最も高い地域を除外
       defaultBehavior: {
-        origin: origins.S3BucketOrigin.withOriginAccessControl(siteBucket),
+        origin: siteOrigin,
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
-        responseHeadersPolicy: securityHeaders,
+        responseHeadersPolicy: cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
         compress: true,
         functionAssociations: [{ function: spaRewrite, eventType: cloudfront.FunctionEventType.VIEWER_REQUEST }],
       },
@@ -132,13 +120,14 @@ export class MoshiLabStack extends Stack {
           origin: apiOrigin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.HTTPS_ONLY,
           allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
-          cachePolicy: apiCachePolicy,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
           originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
         },
         "/config.json": {
-          origin: origins.S3BucketOrigin.withOriginAccessControl(siteBucket),
+          origin: siteOrigin,
           viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          responseHeadersPolicy: cloudfront.ResponseHeadersPolicy.SECURITY_HEADERS,
         },
       },
     });
@@ -207,6 +196,56 @@ export class MoshiLabStack extends Stack {
     // 濫用対策のスロットリング（デフォルトステージ）
     const stage = httpApi.defaultStage!.node.defaultChild as apigw.CfnStage;
     stage.defaultRouteSettings = { throttlingBurstLimit: 50, throttlingRateLimit: 20 };
+    // アクセスログ（不審なアクセスの調査用。IP・UA・ステータスを記録し約3か月保管）
+    const accessLogs = new logs.LogGroup(this, "ApiAccessLogs", { retention: LOG_RETENTION, removalPolicy: RemovalPolicy.DESTROY });
+    stage.accessLogSettings = {
+      destinationArn: accessLogs.logGroupArn,
+      format: JSON.stringify({
+        requestId: "$context.requestId",
+        time: "$context.requestTime",
+        ip: "$context.identity.sourceIp",
+        ua: "$context.identity.userAgent",
+        method: "$context.httpMethod",
+        path: "$context.path",
+        status: "$context.status",
+        latency: "$context.responseLatency",
+        sub: "$context.authorizer.claims.sub",
+        error: "$context.error.message",
+      }),
+    };
+
+    // ---------- 監視・エラー通知 ----------
+    const alarmTopic = new sns.Topic(this, "Alarms", { displayName: "模試ラボ アラート" });
+    if (props.alertEmail) alarmTopic.addSubscription(new subs.EmailSubscription(props.alertEmail));
+    const notify = new cwActions.SnsAction(alarmTopic);
+    const fiveMin = Duration.minutes(5);
+    const alarms: [string, cloudwatch.IMetric, number, string][] = [
+      ["ApiErrors", fn.metricErrors({ period: fiveMin, statistic: "Sum" }), 1, "Lambda（API）で未処理の例外が発生しました"],
+      ["ApiThrottles", fn.metricThrottles({ period: fiveMin, statistic: "Sum" }), 1, "Lambda（API）がスロットリングされました"],
+      ["Api5xx", httpApi.metricServerError({ period: fiveMin, statistic: "Sum" }), 1, "API が 5xx を返しました"],
+      ["Api4xxSpike", httpApi.metricClientError({ period: fiveMin, statistic: "Sum" }), 300, "API の 4xx が急増しています（ボット・不正アクセスの可能性）"],
+    ];
+    // アプリが握りつぶした例外（500 を返したもの）もログから拾う
+    const appErrors = new logs.MetricFilter(this, "AppErrorFilter", {
+      logGroup: fn.logGroup,
+      metricNamespace: "MoshiLab",
+      metricName: "AppErrors",
+      filterPattern: logs.FilterPattern.stringValue("$.level", "=", "ERROR"),
+      metricValue: "1",
+      defaultValue: 0,
+    });
+    alarms.push(["AppErrors", appErrors.metric({ period: fiveMin, statistic: "Sum" }), 1, "アプリケーションのエラーログが出力されました"]);
+    for (const [id, metric, threshold, description] of alarms) {
+      const alarm = new cloudwatch.Alarm(this, id, {
+        metric,
+        threshold,
+        evaluationPeriods: 1,
+        comparisonOperator: cloudwatch.ComparisonOperator.GREATER_THAN_OR_EQUAL_TO_THRESHOLD,
+        treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
+        alarmDescription: description,
+      });
+      alarm.addAlarmAction(notify);
+    }
 
     // ---------- フロントのデプロイ ----------
     new s3deploy.BucketDeployment(this, "DeploySite", {
@@ -230,5 +269,9 @@ export class MoshiLabStack extends Stack {
     new CfnOutput(this, "GoogleRedirectUri", { value: `${domain.baseUrl()}/oauth2/idpresponse`, description: "Google Cloud Console の「承認済みのリダイレクト URI」に登録する" });
     new CfnOutput(this, "UserPoolClientId", { value: client.userPoolClientId });
     new CfnOutput(this, "TableName", { value: table.tableName });
+    new CfnOutput(this, "AlarmTopicArn", {
+      value: alarmTopic.topicArn,
+      description: props.alertEmail ? "通知先メールに届く確認メールのリンクを開いて購読を有効にしてください" : "-c alertEmail=... を付けて再デプロイすると、エラー時にメールが届きます",
+    });
   }
 }

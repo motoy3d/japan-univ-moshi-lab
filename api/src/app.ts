@@ -16,6 +16,16 @@ export interface ApiResponse {
   body: unknown;
 }
 
+/** ボット的な提出の判定（不正対策ではなく、偏差値の母集団を守るための最低限のフィルタ） */
+export const BOT_GUARD = {
+  /** 1ユーザーが24時間に提出できる回数 */
+  dailySubmitLimit: 20,
+  /** これより短い所要時間の提出は母集団に含めない（90分の試験を数分で解き終えるのは不自然） */
+  minSecondsForPopulation: 15 * 60,
+  /** 解答した設問の割合がこれ未満の提出は母集団に含めない（ほぼ白紙） */
+  minAnsweredRatio: 0.3,
+};
+
 const ok = (body: unknown): ApiResponse => ({ status: 200, body });
 const err = (status: number, message: string): ApiResponse => ({ status, body: { message } });
 
@@ -71,6 +81,12 @@ export async function route(
     if (!exam) return err(404, "模試が見つかりません");
     if (typeof req.answers !== "object" || req.answers === null) return err(400, "解答がありません");
 
+    // 短時間の連続提出（スクリプトによる大量送信など）を止める
+    const now = Date.now();
+    const recent = (await repo.listAttempts(userId)).filter((a) => now - Date.parse(a.createdAt) < 24 * 3600 * 1000);
+    if (recent.length >= BOT_GUARD.dailySubmitLimit)
+      return err(429, `提出は24時間に${BOT_GUARD.dailySubmitLimit}回までです。時間をおいて再度お試しください`);
+
     // 解答を既知の問題IDだけに絞り、長さを制限する
     const answers: AttemptDetail["answers"] = {};
     for (const q of allQuestions(exam)) {
@@ -80,8 +96,19 @@ export async function route(
     }
     const scored = scoreExam(exam, answers);
     const attemptId = newAttemptId();
+    const durationSec = Math.max(0, Math.min(Math.round(Number(req.durationSec) || 0), 6 * 3600));
     const sec = Object.fromEntries(scored.sections.map((s) => [s.key, s.score]));
-    const counted = await repo.recordFirstAttempt(exam.id, userId, attemptId, scored.score, bucketOf(scored.score, exam.totalPoints), sec);
+    // ボット的な提出は母集団に入れない（「初回」の枠も消費しないので、次のまともな受験が初回扱いになる）
+    const answeredRatio = Object.keys(answers).length / allQuestions(exam).length;
+    const excludedReason =
+      durationSec < BOT_GUARD.minSecondsForPopulation
+        ? `所要時間が${BOT_GUARD.minSecondsForPopulation / 60}分未満のため`
+        : answeredRatio < BOT_GUARD.minAnsweredRatio
+          ? `解答した設問が${Math.round(BOT_GUARD.minAnsweredRatio * 100)}%未満のため`
+          : undefined;
+    const counted = excludedReason
+      ? false
+      : await repo.recordFirstAttempt(exam.id, userId, attemptId, scored.score, bucketOf(scored.score, exam.totalPoints), sec);
     const stats = await currentStats(repo, exam.id);
     const attempt: AttemptDetail = {
       attemptId,
@@ -89,12 +116,13 @@ export async function route(
       examTitle: `${exam.edition} ${exam.title}`,
       createdAt: new Date().toISOString(),
       mode: req.mode === "paper" ? "paper" : "web",
-      durationSec: Math.max(0, Math.min(Math.round(Number(req.durationSec) || 0), 6 * 3600)),
+      durationSec,
       score: scored.score,
       maxScore: scored.maxScore,
       deviation: deviationScore(scored.score, stats),
       population: stats.count,
       counted,
+      ...(excludedReason ? { excludedReason } : {}),
       sections: scored.sections,
       categories: scored.categories,
       answers,

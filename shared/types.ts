@@ -146,6 +146,8 @@ export interface AttemptSummary {
   population: number;
   /** 母集団に含まれた（初回受験）か */
   counted: boolean;
+  /** 母集団に含めなかった理由（所要時間が短すぎる・ほぼ白紙など） */
+  excludedReason?: string;
   sections: PartScore[];
   categories: PartScore[];
 }
