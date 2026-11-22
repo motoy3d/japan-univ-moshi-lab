@@ -1,4 +1,8 @@
 import { EXAMS, findExam } from "../../content/index";
+import { findTarget } from "../../content/admissions";
+
+/** 志望校の登録上限 */
+const MAX_TARGETS = 3;
 import { allQuestions, scoreExam, stripAnswers } from "../../shared/scoring";
 import { bucketOf, deviationScore, toExamStats, topPercent } from "../../shared/stats";
 import type {
@@ -171,6 +175,18 @@ export async function route(
     const g = Number(body.goalDeviation);
     if (body.goalDeviation != null && Number.isFinite(g)) profile.goalDeviation = Math.min(80, Math.max(40, Math.round(g)));
     if (typeof body.examDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(body.examDate)) profile.examDate = body.examDate;
+    if (Array.isArray(body.targets)) {
+      const seen = new Set<string>();
+      const targets: NonNullable<Profile["targets"]> = [];
+      for (const t of body.targets.slice(0, MAX_TARGETS)) {
+        const ref = { admissionId: String(t?.admissionId ?? ""), facultyId: String(t?.facultyId ?? ""), methodId: String(t?.methodId ?? "") };
+        const key = `${ref.admissionId}/${ref.facultyId}/${ref.methodId}`;
+        if (!findTarget(ref)) return err(400, "志望校の指定が不正です");
+        if (!seen.has(key)) targets.push(ref);
+        seen.add(key);
+      }
+      if (targets.length) profile.targets = targets;
+    }
     await repo.putProfile(userId, profile);
     return ok(profile);
   }

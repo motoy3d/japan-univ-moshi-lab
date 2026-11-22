@@ -190,6 +190,8 @@ export interface Profile {
   nickname?: string;
   /** 目標偏差値（40〜80） */
   goalDeviation?: number;
-  /** 本番の受験日 YYYY-MM-DD（カウントダウン表示） */
+  /** 本番の受験日 YYYY-MM-DD（志望校を設定していない場合の手入力） */
   examDate?: string;
+  /** 志望校（先頭が第1志望、最大3件）。値は content/admissions.ts の ID */
+  targets?: { admissionId: string; facultyId: string; methodId: string }[];
 }

@@ -4,6 +4,7 @@ import { currentUser } from "../auth";
 import { fmtDate, useAsync } from "../hooks";
 import { Ring, daysUntil, opportunities } from "../components/Motivation";
 import { deviationScore, scoreForDeviation } from "../../../shared/stats";
+import { jpDate, jpDateTime, nextDeadline, primaryExamDate, targetName } from "../targets";
 
 function greeting() {
   const h = new Date().getHours();
@@ -21,7 +22,9 @@ export function HomePage() {
   const list = attempts.data ?? [];
   const latest = list[0];
   const best = list.length ? Math.max(...list.map((a) => a.score)) : null;
-  const days = daysUntil(me.data?.examDate);
+  const primary = me.data?.targets?.[0];
+  const days = daysUntil(primaryExamDate(me.data?.targets, me.data?.examDate));
+  const deadline = nextDeadline(primary);
   const goal = me.data?.goalDeviation;
   const latestDev = latest && stats.data ? deviationScore(latest.score, stats.data) : null;
   const goalScore = goal && stats.data ? scoreForDeviation(goal, stats.data) : null;
@@ -33,7 +36,10 @@ export function HomePage() {
         <div className="hero-main">
           <p className="hero-greet">{greeting()}、{name} さん</p>
           {days !== null && days >= 0 ? (
-            <h1 className="hero-title">本番まで <span className="hero-num">{days}</span> 日</h1>
+            <>
+              {primary && <p className="hero-target">{targetName(primary, true)}　{jpDate(primaryExamDate(me.data?.targets)!)}</p>}
+              <h1 className="hero-title">本番まで <span className="hero-num">{days}</span> 日</h1>
+            </>
           ) : (
             <h1 className="hero-title">今日も1セット、積み上げよう</h1>
           )}
@@ -44,14 +50,19 @@ export function HomePage() {
                 : "前回は満点。次は時間を短縮して精度を保ちましょう。"
               : "まずは1回、本番と同じ90分で現在地を測りましょう。"}
           </p>
+          {deadline && (
+            <p className="hero-deadline">
+              📮 {deadline.label.replace(/（.*）/, "")}：{jpDateTime(deadline.start)} 〜 <b>{jpDateTime(deadline.end)}</b>
+            </p>
+          )}
           <div className="row" style={{ marginTop: 14 }}>
             {firstExamId && (
               <Link className="btn btn-hero" to={`/exams/${firstExamId}${latest ? "" : "/take"}`}>
                 {latest ? "模試に取り組む" : "最初の模試を始める"}
               </Link>
             )}
-            {(!goal || !me.data?.examDate) && (
-              <Link className="btn btn-ghost" to="/settings">目標と受験日を設定</Link>
+            {(!goal || (!primary && !me.data?.examDate)) && (
+              <Link className="btn btn-ghost" to="/settings">{primary ? "目標偏差値を設定" : "志望校を設定（30秒）"}</Link>
             )}
           </div>
         </div>

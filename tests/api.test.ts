@@ -110,3 +110,12 @@ test("ボット的な提出: 短時間・白紙は母集団に含めず、24時�
   for (let i = 2; i < BOT_GUARD.dailySubmitLimit; i++) await post("bot", {}, 3600);
   assert.equal((await post("bot", {}, 3600)).status, 429);
 });
+
+test("API: 志望校は公式データにあるものだけ保存できる", async () => {
+  const repo = new MemoryRepo();
+  const put = (body: unknown) => route(repo, "PUT", "/api/me", "u1", JSON.stringify(body));
+  const okRes = await put({ targets: [{ admissionId: "keio", facultyId: "shogaku", methodId: "a" }, { admissionId: "keio", facultyId: "shogaku", methodId: "a" }, { admissionId: "kyotsu", facultyId: "main", methodId: "general" }] });
+  assert.equal(okRes.status, 200);
+  assert.deepEqual((okRes.body as { targets: unknown[] }).targets.length, 2); // 重複は1つにまとめる
+  assert.equal((await put({ targets: [{ admissionId: "keio", facultyId: "shogaku", methodId: "z" }] })).status, 400);
+});

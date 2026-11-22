@@ -2,6 +2,8 @@
 import { EXAMS } from "../content/index";
 import { allQuestions } from "../shared/scoring";
 import { CATEGORY_LABELS } from "../shared/types";
+import { ADMISSIONS } from "../content/admissions";
+import { findExam } from "../content/index";
 
 let errors = 0;
 const fail = (examId: string, msg: string) => {
@@ -82,6 +84,24 @@ for (const exam of EXAMS) {
   }
   console.log(`✓ ${exam.id}: マーク ${qs.filter((q) => q.kind === "mark").length} 問 / 記述 ${qs.filter((q) => q.kind === "write").length} 問 / ${total} 点`);
 }
+// 志望校データ: 日付の形式・模試 ID の存在・年度切れ
+const DATE = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2})?$/;
+const today = new Date().toISOString().slice(0, 10);
+for (const a of ADMISSIONS) {
+  for (const f of a.faculties) {
+    if (!f.stages.length) fail(a.id, `${f.id}: 試験日がない`);
+    for (const st of f.stages) {
+      if (!DATE.test(st.date) || (st.result && !DATE.test(st.result))) fail(a.id, `${f.id}: 日付の形式が不正`);
+      for (const pd of st.periods) if (!/^\d{1,2}:\d{2}$/.test(pd.start) || !/^\d{1,2}:\d{2}$/.test(pd.end)) fail(a.id, `${f.id}: 時刻の形式が不正`);
+    }
+    for (const id of f.mockExamIds) if (!findExam(id)) fail(a.id, `${f.id}: 模試 ${id} が存在しない`);
+    if (!f.methods.length) fail(a.id, `${f.id}: 受験方式がない`);
+  }
+  const last = a.faculties.flatMap((f) => f.stages.map((st) => st.date)).sort().at(-1)!;
+  if (last < today) console.warn(`⚠ [${a.id}] ${a.year}年度の日程はすべて終了しています。新年度の要項で更新してください（出典: ${a.source.url}）`);
+  console.log(`✓ ${a.id}: ${a.year}年度 ${a.faculties.length}学部（${a.source.checkedAt} 確認）`);
+}
+
 if (errors) {
   console.error(`${errors} 件のエラー`);
   process.exit(1);
