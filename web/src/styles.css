@@ -590,7 +590,8 @@ input[type="date"] { font: inherit; min-height: 44px; padding: 8px 12px; border-
   }
   .tabbar a { display: grid; justify-items: center; gap: 2px; padding: 8px 0 6px; font-size: 11px; color: var(--muted); text-decoration: none; }
   .tabbar a.active { color: var(--accent); font-weight: 700; }
-  .container.with-tabbar { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
+  .container.with-tabbar { padding-bottom: 8px; }
+  .app-footer.with-tabbar { padding-bottom: calc(88px + env(safe-area-inset-bottom)); }
 }
 
 /* ---- ログイン ---- */
@@ -669,3 +670,11 @@ input[type="date"] { font: inherit; min-height: 44px; padding: 8px 12px; border-
 .hero-deadline { margin: 8px 0 0; font-size: 13px; opacity: 0.9; }
 .picker .chip.method { display: flex; flex-direction: column; align-items: flex-start; text-align: left; border-radius: 12px; width: 100%; padding: 10px 14px; }
 .picker .chip.method small { margin: 2px 0 0; }
+
+/* ---- フッター・規約 ---- */
+.app-footer { display: flex; flex-wrap: wrap; gap: 6px 16px; justify-content: center; padding: 20px 16px 28px; font-size: 12px; color: var(--muted); }
+.app-footer a { color: inherit; }
+.legal { max-width: 760px; line-height: 1.85; }
+.legal h2 { font-size: 17px; margin-top: 28px; }
+.legal ol, .legal ul { padding-left: 1.4em; }
+.legal li { margin: 4px 0; }

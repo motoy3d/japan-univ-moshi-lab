@@ -10,6 +10,7 @@ import { ResultPage } from "./pages/ResultPage";
 import { HistoryPage } from "./pages/HistoryPage";
 import { AnswerKeyPrintPage } from "./pages/AnswerKeyPrintPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { PrivacyPage, TermsPage } from "./pages/LegalPages";
 
 function RequireAuth({ children }: { children: ReactNode }) {
   const loc = useLocation();
@@ -22,16 +23,21 @@ function Shell({ children }: { children: ReactNode }) {
   return (
     <>
       <header className="app-header no-print">
-        <Link to="/" className="brand"><span className="logo" aria-hidden>模</span>予想模試ラボ</Link>
+        <Link to="/" className="brand"><span className="logo" aria-hidden>模</span>模試ラボ</Link>
         {user && (
           <nav className="top-nav">
             <NavLink to="/" end>ホーム</NavLink>
             <NavLink to="/history">成績分析</NavLink>
-            <NavLink to="/settings">目標・設定</NavLink>
+            <NavLink to="/settings">志望校・目標</NavLink>
           </nav>
         )}
       </header>
       <main className={`container ${user ? "with-tabbar" : ""}`}>{children}</main>
+      <footer className={`app-footer no-print ${user ? "with-tabbar" : ""}`}>
+        <Link to="/terms">利用規約</Link>
+        <Link to="/privacy">プライバシーポリシー</Link>
+        <span>© 模試ラボ</span>
+      </footer>
       {user && (
         <nav className="tabbar no-print" aria-label="メインメニュー">
           <NavLink to="/" end><TabIcon d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />ホーム</NavLink>
@@ -58,6 +64,8 @@ export function App() {
     <Routes>
       <Route path="/login" element={<Shell><LoginPage /></Shell>} />
       <Route path="/callback" element={<Shell><CallbackPage /></Shell>} />
+      <Route path="/terms" element={<Shell><TermsPage /></Shell>} />
+      <Route path="/privacy" element={<Shell><PrivacyPage /></Shell>} />
       <Route path="/" element={authed(<HomePage />)} />
       <Route path="/exams/:id" element={authed(<ExamPage />)} />
       <Route path="/exams/:id/take" element={authed(<TakePage />, false)} />

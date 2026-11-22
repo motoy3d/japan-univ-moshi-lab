@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { currentUser, handleCallback, localLogin, login } from "../auth";
 import { getConfig } from "../config";
 
@@ -27,6 +27,9 @@ export function LoginPage() {
       <div className="card grid" style={{ gap: 12 }}>
         <h2 style={{ margin: 0 }}>ログイン / 新規登録</h2>
         <p className="muted small" style={{ margin: 0 }}>受験記録と成績分析を保存するためにログインします。</p>
+        <p className="muted small" style={{ margin: 0 }}>
+          ログイン・新規登録により、<Link to="/terms">利用規約</Link>と<Link to="/privacy">プライバシーポリシー</Link>に同意したものとみなします。未成年の方は保護者の同意を得てご利用ください。
+        </p>
         {cfg.authMode === "cognito" ? (
           <>
             {cfg.googleEnabled && (

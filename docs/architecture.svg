@@ -14,7 +14,7 @@
     </style>
   </defs>
   <rect width="1000" height="640" fill="#fcfcfb"/>
-  <text x="24" y="34" font-size="20" font-weight="700" fill="#14284b">予想模試ラボ　AWS アーキテクチャ</text>
+  <text x="24" y="34" font-size="20" font-weight="700" fill="#14284b">模試ラボ　AWS アーキテクチャ</text>
   <text x="24" y="56" class="s">サーバー常駐なし・すべて従量課金（東京リージョン ap-northeast-1）／ AWS CDK で一括構築</text>
 
   <!-- AWS クラウド境界 -->
@@ -57,7 +57,7 @@
   <!-- Lambda -->
   <rect x="760" y="242" width="196" height="92" rx="12" class="box" stroke="#ed7100" stroke-width="1.6"/>
   <text x="858" y="270" text-anchor="middle" class="t">Lambda</text>
-  <text x="858" y="290" text-anchor="middle" class="s">Node.js 22・arm64</text>
+  <text x="858" y="290" text-anchor="middle" class="s">Node.js 26・arm64</text>
   <text x="858" y="306" text-anchor="middle" class="s">採点・偏差値・成績</text>
   <text x="858" y="322" text-anchor="middle" class="s">（正解は採点時のみ使用）</text>
 

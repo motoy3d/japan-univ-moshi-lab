@@ -29,7 +29,6 @@
   "engines": {
     "node": ">=26"
   },
-  "dependencies": {},
   "allowScripts": {
     "esbuild@0.28.2": true
   }
