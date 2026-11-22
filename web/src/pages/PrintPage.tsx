@@ -10,8 +10,8 @@ type Paper = "A4" | "B5";
 const PARTS = [
   ["cover", "表紙"],
   ["booklet", "問題"],
-  ["mark", "マーク解答用紙"],
-  ["write", "記述解答用紙"],
+  ["mark", "解答用紙A（マーク）"],
+  ["write", "解答用紙B（記述）"],
 ] as const;
 type Part = (typeof PARTS)[number][0];
 
@@ -128,17 +128,20 @@ function Booklet({ exam }: { exam: Exam }) {
     <div className="booklet">
       {exam.sections.map((s) => (
         <section className="b-section" key={s.label}>
+          {s.sheetNotice && <div className="b-sheet-notice">{s.sheetNotice}</div>}
           <div className="b-section-head">
             <span className="b-roman">{s.label}</span>
             <span className="b-instruction">{s.instruction}</span>
           </div>
+          {s.example && <div className="b-example">{s.example}</div>}
+          {s.passage && s.groups.map((g, gi) => g.wordBox && <WordBox key={gi} words={g.wordBox} />)}
           {s.passage && <BookletPassage passage={s.passage} />}
           {s.groups.map((g, gi) => (
-            <BookletGroup key={gi} group={g} />
+            <BookletGroup key={gi} group={g} wordBoxShown={!!s.passage} />
           ))}
         </section>
       ))}
-      <div className="b-end">— 以　上 —</div>
+      <div className="b-end">《以下余白》</div>
     </div>
   );
 }
@@ -152,11 +155,13 @@ function BookletPassage({ passage }: { passage: Passage }) {
           const sp = passage.dialogue ? splitSpeaker(para) : null;
           return (
             <p key={i}>
+              {i === 0 && passage.label && <span className="b-plabel">{passage.label}</span>}
               {sp ? <><span style={{ display: "inline-block", width: "4.2em" }}>{sp[0]}:</span>{renderMarkup(sp[1])}</> : renderMarkup(para)}
             </p>
           );
         })}
       </div>
+      {passage.source && <div className="b-source">{passage.source}</div>}
       {passage.notes && (
         <div className="b-notes">
           （注）{passage.notes.map((n) => <span key={n}>{n}</span>)}
@@ -173,16 +178,18 @@ function choiceLayout(choices: string[]) {
   return "";
 }
 
-function BookletGroup({ group }: { group: QuestionGroup }) {
+const WordBox = ({ words }: { words: string[] }) => (
+  <div className="word-box print">
+    {words.map((w) => <span key={w}>{w}</span>)}
+  </div>
+);
+
+function BookletGroup({ group, wordBoxShown }: { group: QuestionGroup; wordBoxShown?: boolean }) {
   return (
     <div className="b-group">
       {group.instruction && <div className="b-group-inst">{group.instruction}</div>}
       {group.passage && <BookletPassage passage={group.passage} />}
-      {group.wordBox && (
-        <div className="word-box print">
-          {group.wordBox.map((w) => <span key={w}>{w}</span>)}
-        </div>
-      )}
+      {group.wordBox && !wordBoxShown && <WordBox words={group.wordBox} />}
       {group.choices && (
         <div className="b-shared">
           {group.choices.map((c, i) => (
@@ -190,22 +197,34 @@ function BookletGroup({ group }: { group: QuestionGroup }) {
           ))}
         </div>
       )}
-      {!group.choices && group.questions.filter((q) => q.kind === "mark").map((q) => <BookletQuestion key={q.id} q={q} />)}
+      {!group.choices &&
+        group.questions
+          .filter((q) => q.kind === "mark")
+          .map((q) => <BookletQuestion key={q.id} q={q} answerLine={group.answerLine} hideNo={!!group.passage?.label} />)}
     </div>
   );
 }
 
-function BookletQuestion({ q }: { q: Question }) {
+/** 解答番号の枠（本文の空所と同じ見た目） */
+const AnsBox = ({ no }: { no: string }) => <span className="b-ansbox">({no})</span>;
+
+function BookletQuestion({ q, answerLine, hideNo }: { q: Question; answerLine?: boolean; hideNo?: boolean }) {
   const isJp = q.prompt ? /[぀-ヿ一-龯]/.test(q.prompt.split("\n")[0]) : false;
+  const no = questionLabel(q);
   return (
-    <div className="b-q">
-      <span className="no">({questionLabel(q)})</span>
+    <div className={`b-q ${hideNo ? "no-num" : ""}`}>
+      {!hideNo && <span className="no">({no})</span>}
       <div>
-        {q.prompt && <div className={`prompt ${isJp ? "jp" : ""}`}>{q.prompt}</div>}
+        {(q.prompt || answerLine) && (
+          <div className={`prompt ${isJp ? "jp" : ""}`}>
+            {q.prompt}
+            {answerLine && <>{q.prompt ? " " : ""}The answer is: <AnsBox no={no} />.</>}
+          </div>
+        )}
         {q.choices && (
           <div className={`b-choices ${choiceLayout(q.choices)}`}>
             {q.choices.map((c, i) => (
-              <span className="c" key={i}><span>{i + 1}.</span><span>{c}</span></span>
+              <span className="c" key={i}><span>{i + 1}</span><span>{c}</span></span>
             ))}
           </div>
         )}
@@ -231,8 +250,8 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
           <div className="b" />
         </div>
         <div className="ms-box ms-mid">
-          <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試</span>
-          <b>英　語</b>
+          <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試　英語</span>
+          <b>解答用紙A</b>
         </div>
         <div className="ms-notes">
           <div>［注意事項］</div>
@@ -285,7 +304,7 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
               </div>
             </div>
           ))}
-          <div className="ms-foot">解答番号（{used + 1}）以降の欄は使用しません。記述式（VII・VIII）は記述解答用紙に記入すること。</div>
+          <div className="ms-foot">解答番号（{used + 1}）以降の欄は使用しません。VII・VIII は解答用紙Bに記入すること。</div>
         </div>
       </div>
     </div>
@@ -298,7 +317,7 @@ function WriteSheet({ exam }: { exam: Exam }) {
   return (
     <div className="ws">
       <div className="ws-head">
-        <div className="ws-title">英語　記述解答用紙</div>
+        <div className="ws-title">英語　解答用紙B</div>
         <div className="ws-id">
           <span>受験番号</span><div />
           <span>氏名</span><div className="name" />

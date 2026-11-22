@@ -6,6 +6,7 @@ import {
   type ExamWithKey,
   type PartScore,
   type Question,
+  type QuestionGroup,
   type QuestionResult,
   type QuestionWithKey,
 } from "./types";
@@ -29,6 +30,23 @@ export function isCorrect(q: QuestionWithKey, value: Answers[string]): boolean {
   if (q.kind === "mark") return Number(value) === q.answer;
   const accepted = (q.answer as string[]).map(normalizeWritten);
   return accepted.includes(normalizeWritten(String(value)));
+}
+
+/** 語群の同じ語を二回以上使った設問の ID（wordForms がある設問グループのみ） */
+export function reusedWords(group: QuestionGroup<QuestionWithKey>, answers: Answers): Set<string> {
+  const out = new Set<string>();
+  if (!group.wordForms) return out;
+  const formToWord = new Map<string, string>();
+  for (const [word, forms] of Object.entries(group.wordForms)) for (const f of forms) formToWord.set(normalizeWritten(f), word);
+  const byWord = new Map<string, string[]>();
+  for (const q of group.questions) {
+    const v = answers[q.id];
+    if (q.kind !== "write" || v === undefined || v === null || v === "") continue;
+    const word = formToWord.get(normalizeWritten(String(v)));
+    if (word) byWord.set(word, [...(byWord.get(word) ?? []), q.id]);
+  }
+  for (const ids of byWord.values()) if (ids.length > 1) ids.forEach((id) => out.add(id));
+  return out;
 }
 
 export interface ScoreResult {
@@ -56,8 +74,10 @@ export function scoreExam(exam: ExamWithKey, answers: Answers): ScoreResult {
       total: 0,
     };
     for (const group of section.groups) {
+      const reused = reusedWords(group, answers);
       for (const q of group.questions) {
-        const ok = isCorrect(q, answers[q.id]);
+        // 同じ語を二回以上使った解答は、正しい形でも得点にしない（本番の注意書きどおり）
+        const ok = isCorrect(q, answers[q.id]) && !reused.has(q.id);
         const earned = ok ? q.points : 0;
         results.push({ id: q.id, correct: ok, earned });
         part.score += earned;
@@ -96,7 +116,7 @@ export function stripAnswers(exam: ExamWithKey): Exam<Question> {
     ...exam,
     sections: exam.sections.map((s) => ({
       ...s,
-      groups: s.groups.map((g) => ({
+      groups: s.groups.map(({ wordForms: _w, ...g }) => ({
         ...g,
         questions: g.questions.map(({ answer: _a, explanation: _e, ...q }) => q),
       })),

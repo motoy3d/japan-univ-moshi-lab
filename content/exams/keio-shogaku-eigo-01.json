@@ -8,38 +8,39 @@
   "durationMin": 90,
   "totalPoints": 200,
   "coverNotes": [
-    "試験開始の合図があるまで、この問題冊子を開いてはいけません。",
-    "この問題冊子は、表紙を除き本文が I から VIII まであります。落丁、乱丁、印刷不鮮明の箇所等があった場合は、手を挙げて監督者に知らせてください。",
-    "解答用紙は、マーク解答用紙と記述解答用紙の2種類です。I〜VI の解答はマーク解答用紙に、VII・VIII の解答は記述解答用紙に記入してください。",
-    "マーク解答用紙には、HBの黒鉛筆を使用し、所定の解答欄の該当する番号を濃く正確にマークしてください。訂正する場合は、プラスチック製の消しゴムできれいに消してください。",
-    "記述解答用紙には、所定の解答欄に、はっきりと記入してください。",
-    "解答用紙の受験番号欄・氏名欄は必ず記入してください。",
-    "問題冊子の余白は、適宜下書きに使用してかまいません。"
+    "受験番号と氏名は、解答用紙A（マークシート）と解答用紙Bのそれぞれ所定の欄に必ず記入すること。さらに、解答用紙A（マークシート）の受験番号欄をマークすること。",
+    "解答は、すべて指定された解答用紙の所定の欄に記入またはマークすること。I〜VI は解答用紙A（マークシート）、VII・VIII は解答用紙Bを使用する。",
+    "解答用紙A（マークシート）への記入に先立って、用紙上に記載された注意事項を必ず読むこと。",
+    "解答用紙A（マークシート）にはHBの黒鉛筆を使用し、たとえば（12）と表示のある問いに対して 3 と解答する場合は、解答欄（12）の 3 をマークすること。",
+    "問題冊子の余白は下書きに用いてよい。",
+    "試験開始の合図とともに全てのページが揃っているか確認し、ページの抜けや重複があった場合は直ちに監督者に申し出ること。"
   ],
   "disclaimer": "本模試は、過去の出題形式（大問構成・設問形式・分量）を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。配点は大学から公表されていないため、本模試独自の想定配点です。",
   "sections": [
     {
       "label": "I",
-      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（10）にマークしなさい。",
       "passage": {
         "paragraphs": [
           "When a ride-hailing app charges twice the usual fare on a rainy Friday night, many customers feel cheated. Yet the same customers rarely complain when an airline charges more for a seat booked the day before departure, or when a hotel raises its rates during a popular festival. The practice behind all three cases is known as dynamic pricing: the adjustment of prices in response to changes in demand, supply, or other market conditions. {{b:1}} the idea is hardly new — street vendors have always raised their prices when crowds gather — digital technology has transformed its speed and scale.",
           "Economists generally defend dynamic pricing on grounds of efficiency. A fixed price, they argue, sends no signal when conditions change. If fares stay the same during a storm, more people want rides than there are drivers willing to work, and the result is long waits for everyone. A higher price, by contrast, does two things at once: it {{b:2}} some riders to postpone trips that are not urgent, and it attracts additional drivers onto the road. In this view, the price is not a penalty imposed on unlucky customers but a piece of information that helps match buyers and sellers.",
-          "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:3|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
-          "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:4}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
-          "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:5|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
-          "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:6}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
+          "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:5|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
+          "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:3}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
+          "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:6|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
+          "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:4}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
           "The debate over dynamic pricing, then, is less about whether prices should move than about who benefits when they do. A price that rises during a storm may put more cars on the road, but if customers come to believe that the system is designed mainly to extract as much money from them as possible, they may simply turn to competitors — or to their own cars. A business that loses its customers' goodwill may not notice the damage at once, because the loss appears gradually, in trips not taken and accounts quietly closed. In the long run, firms that rely on flexible pricing may find that {{u:7|their most valuable asset is not the cleverness of their algorithms but the trust of the people who use them}}."
         ],
         "notes": [
           "ride-hailing 配車サービスの",
           "hardware store 金物店",
           "snow shovel 雪かき用シャベル"
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
-          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
           "questions": [
             {
               "id": "m1",
@@ -75,22 +76,6 @@
               "id": "m3",
               "kind": "mark",
               "no": 3,
-              "category": "paraphrase",
-              "prompt": "Which of the following best expresses the meaning of underlined (3)?",
-              "choices": [
-                "People cared mostly about the size of a price increase.",
-                "People judged a price increase according to why it happened.",
-                "People believed that shops should never change their prices.",
-                "People were unable to explain their reactions to price changes."
-              ],
-              "points": 5,
-              "answer": 2,
-              "explanation": "直後のコロン以下「コスト上昇の転嫁は許されるが、需要の急増につけ込むのは許されない」が言い換え。値上げの『理由』で判断した＝2。1 は「上げ幅」で逆。"
-            },
-            {
-              "id": "m4",
-              "kind": "mark",
-              "no": 4,
               "category": "vocab",
               "choices": [
                 "indifferent",
@@ -103,25 +88,9 @@
               "explanation": "so ~ that ...「非常に〜なので…」。会社がすぐ謝罪・返金したのだから、世間の反応は『敵対的』（hostile）だったと分かる。"
             },
             {
-              "id": "m5",
+              "id": "m4",
               "kind": "mark",
-              "no": 5,
-              "category": "paraphrase",
-              "prompt": "Which of the following best expresses the meaning of underlined (5)?",
-              "choices": [
-                "It gives sellers more knowledge about the transaction than buyers have.",
-                "It forces sellers to share their data with buyers.",
-                "It makes prices easier for buyers to compare.",
-                "It reduces the amount of data that sellers collect."
-              ],
-              "points": 5,
-              "answer": 1,
-              "explanation": "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。"
-            },
-            {
-              "id": "m6",
-              "kind": "mark",
-              "no": 6,
+              "no": 4,
               "category": "logic",
               "choices": [
                 "Otherwise",
@@ -132,6 +101,44 @@
               "points": 3,
               "answer": 3,
               "explanation": "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。Therefore は因果、Instead は代替、Otherwise は条件の逆で不適。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (5)?",
+              "choices": [
+                "People cared mostly about the size of a price increase.",
+                "People judged a price increase according to why it happened.",
+                "People believed that shops should never change their prices.",
+                "People were unable to explain their reactions to price changes."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直後のコロン以下「コスト上昇の転嫁は許されるが、需要の急増につけ込むのは許されない」が言い換え。値上げの『理由』で判断した＝2。1 は「上げ幅」で逆。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (6)?",
+              "choices": [
+                "It gives sellers more knowledge about the transaction than buyers have.",
+                "It forces sellers to share their data with buyers.",
+                "It makes prices easier for buyers to compare.",
+                "It reduces the amount of data that sellers collect."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。"
             },
             {
               "id": "m7",
@@ -203,26 +210,28 @@
     },
     {
       "label": "II",
-      "instruction": "次の英文を読み、（11）〜（19）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（11）〜（19）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（11）〜（19）にマークしなさい。",
       "passage": {
         "paragraphs": [
           "In April 1956, a converted oil tanker called the Ideal X left the port of Newark, New Jersey, carrying fifty-eight large metal boxes on its deck. Few people paid attention, and most experts at the time assumed that shipping by sea would always be slow and labor-intensive. The ship's owner, a trucking businessman named Malcom McLean, was not trying to change the world; he was trying to {{b:11}} the traffic jams that slowed his trucks along the crowded highways of the East Coast. His solution was simple: rather than unloading goods from a truck, carrying them onto a ship piece by piece, and loading them onto another truck at the other end, why not lift the entire trailer body onto the ship?",
           "Before the container, loading and unloading a ship was slow, expensive, and dangerous work. Cargo arrived at the docks in sacks, barrels, crates, and bales of every size, and gangs of dockworkers had to fit each item into the ship's hold by hand. A vessel could spend nearly as much time in port as it did at sea. Theft was common, and damage more common still. By some estimates, the cost of handling cargo at the docks made up as much as half the total cost of moving goods across the ocean.",
-          "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:12|Numbers like these}} were impossible for the rest of the industry to ignore. Insurance companies, which had long charged high rates to cover theft and breakage on the docks, soon lowered their premiums as well, adding further to the savings.",
-          "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:13}} standards, and agreeing on them took years of difficult negotiation. Each firm naturally preferred the dimensions it already used, since changing them meant replacing expensive equipment. Only in the late 1960s did international bodies settle on a small family of sizes, including the twenty-foot box that still serves as the industry's unit of measurement. {{u:14|What had looked like a technical detail}} turned out to be the key to the whole system.",
-          "Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived. The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Some of the busiest ports of the 1950s, such as those on the west side of Manhattan and in central London, handled almost no cargo at all within a generation. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:15|relentless}} advance; the savings were simply too large.",
-          "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:16}} production across many countries, assembling a single product from components made in a dozen places. Distance, which had once protected local producers from foreign competition, mattered far less than before. Warehouses full of spare parts, once a sign of careful management, came to be seen as wasted money, and firms learned to keep only what they needed for the next few days.",
+          "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:14|Numbers like these}} were impossible for the rest of the industry to ignore. Insurance companies, which had long charged high rates to cover theft and breakage on the docks, soon lowered their premiums as well, adding further to the savings.",
+          "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:12}} standards, and agreeing on them took years of difficult negotiation. Each firm naturally preferred the dimensions it already used, since changing them meant replacing expensive equipment. Only in the late 1960s did international bodies settle on a small family of sizes, including the twenty-foot box that still serves as the industry's unit of measurement. {{u:15|What had looked like a technical detail}} turned out to be the key to the whole system.",
+          "Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived. The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Some of the busiest ports of the 1950s, such as those on the west side of Manhattan and in central London, handled almost no cargo at all within a generation. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:16|relentless}} advance; the savings were simply too large.",
+          "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:13}} production across many countries, assembling a single product from components made in a dozen places. Distance, which had once protected local producers from foreign competition, mattered far less than before. Warehouses full of spare parts, once a sign of careful management, came to be seen as wasted money, and firms learned to keep only what they needed for the next few days.",
           "In this sense, the humble metal box helped create the global supply chains that define the modern economy — along with their weaknesses. A system designed to remove every unnecessary delay has little room to absorb an unexpected one. When ports were disrupted during the pandemic of 2020, ships waited for weeks to unload, empty containers piled up in the wrong places, and shortages spread from one industry to the next. {{u:17|The very efficiency that had made the system so attractive}} also made it fragile, and many companies have since begun to keep larger stocks and to buy from suppliers closer to home."
         ],
         "notes": [
           "hold 船倉",
           "bale （貨物の）梱",
           "pier 埠頭、桟橋"
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
-          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
           "questions": [
             {
               "id": "m11",
@@ -243,22 +252,6 @@
               "id": "m12",
               "kind": "mark",
               "no": 12,
-              "category": "paraphrase",
-              "prompt": "Which of the following does underlined (12) refer to?",
-              "choices": [
-                "the number of boxes carried by the Ideal X",
-                "dramatic reductions in the cost of handling cargo",
-                "the distances between major ports",
-                "the number of dockworkers who lost their jobs"
-              ],
-              "points": 5,
-              "answer": 2,
-              "explanation": "直前の文「積み込みコストが1トン約6ドルから16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。"
-            },
-            {
-              "id": "m13",
-              "kind": "mark",
-              "no": 13,
               "category": "vocab",
               "choices": [
                 "competing",
@@ -271,11 +264,48 @@
               "explanation": "異なるサイズの箱が混在して不便だった、という文脈。システムの利点は全員が『共通の』規格を採用することにかかっていた。competing（競合する）は逆。"
             },
             {
+              "id": "m13",
+              "kind": "mark",
+              "no": 13,
+              "category": "vocab",
+              "choices": [
+                "limit",
+                "spread",
+                "delay",
+                "copy"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（spread）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
               "id": "m14",
               "kind": "mark",
               "no": 14,
               "category": "paraphrase",
-              "prompt": "Which of the following best expresses the meaning of underlined (14)?",
+              "prompt": "Which of the following does underlined (14) refer to?",
+              "choices": [
+                "the number of boxes carried by the Ideal X",
+                "dramatic reductions in the cost of handling cargo",
+                "the distances between major ports",
+                "the number of dockworkers who lost their jobs"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "直前の文「積み込みコストが1トン約6ドルから16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。"
+            },
+            {
+              "id": "m15",
+              "kind": "mark",
+              "no": 15,
+              "category": "paraphrase",
+              "prompt": "Which of the following best expresses the meaning of underlined (15)?",
               "choices": [
                 "a rule that only engineers could understand",
                 "a minor matter such as the exact size of a box",
@@ -287,11 +317,11 @@
               "explanation": "前の文脈は箱のサイズ（寸法）の統一をめぐる交渉。『技術的な細部に見えたもの』＝箱の正確な寸法という些細に思える事柄＝2。"
             },
             {
-              "id": "m15",
+              "id": "m16",
               "kind": "mark",
-              "no": 15,
+              "no": 16,
               "category": "paraphrase",
-              "prompt": "Which of the following is closest in meaning to underlined (15)?",
+              "prompt": "Which of the following is closest in meaning to underlined (16)?",
               "choices": [
                 "slow",
                 "unstoppable",
@@ -301,21 +331,6 @@
               "points": 5,
               "answer": 2,
               "explanation": "relentless「容赦ない・とどまることのない」。直前の「組合はその前進を止められなかった」とも一致する。"
-            },
-            {
-              "id": "m16",
-              "kind": "mark",
-              "no": 16,
-              "category": "vocab",
-              "choices": [
-                "limit",
-                "spread",
-                "delay",
-                "copy"
-              ],
-              "points": 3,
-              "answer": 2,
-              "explanation": "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（spread）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。"
             },
             {
               "id": "m17",
@@ -371,7 +386,7 @@
     },
     {
       "label": "III",
-      "instruction": "次の英文を読み、（20）〜（29）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文を読み、（20）〜（29）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（20）〜（29）にマークしなさい。",
       "passage": {
         "paragraphs": [
           "For decades, governments and employers tried to encourage people to save for retirement mainly by explaining why it mattered. Workers received brochures, attended seminars, and were shown charts of how small monthly contributions could grow over forty years. The results were disappointing. Many people agreed that they ought to save more, fully intended to do so, and then did nothing. The problem, it turned out, was not a lack of information but a {{b:20}} of action.",
@@ -387,11 +402,13 @@
           "contribution 拠出金、掛け金",
           "offset 相殺する",
           "status quo 現状"
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
-          "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
           "questions": [
             {
               "id": "m20",
@@ -437,7 +454,13 @@
               "points": 3,
               "answer": 1,
               "explanation": "比較級・too を強める副詞は far / much。far too small「あまりにも小さすぎる」。very too とは言わない。"
-            },
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
             {
               "id": "m23",
               "kind": "mark",
@@ -556,7 +579,7 @@
     },
     {
       "label": "IV",
-      "instruction": "次の（30）〜（36）の英文の空所に入れるのに最も適切な語句を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文（30）〜（36）の空所に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（30）〜（36）にマークしなさい。",
       "groups": [
         {
           "instruction": "",
@@ -566,7 +589,7 @@
               "kind": "mark",
               "no": 30,
               "category": "grammar",
-              "prompt": "The new regulations, (   ) take effect next April, will affect most small retailers.",
+              "prompt": "The new regulations, _____ take effect next April, will affect most small retailers.",
               "choices": [
                 "that",
                 "which",
@@ -582,7 +605,7 @@
               "kind": "mark",
               "no": 31,
               "category": "grammar",
-              "prompt": "Investors were impressed by the (   ) of the start-up's business plan.",
+              "prompt": "Investors were impressed by the _____ of the start-up's business plan.",
               "choices": [
                 "simple",
                 "simplicity",
@@ -591,14 +614,14 @@
               ],
               "points": 2,
               "answer": 2,
-              "explanation": "the (   ) of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。"
+              "explanation": "the _____ of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。"
             },
             {
               "id": "m32",
               "kind": "mark",
               "no": 32,
               "category": "grammar",
-              "prompt": "The company failed to (   ) the demand for its new phone, and many stores ran out of stock.",
+              "prompt": "The company failed to _____ the demand for its new phone, and many stores ran out of stock.",
               "choices": [
                 "meet",
                 "see",
@@ -614,7 +637,7 @@
               "kind": "mark",
               "no": 33,
               "category": "grammar",
-              "prompt": "The committee recommended that the plan (   ) postponed until further notice.",
+              "prompt": "The committee recommended that the plan _____ postponed until further notice.",
               "choices": [
                 "is",
                 "be",
@@ -630,7 +653,7 @@
               "kind": "mark",
               "no": 34,
               "category": "grammar",
-              "prompt": "I'd rather you (   ) tell anyone about the merger until it is officially announced.",
+              "prompt": "I'd rather you _____ tell anyone about the merger until it is officially announced.",
               "choices": [
                 "don't",
                 "didn't",
@@ -646,7 +669,7 @@
               "kind": "mark",
               "no": 35,
               "category": "grammar",
-              "prompt": "(   ) the bad weather, the shipment arrived on time.",
+              "prompt": "_____ the bad weather, the shipment arrived on time.",
               "choices": [
                 "Although",
                 "Despite",
@@ -662,7 +685,7 @@
               "kind": "mark",
               "no": 36,
               "category": "grammar",
-              "prompt": "Had the central bank lowered interest rates last year, more firms (   ) money to expand.",
+              "prompt": "Had the central bank lowered interest rates last year, more firms _____ money to expand.",
               "choices": [
                 "would borrow",
                 "will have borrowed",
@@ -679,13 +702,14 @@
     },
     {
       "label": "V",
-      "instruction": "次の英文の空所（37）〜（42）に入れるのに最も適切な語を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文の空所（37）〜（42）に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（37）〜（42）にマークしなさい。",
       "passage": {
         "paragraphs": [
           "Almost every streaming service, software company, and online newspaper now offers a free trial. The logic seems straightforward: let people try the product, and the good ones will {{b:37}} for themselves. But the real power of the free trial lies less in the product than in the psychology of the customer. Once people have started using a service, they begin to think of it as something they already own, and giving it up feels like a {{b:38}} rather than a decision not to buy.",
           "Firms are well aware of this. Many trials ask for credit-card details at the start and switch to paid billing automatically when the trial ends. A customer who meant to cancel after a month may simply forget, and the company quietly {{b:39}} from that inattention. Consumer groups argue that this turns a fair offer into a trap, and some governments now require firms to send a reminder before the first payment is {{b:40}}.",
           "Not every company benefits from such tactics, however. Customers who feel tricked into paying are more likely to cancel later and to warn their friends. Some firms have found that trials which end without automatic billing attract fewer subscribers at first but keep them longer. In a market where switching to a {{b:41}} takes only a few clicks, a reputation for honesty may be worth more than a few months of forgotten payments. The free trial, in other words, works best when it is {{b:42}} what it claims to be: a chance to try before you buy."
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
@@ -787,14 +811,17 @@
     },
     {
       "label": "VI",
-      "instruction": "次の（43）〜（46）の英文を読み、それぞれの英文から推測できる内容として最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+      "instruction": "次の英文（43）〜（46）を読み、それぞれの設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（43）〜（46）にマークしなさい。",
       "groups": [
         {
           "instruction": "",
+          "answerLine": true,
           "passage": {
+            "label": "(43)",
             "paragraphs": [
               "Loyalty programs are often described as a reward for faithful customers, but their main value to retailers may lie elsewhere. Every time a member shows a card or scans an app at the checkout, the store learns what that person bought, when, and at what price. Over months, this record reveals patterns that no survey could capture: which products are bought together, which discounts actually change behavior, and which customers are drifting away. Some retailers now earn more by analyzing this information, or by selling insights based on it to manufacturers, than they spend on the points and coupons they give away. For many shoppers, the discount is real but small; for the store, the data may be the main product."
-            ]
+            ],
+            "source": "[Original passage written for this mock exam]"
           },
           "questions": [
             {
@@ -802,7 +829,7 @@
               "kind": "mark",
               "no": 43,
               "category": "inference",
-              "prompt": "Which of the following can be inferred from the passage above?",
+              "prompt": "Which one of the following can be inferred from the passage?",
               "choices": [
                 "Most customers join loyalty programs in order to protect their privacy.",
                 "The points given to members can cost a retailer less than the information it gains.",
@@ -817,10 +844,13 @@
         },
         {
           "instruction": "",
+          "answerLine": true,
           "passage": {
+            "label": "(44)",
             "paragraphs": [
               "In a famous experiment, shoppers at a grocery store were offered free samples of jam. On some days the display contained six flavors; on others, twenty-four. The larger display attracted more visitors, but shoppers who saw only six flavors were far more likely to buy a jar. The researchers suggested that too many options can make choosing feel so difficult that people put off the decision altogether. Later studies, however, have found the effect only under certain conditions, such as when the options are hard to compare or when shoppers have no clear preference to begin with. When people already know what they like, a wide selection seems to do little harm."
-            ]
+            ],
+            "source": "[Original passage written for this mock exam]"
           },
           "questions": [
             {
@@ -828,7 +858,7 @@
               "kind": "mark",
               "no": 44,
               "category": "inference",
-              "prompt": "Which of the following can be inferred from the passage above?",
+              "prompt": "Which one of the following statements is consistent with the content of the passage?",
               "choices": [
                 "Shoppers always buy more when they are offered fewer options.",
                 "The larger display failed to attract the attention of shoppers.",
@@ -843,10 +873,13 @@
         },
         {
           "instruction": "",
+          "answerLine": true,
           "passage": {
+            "label": "(45)",
             "paragraphs": [
               "When a company announces that it will move its headquarters to a smaller city, local officials often celebrate the jobs it will bring. Economists urge caution. A new employer raises demand not only for workers but also for housing, and if the supply of homes cannot expand quickly, rents rise for everyone in the area, including residents who do not work for the company. Whether a town gains overall depends largely on how easily it can build — a question of zoning rules and available land rather than of the company's own plans. Two towns attracting the same employer may therefore end up with very different results."
-            ]
+            ],
+            "source": "[Original passage written for this mock exam]"
           },
           "questions": [
             {
@@ -854,7 +887,7 @@
               "kind": "mark",
               "no": 45,
               "category": "inference",
-              "prompt": "Which of the following can be inferred from the passage above?",
+              "prompt": "With which one of the following statements would the author most likely agree?",
               "choices": [
                 "Economists believe that companies should never move to smaller cities.",
                 "Residents who do not work for the new company may be worse off in some respects.",
@@ -869,10 +902,13 @@
         },
         {
           "instruction": "",
+          "answerLine": true,
           "passage": {
+            "label": "(46)",
             "paragraphs": [
               "Several companies that tested a four-day working week reported that productivity stayed the same or even improved, while employees said they felt less stressed. Critics point out that the firms which volunteered for such trials were probably those most likely to succeed — businesses whose work could be reorganized easily and whose managers were already enthusiastic. A hospital or a factory running around the clock, they argue, faces very different constraints. The results may therefore say more about what is possible for certain kinds of organizations than about what would happen if the policy were adopted everywhere. Larger and more varied trials will be needed before firm conclusions can be drawn."
-            ]
+            ],
+            "source": "[Original passage written for this mock exam]"
           },
           "questions": [
             {
@@ -880,7 +916,7 @@
               "kind": "mark",
               "no": 46,
               "category": "inference",
-              "prompt": "Which of the following can be inferred from the passage above?",
+              "prompt": "Which one of the following statements best captures the main argument of the passage?",
               "choices": [
                 "A four-day week has been shown to fail in hospitals and factories.",
                 "Employees in the trials worked longer hours on each of the four days.",
@@ -897,12 +933,14 @@
     },
     {
       "label": "VII",
-      "instruction": "次の英文の空所（a）〜（f）に入れるのに最も適切な語を下の語群から選び、必要に応じて適切な形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使うこと。また、解答は1語とする。",
+      "instruction": "次の英文を読み、空所（a）〜（f）に入る、文脈の上で最も適した動詞を下記の語群から選び、必要に応じて語形を変えて解答用紙Bの解答欄に記入しなさい。ただし、各解答欄に記入する語は一語のみとし、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "sheetNotice": "ここからは解答用紙Bを使用しなさい。",
       "passage": {
         "paragraphs": [
           "Few industries have {{w:a}} as many changes in a single generation as the music business. In the 1990s, record companies earned most of their income from compact discs, and the idea that people would one day pay a monthly fee to hear almost any song ever recorded would have been {{w:b}} as fantasy. When file-sharing websites appeared around the turn of the century, sales {{w:c}} sharply, and many executives responded by suing the very customers they depended on.",
           "Streaming services eventually offered a legal alternative, and revenue began to grow again. Yet new problems have {{w:d}}. Musicians complain that the fees paid for each play are tiny, and that the system rewards artists who are already famous. Some have {{w:e}} their work from the major platforms in protest, while others, {{w:f}} a closer relationship with their fans, sell recordings and concert tickets directly through their own websites."
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
@@ -915,6 +953,48 @@
             "undergo",
             "withdraw"
           ],
+          "wordForms": {
+            "arise": [
+              "arise",
+              "arises",
+              "arose",
+              "arisen",
+              "arising"
+            ],
+            "dismiss": [
+              "dismiss",
+              "dismisses",
+              "dismissed",
+              "dismissing"
+            ],
+            "fall": [
+              "fall",
+              "falls",
+              "fell",
+              "fallen",
+              "falling"
+            ],
+            "seek": [
+              "seek",
+              "seeks",
+              "sought",
+              "seeking"
+            ],
+            "undergo": [
+              "undergo",
+              "undergoes",
+              "underwent",
+              "undergone",
+              "undergoing"
+            ],
+            "withdraw": [
+              "withdraw",
+              "withdraws",
+              "withdrew",
+              "withdrawn",
+              "withdrawing"
+            ]
+          },
           "questions": [
             {
               "id": "w1",
@@ -994,12 +1074,14 @@
     },
     {
       "label": "VIII",
-      "instruction": "次の英文の空所（a）〜（e）に入れるのに最も適切な語を下の語群から選び、適切な名詞形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使い、名詞形の単数・複数にも注意すること。また、解答は1語とする。",
+      "instruction": "次の英文を読み、空所（a）〜（e）に入る、文脈の上で最も適した名詞を解答用紙Bの解答欄に記入しなさい。下記の動詞の最も適切な名詞形のみを使用すること。ただし、〜ing 形は使用してはいけない。また、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "example": "例： decide → decision",
       "passage": {
         "paragraphs": [
           "Every new business rests on a set of {{w:a}} about what customers want, and the most dangerous of these are the ones that founders never think to question. A start-up may spend years building a product before learning that nobody needs it. To avoid this, many investors now encourage founders to test their ideas early, with simple versions of the product and real customers. The {{w:b}} of a company's early plans, in this view, is not a sign of failure but of learning.",
           "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a team honest enough to point out which is which."
-        ]
+        ],
+        "source": "[Original passage written for this mock exam]"
       },
       "groups": [
         {
@@ -1011,6 +1093,26 @@
             "persist",
             "revise"
           ],
+          "wordForms": {
+            "assume": [
+              "assumption",
+              "assumptions"
+            ],
+            "deny": [
+              "denial",
+              "denials"
+            ],
+            "maintain": [
+              "maintenance"
+            ],
+            "persist": [
+              "persistence"
+            ],
+            "revise": [
+              "revision",
+              "revisions"
+            ]
+          },
           "questions": [
             {
               "id": "w7",

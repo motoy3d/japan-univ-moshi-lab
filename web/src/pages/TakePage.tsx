@@ -158,7 +158,7 @@ function WebExam({ exam }: { exam: Exam }) {
       <div className={`take-body ${hasPassage ? "" : "no-passage"}`}>
         {hasPassage && (
           <div className={`pane ${pane === "passage" ? "" : "hidden-mobile"}`}>
-            <p className="instruction"><b style={{ fontFamily: "var(--font-en)" }}>{section.label}.</b>　{section.instruction}</p>
+            <SectionHead section={section} />
             <PassageView passage={section.passage!} answers={draft.answers} onBlank={jumpTo} qs={section.groups.flatMap((g) => g.questions)} />
             <p className="small muted no-print" style={{ marginTop: 24 }}>
               <button className="btn" onClick={() => setPane("questions")} style={{ minHeight: 40 }}>設問へ →</button>
@@ -167,7 +167,7 @@ function WebExam({ exam }: { exam: Exam }) {
         )}
         <div className={`pane ${pane === "questions" || !hasPassage ? "" : "hidden-mobile"}`} ref={qRef}>
           {!hasPassage && (
-            <p className="instruction"><b style={{ fontFamily: "var(--font-en)" }}>{section.label}.</b>　{section.instruction}</p>
+            <SectionHead section={section} />
           )}
           {section.groups.map((g, gi) => (
             <GroupView key={gi} group={g} answers={draft.answers} onPick={setAnswer} onText={setText} onBlank={jumpTo} disabled={timeUp} />
@@ -206,6 +206,20 @@ function WebExam({ exam }: { exam: Exam }) {
   );
 }
 
+function SectionHead({ section }: { section: Exam["sections"][number] }) {
+  return (
+    <>
+      {section.sheetNotice && <p className="notice small">{section.sheetNotice}（Web受験では下の入力欄に記入）</p>}
+      <p className="instruction"><b style={{ fontFamily: "var(--font-en)" }}>{section.label}.</b>　{section.instruction}</p>
+      {section.example && <p className="instruction" style={{ fontFamily: "var(--font-en)" }}>{section.example}</p>}
+      {section.passage &&
+        section.groups.map((g, gi) => g.wordBox && (
+          <div key={gi} className="word-box" aria-label="語群">{g.wordBox.map((w) => <span key={w}>{w}</span>)}</div>
+        ))}
+    </>
+  );
+}
+
 function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; answers: Answers; onBlank: (q: Question) => void; qs: Question[] }) {
   const byNo = new Map(qs.filter((q) => q.kind === "mark").map((q) => [q.no, q]));
   const byLabel = new Map(qs.filter((q) => q.kind === "write").map((q) => [q.label, q]));
@@ -229,6 +243,7 @@ function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; a
         const sp = p.dialogue ? splitSpeaker(para) : null;
         return (
           <p key={i}>
+            {i === 0 && p.label && <b style={{ fontFamily: "var(--font-en)", marginRight: 6 }}>{p.label}</b>}
             {sp ? (
               <>
                 <b>{sp[0]}:</b>{" "}
@@ -240,6 +255,7 @@ function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; a
           </p>
         );
       })}
+      {p.source && <p className="small muted" style={{ textAlign: "right", textIndent: 0 }}>{p.source}</p>}
       {p.notes && (
         <div className="notes">
           {p.notes.map((n) => <span key={n}>（注）{n}</span>)}

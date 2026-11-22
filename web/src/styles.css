@@ -679,3 +679,15 @@ input[type="date"] { font: inherit; min-height: 44px; padding: 8px 12px; border-
 .legal ol, .legal ul { padding-left: 1.4em; }
 .legal li { margin: 4px 0; }
 .demo-banner { background: var(--accent-soft); color: var(--fg, inherit); font-size: 12px; line-height: 1.5; padding: 6px max(16px, env(safe-area-inset-left, 0px)); text-align: center; }
+
+/* ---- 問題冊子: 大学の公開問題に合わせた書式 ---- */
+.b-passage .b-blank:not(.w) { border: 0.7pt solid #000; padding: 0 0.6em; min-width: 4.4em; line-height: 1.25; }
+.b-ansbox { display: inline-block; border: 0.7pt solid #000; min-width: 4.4em; text-align: center; padding: 0 0.4em; line-height: 1.25; font-family: var(--font-en); }
+.b-q.no-num { grid-template-columns: 1fr; }
+.b-group-inst { font-family: var(--font-en); font-size: 10.5pt; }
+.b-choices.inline { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.b-choices .c { grid-template-columns: 4.5mm 1fr; }
+.b-source { text-align: right; font-family: var(--font-en); font-size: 8.5pt; margin: 1mm 0 3mm; }
+.b-plabel { font-family: var(--font-en); margin-right: 0.6em; }
+.b-sheet-notice { text-align: center; font-weight: 700; font-size: 12pt; letter-spacing: 0.08em; border-top: 1.2pt solid #000; padding-top: 2mm; margin-bottom: 5mm; }
+.b-example { font-size: 10pt; margin: -1mm 0 2mm 13mm; }

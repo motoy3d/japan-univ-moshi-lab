@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { BOT_GUARD, route } from "../api/src/app";
 import { MemoryRepo } from "../api/src/repo-memory";
 import { findExam } from "../content/index";
-import { allQuestions, isCorrect, normalizeWritten, scoreExam } from "../shared/scoring";
+import { allQuestions, isCorrect, normalizeWritten, scoreExam, stripAnswers } from "../shared/scoring";
 import { deviationScore, toExamStats, topPercent } from "../shared/stats";
 import type { AttemptReview, Answers, Exam } from "../shared/types";
 
@@ -118,4 +118,23 @@ test("API: 志望校は公式データにあるものだけ保存できる", asy
   assert.equal(okRes.status, 200);
   assert.deepEqual((okRes.body as { targets: unknown[] }).targets.length, 2); // 重複は1つにまとめる
   assert.equal((await put({ targets: [{ admissionId: "keio", facultyId: "shogaku", methodId: "z" }] })).status, 400);
+});
+
+test("語群の同じ動詞を二回使った解答は、正しい形でも得点にならない", () => {
+  const qs = allQuestions(exam);
+  const a = qs.find((q) => q.id === "w1")!; // (a) undergone
+  const d = qs.find((q) => q.id === "w4")!; // (d) arisen
+  const base: Answers = { [a.id]: "undergone", [d.id]: "arisen" };
+  const ok = scoreExam(exam, base).results;
+  assert.ok(ok.find((r) => r.id === a.id)!.correct && ok.find((r) => r.id === d.id)!.correct);
+  // (d) にも undergo の語形を書くと、正しい (a) も得点にならない
+  const twice = scoreExam(exam, { ...base, [d.id]: "underwent" }).results;
+  assert.equal(twice.find((r) => r.id === a.id)!.correct, false);
+  assert.equal(twice.find((r) => r.id === d.id)!.correct, false);
+});
+
+test("受験前の問題データに採点専用の語形一覧を含めない", () => {
+  const json = JSON.stringify(stripAnswers(exam));
+  assert.ok(!json.includes("wordForms"));
+  assert.ok(!json.includes("assumptions"));
 });

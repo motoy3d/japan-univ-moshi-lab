@@ -59,6 +59,13 @@ export interface QuestionGroup<Q = Question> {
   choices?: string[];
   /** 語群（記述の語形変化で使う語の一覧） */
   wordBox?: string[];
+  /**
+   * 語群の各語がとりうる語形（採点専用・受験前のクライアントには送らない）。
+   * 「同じ語を二回以上選んだ場合は得点にならない」の判定に使う
+   */
+  wordForms?: Record<string, string[]>;
+  /** 印刷時に各設問の後ろへ「The answer is: [ n ].」を付ける（本番の書式） */
+  answerLine?: boolean;
   /** グループ固有の本文（短文の内容推測など、設問ごとに英文があるとき） */
   passage?: Passage;
   questions: Q[];
@@ -72,6 +79,10 @@ export interface Passage {
   notes?: string[];
   /** 会話文の場合は話者付きの行として描画する */
   dialogue?: boolean;
+  /** 本文の前に付ける番号（短文の (43) など） */
+  label?: string;
+  /** 本文の末尾に右寄せで付ける出典行 */
+  source?: string;
 }
 
 export interface Section<Q = Question> {
@@ -79,6 +90,10 @@ export interface Section<Q = Question> {
   label: string;
   /** 大問の指示文 */
   instruction: string;
+  /** 大問の前に置く案内（例: ここからは解答用紙Bを使用しなさい。） */
+  sheetNotice?: string;
+  /** 指示文の下に置く例（例: decide → decision） */
+  example?: string;
   passage?: Passage;
   groups: QuestionGroup<Q>[];
 }

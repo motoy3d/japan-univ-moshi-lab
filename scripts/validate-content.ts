@@ -1,6 +1,6 @@
 // 模試データの整合性チェック: npm run validate
 import { EXAMS } from "../content/index";
-import { allQuestions } from "../shared/scoring";
+import { allQuestions, normalizeWritten } from "../shared/scoring";
 import { CATEGORY_LABELS } from "../shared/types";
 import { ADMISSIONS } from "../content/admissions";
 import { findExam } from "../content/index";
@@ -65,6 +65,14 @@ for (const exam of EXAMS) {
         }
         if (!q.explanation) fail(exam.id, `${q.id}: 解説がない`);
         if (!(q.category in CATEGORY_LABELS)) fail(exam.id, `${q.id}: 未定義の分野 ${q.category}`);
+      }
+      if (group.wordForms) {
+        const keys = Object.keys(group.wordForms).sort().join(",");
+        if (keys !== [...(group.wordBox ?? [])].sort().join(",")) fail(exam.id, `大問${section.label}: wordForms の語が語群と一致しない`);
+        // 正解の語形はすべて、いずれかの語の語形として登録されていること（二回使用の判定が効くように）
+        const forms = new Set(Object.values(group.wordForms).flat().map(normalizeWritten));
+        for (const q of group.questions)
+          if (q.kind === "write") for (const a of q.answer as string[]) if (!forms.has(normalizeWritten(a))) fail(exam.id, `${q.id}: 正解 ${a} が wordForms にない`);
       }
       if (group.wordBox) {
         const writes = group.questions.filter((q) => q.kind === "write");

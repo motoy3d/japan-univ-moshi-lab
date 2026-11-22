@@ -6,14 +6,9 @@ import pathlib
 
 OUT = pathlib.Path(__file__).resolve().parent.parent / "content/exams/keio-shogaku-eigo-01.json"
 
-n_mark = 0
-n_write = 0
-
-
+# 設問番号は最後にまとめて振る（本番と同じく、長文は「空所 → その他」の順に番号を付けるため）
 def mark(category, choices, answer, explanation, prompt=None, points=None):
-    global n_mark
-    n_mark += 1
-    q = {"id": f"m{n_mark}", "kind": "mark", "no": n_mark, "category": category}
+    q = {"id": None, "kind": "mark", "no": None, "category": category}
     if prompt:
         q["prompt"] = prompt
     q.update({"choices": choices, "points": points, "answer": answer, "explanation": explanation})
@@ -21,10 +16,8 @@ def mark(category, choices, answer, explanation, prompt=None, points=None):
 
 
 def write(label, answers, explanation, points=3, category="verb-form"):
-    global n_write
-    n_write += 1
     return {
-        "id": f"w{n_write}", "kind": "write", "no": n_write, "label": label, "category": category,
+        "id": None, "kind": "write", "no": None, "label": label, "category": category,
         "points": points, "answer": answers, "explanation": explanation,
     }
 
@@ -49,15 +42,26 @@ def title(choices, answer, exp, prompt="Which of the following is the most appro
     return mark("main-idea", choices, answer, exp, prompt=prompt, points=READ)
 
 
+SOURCE = "[Original passage written for this mock exam]"
+SHEET_A = "解答用紙A（マークシート）"
+
+
+def mark_instruction(first, last, what="の設問について最も適切なものを"):
+    return f"次の英文を読み、（{first}）〜（{last}）{what}選択肢 1〜4 から選び、その番号を{SHEET_A}の解答欄（{first}）〜（{last}）にマークしなさい。"
+
+
 def long_section(label, first, last, paragraphs, notes, questions):
+    # 本番どおり (i) 空所の設問 → (ii) その他の設問。番号もこの順に振る
+    blanks = [q for q in questions if not q.get("prompt")]
+    others = [q for q in questions if q.get("prompt")]
     return {
         "label": label,
-        "instruction": f"次の英文を読み、（{first}）〜（{last}）の設問について最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
-        "passage": {"paragraphs": paragraphs, "notes": notes},
-        "groups": [{
-            "instruction": "空所の設問は、空所に入れるのに最も適切なものを選びなさい。下線部の設問は、下線部の意味・内容として最も適切なものを選びなさい。",
-            "questions": questions,
-        }],
+        "instruction": mark_instruction(first, last),
+        "passage": {"paragraphs": paragraphs, "notes": notes, "source": SOURCE},
+        "groups": [
+            {"instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.", "answerLine": True, "questions": blanks},
+            {"instruction": "(ii) In the context of this passage, choose the best answer for each question.", "answerLine": True, "questions": others},
+        ],
     }
 
 
@@ -67,10 +71,10 @@ sections = []
 p1 = [
     "When a ride-hailing app charges twice the usual fare on a rainy Friday night, many customers feel cheated. Yet the same customers rarely complain when an airline charges more for a seat booked the day before departure, or when a hotel raises its rates during a popular festival. The practice behind all three cases is known as dynamic pricing: the adjustment of prices in response to changes in demand, supply, or other market conditions. {{b:1}} the idea is hardly new — street vendors have always raised their prices when crowds gather — digital technology has transformed its speed and scale.",
     "Economists generally defend dynamic pricing on grounds of efficiency. A fixed price, they argue, sends no signal when conditions change. If fares stay the same during a storm, more people want rides than there are drivers willing to work, and the result is long waits for everyone. A higher price, by contrast, does two things at once: it {{b:2}} some riders to postpone trips that are not urgent, and it attracts additional drivers onto the road. In this view, the price is not a penalty imposed on unlucky customers but a piece of information that helps match buyers and sellers.",
-    "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:3|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
-    "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:4}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
-    "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:5|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
-    "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:6}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
+    "Consumers, however, do not always reason like economists. Research in behavioral economics suggests that people judge prices not only by how much they pay but by whether the price seems fair. In a well-known series of surveys, respondents were asked about a hardware store that raised the price of snow shovels on the morning after a heavy snowstorm. A large majority described the increase as unfair, even though it was exactly what a simple model of supply and demand would predict. {{u:5|What mattered to them was the reason behind the change}}: a firm passing on higher costs was usually forgiven, whereas a firm exploiting a sudden rise in need was not.",
+    "This sense of fairness places real limits on what firms can do. When a large online retailer was found, around the turn of the century, to be charging different customers different prices for the same DVD, the public reaction was so {{b:3}} that the company quickly apologized and refunded the difference. The episode illustrated a distinction that customers seem to draw instinctively. Prices that change over time, for everyone at once, are tolerated; prices that differ from person to person, for no visible reason, provoke anger.",
+    "The arrival of artificial intelligence has made this distinction harder to maintain. Algorithms can now estimate, from a customer's location, device, and purchase history, roughly how much that particular person is willing to pay. In principle, a company could use such estimates to offer each shopper an individual price — a strategy economists call \"first-degree price discrimination.\" Supporters point out that this need not harm everyone: students or low-income customers might be offered discounts they would never receive under a single price. Critics reply that the practice {{u:6|tilts the informational balance firmly in the seller's favor}}, since a customer cannot see what others are paying and therefore cannot tell whether a deal is a good one.",
+    "Regulators in several countries have begun to respond. Some proposals would require firms to disclose when a price has been personalized; others would ban the use of certain data, such as health information, in setting prices. {{b:4}}, many businesses have concluded that transparency is in their own interest. Some ride-hailing services now show customers, before they book, how much the current fare exceeds the usual one, and offer to notify them when it falls. Such measures do not change the underlying economics, but they appear to reduce the feeling of being taken advantage of.",
     "The debate over dynamic pricing, then, is less about whether prices should move than about who benefits when they do. A price that rises during a storm may put more cars on the road, but if customers come to believe that the system is designed mainly to extract as much money from them as possible, they may simply turn to competitors — or to their own cars. A business that loses its customers' goodwill may not notice the damage at once, because the loss appears gradually, in trips not taken and accounts quietly closed. In the long run, firms that rely on flexible pricing may find that {{u:7|their most valuable asset is not the cleverness of their algorithms but the trust of the people who use them}}.",
 ]
 q1 = [
@@ -78,22 +82,22 @@ q1 = [
           "「考え自体は新しくない」と「デジタル技術が速度と規模を一変させた」は対比（譲歩）の関係。Although が入る。Because では因果が逆になり、Unless・Whether は文意が通らない。"),
     blank(["forbids", "encourages", "obliges", "permits"], 2,
           "encourage O to do「Oに〜するよう促す」。値上げは急ぎでない利用者に移動の延期を『促す』のであって、禁じる（forbid）・義務づける（oblige）わけではない。permit O to do は「許可する」で文脈に合わない。", category="vocab"),
-    uline(3, [
+    uline(5, [
         "People cared mostly about the size of a price increase.",
         "People judged a price increase according to why it happened.",
         "People believed that shops should never change their prices.",
         "People were unable to explain their reactions to price changes.",
     ], 2, "直後のコロン以下「コスト上昇の転嫁は許されるが、需要の急増につけ込むのは許されない」が言い換え。値上げの『理由』で判断した＝2。1 は「上げ幅」で逆。",
-        "Which of the following best expresses the meaning of underlined (3)?"),
+        "Which of the following best expresses the meaning of underlined (5)?"),
     blank(["indifferent", "hostile", "cautious", "favorable"], 2,
           "so ~ that ...「非常に〜なので…」。会社がすぐ謝罪・返金したのだから、世間の反応は『敵対的』（hostile）だったと分かる。", category="vocab"),
-    uline(5, [
+    uline(6, [
         "It gives sellers more knowledge about the transaction than buyers have.",
         "It forces sellers to share their data with buyers.",
         "It makes prices easier for buyers to compare.",
         "It reduces the amount of data that sellers collect.",
     ], 1, "tilt the balance in A's favor「Aに有利に傾ける」。since 以下で「客は他人の支払額が見えない」と理由を述べており、売り手のほうが情報を多く持つ（情報の非対称性）＝1。",
-        "Which of the following best expresses the meaning of underlined (5)?"),
+        "Which of the following best expresses the meaning of underlined (6)?"),
     blank(["Otherwise", "Instead", "Meanwhile", "Therefore"], 3,
           "前文は規制当局の動き、空所の後は企業側の自主的な動き。並行して起きていることを示す Meanwhile「一方で・その間に」が適切。Therefore は因果、Instead は代替、Otherwise は条件の逆で不適。"),
     uline(7, [
@@ -128,10 +132,10 @@ sections.append(long_section("I", 1, 10, p1, ["ride-hailing 配車サービス�
 p2 = [
     "In April 1956, a converted oil tanker called the Ideal X left the port of Newark, New Jersey, carrying fifty-eight large metal boxes on its deck. Few people paid attention, and most experts at the time assumed that shipping by sea would always be slow and labor-intensive. The ship's owner, a trucking businessman named Malcom McLean, was not trying to change the world; he was trying to {{b:11}} the traffic jams that slowed his trucks along the crowded highways of the East Coast. His solution was simple: rather than unloading goods from a truck, carrying them onto a ship piece by piece, and loading them onto another truck at the other end, why not lift the entire trailer body onto the ship?",
     "Before the container, loading and unloading a ship was slow, expensive, and dangerous work. Cargo arrived at the docks in sacks, barrels, crates, and bales of every size, and gangs of dockworkers had to fit each item into the ship's hold by hand. A vessel could spend nearly as much time in port as it did at sea. Theft was common, and damage more common still. By some estimates, the cost of handling cargo at the docks made up as much as half the total cost of moving goods across the ocean.",
-    "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:12|Numbers like these}} were impossible for the rest of the industry to ignore. Insurance companies, which had long charged high rates to cover theft and breakage on the docks, soon lowered their premiums as well, adding further to the savings.",
-    "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:13}} standards, and agreeing on them took years of difficult negotiation. Each firm naturally preferred the dimensions it already used, since changing them meant replacing expensive equipment. Only in the late 1960s did international bodies settle on a small family of sizes, including the twenty-foot box that still serves as the industry's unit of measurement. {{u:14|What had looked like a technical detail}} turned out to be the key to the whole system.",
-    "Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived. The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Some of the busiest ports of the 1950s, such as those on the west side of Manhattan and in central London, handled almost no cargo at all within a generation. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:15|relentless}} advance; the savings were simply too large.",
-    "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:16}} production across many countries, assembling a single product from components made in a dozen places. Distance, which had once protected local producers from foreign competition, mattered far less than before. Warehouses full of spare parts, once a sign of careful management, came to be seen as wasted money, and firms learned to keep only what they needed for the next few days.",
+    "The container changed all of this by making cargo uniform. Once goods were packed into a standard box at a factory, they did not need to be touched again until they reached their final destination. Cranes could lift the boxes on and off ships in minutes, and the same box could travel by ship, train, and truck without ever being opened. McLean's first voyage reportedly reduced the cost of loading from almost six dollars per ton to about sixteen cents. {{u:14|Numbers like these}} were impossible for the rest of the industry to ignore. Insurance companies, which had long charged high rates to cover theft and breakage on the docks, soon lowered their premiums as well, adding further to the savings.",
+    "Yet the container did not succeed overnight. For more than a decade, shipping lines, railways, and ports used boxes of different sizes, and a container that fit one company's ships might not fit another's cranes. The benefits of the system depended on everyone adopting {{b:12}} standards, and agreeing on them took years of difficult negotiation. Each firm naturally preferred the dimensions it already used, since changing them meant replacing expensive equipment. Only in the late 1960s did international bodies settle on a small family of sizes, including the twenty-foot box that still serves as the industry's unit of measurement. {{u:15|What had looked like a technical detail}} turned out to be the key to the whole system.",
+    "Ports, too, had to be rebuilt. Old harbors in the centers of cities, with narrow piers and little space for storing boxes, gradually lost business to new terminals built on open land, often far from where dockworkers lived. The human cost of this transition was considerable. In port cities around the world, tens of thousands of dockworkers saw their jobs disappear, and neighborhoods that had grown up around the waterfront went into decline. Some of the busiest ports of the 1950s, such as those on the west side of Manhattan and in central London, handled almost no cargo at all within a generation. Labor unions fought the change, and in some places they won agreements that protected existing workers' incomes for many years. But they could not halt the container's {{u:16|relentless}} advance; the savings were simply too large.",
+    "Economists have long debated how much the container contributed to the growth of world trade. Its most important effect may have been not the lower cost of shipping itself but the greater reliability it made possible. When manufacturers could count on parts arriving on schedule from distant suppliers, they began to {{b:13}} production across many countries, assembling a single product from components made in a dozen places. Distance, which had once protected local producers from foreign competition, mattered far less than before. Warehouses full of spare parts, once a sign of careful management, came to be seen as wasted money, and firms learned to keep only what they needed for the next few days.",
     "In this sense, the humble metal box helped create the global supply chains that define the modern economy — along with their weaknesses. A system designed to remove every unnecessary delay has little room to absorb an unexpected one. When ports were disrupted during the pandemic of 2020, ships waited for weeks to unload, empty containers piled up in the wrong places, and shortages spread from one industry to the next. {{u:17|The very efficiency that had made the system so attractive}} also made it fragile, and many companies have since begun to keep larger stocks and to buy from suppliers closer to home.",
 ]
 q2 = [
@@ -143,7 +147,7 @@ q2 = [
         "the distances between major ports",
         "the number of dockworkers who lost their jobs",
     ], 2, "直前の文「積み込みコストが1トン約6ドルから16セントに下がった」を指す。業界が無視できなかったのは劇的なコスト削減＝2。",
-        "Which of the following does underlined (12) refer to?"),
+        "Which of the following does underlined (14) refer to?"),
     blank(["competing", "common", "temporary", "private"], 2,
           "異なるサイズの箱が混在して不便だった、という文脈。システムの利点は全員が『共通の』規格を採用することにかかっていた。competing（競合する）は逆。", category="vocab"),
     uline(14, [
@@ -152,10 +156,10 @@ q2 = [
         "a disagreement between shipping lines and railways",
         "the design of the cranes used in new ports",
     ], 2, "前の文脈は箱のサイズ（寸法）の統一をめぐる交渉。『技術的な細部に見えたもの』＝箱の正確な寸法という些細に思える事柄＝2。",
-        "Which of the following best expresses the meaning of underlined (14)?"),
+        "Which of the following best expresses the meaning of underlined (15)?"),
     uline(15, ["slow", "unstoppable", "accidental", "temporary"], 2,
           "relentless「容赦ない・とどまることのない」。直前の「組合はその前進を止められなかった」とも一致する。",
-          "Which of the following is closest in meaning to underlined (15)?"),
+          "Which of the following is closest in meaning to underlined (16)?"),
     blank(["limit", "spread", "delay", "copy"], 2,
           "部品が予定通り届くと信頼できるようになったので、生産を多くの国に『分散させた』（spread）。直後の「十数か所で作られた部品から一つの製品を組み立てる」と合う。", category="vocab"),
     uline(17, [
@@ -250,23 +254,23 @@ sections.append(long_section("III", 20, 29, p3, ["contribution 拠出金、掛�
 G = 2
 q4 = [
     mark("grammar", ["that", "which", "what", "where"], 2,
-         "カンマで挟まれた非制限用法の関係代名詞。非制限用法で that は使えない。", prompt="The new regulations, (   ) take effect next April, will affect most small retailers.", points=G),
+         "カンマで挟まれた非制限用法の関係代名詞。非制限用法で that は使えない。", prompt="The new regulations, _____ take effect next April, will affect most small retailers.", points=G),
     mark("grammar", ["simple", "simplicity", "simply", "simplify"], 2,
-         "the (   ) of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。", prompt="Investors were impressed by the (   ) of the start-up's business plan.", points=G),
+         "the _____ of ... の位置には名詞が必要（品詞の判別）。simplicity「簡潔さ」。", prompt="Investors were impressed by the _____ of the start-up's business plan.", points=G),
     mark("grammar", ["meet", "see", "hold", "take"], 1,
-         "meet demand「需要を満たす」（多義語 meet ＝ satisfy）。在庫切れになったのは需要を満たせなかったから。", prompt="The company failed to (   ) the demand for its new phone, and many stores ran out of stock.", points=G),
+         "meet demand「需要を満たす」（多義語 meet ＝ satisfy）。在庫切れになったのは需要を満たせなかったから。", prompt="The company failed to _____ the demand for its new phone, and many stores ran out of stock.", points=G),
     mark("grammar", ["is", "be", "will be", "being"], 2,
-         "recommend that S (should) 原形 ― 提案・要求を表す動詞に続く that 節では仮定法現在（原形）を使う。", prompt="The committee recommended that the plan (   ) postponed until further notice.", points=G),
+         "recommend that S (should) 原形 ― 提案・要求を表す動詞に続く that 節では仮定法現在（原形）を使う。", prompt="The committee recommended that the plan _____ postponed until further notice.", points=G),
     mark("grammar", ["don't", "didn't", "won't", "haven't"], 2,
-         "would rather + S + 過去形（仮定法過去）で「Sに〜してほしい」。現在・未来のことでも過去形を使う。", prompt="I'd rather you (   ) tell anyone about the merger until it is officially announced.", points=G),
+         "would rather + S + 過去形（仮定法過去）で「Sに〜してほしい」。現在・未来のことでも過去形を使う。", prompt="I'd rather you _____ tell anyone about the merger until it is officially announced.", points=G),
     mark("grammar", ["Although", "Despite", "Even", "However"], 2,
-         "直後が名詞句（the bad weather）なので前置詞 Despite。Although は接続詞なので後に節が続く。", prompt="(   ) the bad weather, the shipment arrived on time.", points=G),
+         "直後が名詞句（the bad weather）なので前置詞 Despite。Although は接続詞なので後に節が続く。", prompt="_____ the bad weather, the shipment arrived on time.", points=G),
     mark("grammar", ["would borrow", "will have borrowed", "would have borrowed", "had borrowed"], 3,
-         "If が省略された倒置の仮定法過去完了（Had S p.p.）。last year の事実に反する仮定なので、帰結節は would have p.p.。", prompt="Had the central bank lowered interest rates last year, more firms (   ) money to expand.", points=G),
+         "If が省略された倒置の仮定法過去完了（Had S p.p.）。last year の事実に反する仮定なので、帰結節は would have p.p.。", prompt="Had the central bank lowered interest rates last year, more firms _____ money to expand.", points=G),
 ]
 sections.append({
     "label": "IV",
-    "instruction": "次の（30）〜（36）の英文の空所に入れるのに最も適切な語句を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+    "instruction": f"次の英文（30）〜（36）の空所に入る最も適切なものを選択肢 1〜4 から選び、その番号を{SHEET_A}の解答欄（30）〜（36）にマークしなさい。",
     "groups": [{"instruction": "", "questions": q4}],
 })
 
@@ -287,14 +291,19 @@ q5 = [
 ]
 sections.append({
     "label": "V",
-    "instruction": "次の英文の空所（37）〜（42）に入れるのに最も適切な語を選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
-    "passage": {"paragraphs": p5},
+    "instruction": f"次の英文の空所（37）〜（42）に入る最も適切なものを選択肢 1〜4 から選び、その番号を{SHEET_A}の解答欄（37）〜（42）にマークしなさい。",
+    "passage": {"paragraphs": p5, "source": SOURCE},
     "groups": [{"instruction": "", "questions": q5}],
 })
 
 # ───────────────────────── VI 短文の内容推測 ─────────────────────────
 INF = 4
-VI_PROMPT = "Which of the following can be inferred from the passage above?"
+VI_PROMPTS = [
+    "Which one of the following can be inferred from the passage?",
+    "Which one of the following statements is consistent with the content of the passage?",
+    "With which one of the following statements would the author most likely agree?",
+    "Which one of the following statements best captures the main argument of the passage?",
+]
 vi = [
     ("Loyalty programs are often described as a reward for faithful customers, but their main value to retailers may lie elsewhere. Every time a member shows a card or scans an app at the checkout, the store learns what that person bought, when, and at what price. Over months, this record reveals patterns that no survey could capture: which products are bought together, which discounts actually change behavior, and which customers are drifting away. Some retailers now earn more by analyzing this information, or by selling insights based on it to manufacturers, than they spend on the points and coupons they give away. For many shoppers, the discount is real but small; for the store, the data may be the main product.",
      ["Most customers join loyalty programs in order to protect their privacy.",
@@ -323,11 +332,11 @@ vi = [
 ]
 groups6 = []
 for i, (text, choices, ans, exp) in enumerate(vi):
-    q = mark("inference", choices, ans, exp, prompt=VI_PROMPT, points=INF)
-    groups6.append({"instruction": "", "passage": {"paragraphs": [text]}, "questions": [q]})
+    q = mark("inference", choices, ans, exp, prompt=VI_PROMPTS[i], points=INF)
+    groups6.append({"instruction": "", "answerLine": True, "passage": {"label": f"({43 + i})", "paragraphs": [text], "source": SOURCE}, "questions": [q]})
 sections.append({
     "label": "VI",
-    "instruction": "次の（43）〜（46）の英文を読み、それぞれの英文から推測できる内容として最も適切なものを選択肢 1〜4 から1つ選び、その番号を解答用紙の所定の解答欄にマークしなさい。",
+    "instruction": f"次の英文（43）〜（46）を読み、それぞれの設問について最も適切なものを選択肢 1〜4 から選び、その番号を{SHEET_A}の解答欄（43）〜（46）にマークしなさい。",
     "groups": groups6,
 })
 
@@ -337,6 +346,15 @@ p7 = [
     "Streaming services eventually offered a legal alternative, and revenue began to grow again. Yet new problems have {{w:d}}. Musicians complain that the fees paid for each play are tiny, and that the system rewards artists who are already famous. Some have {{w:e}} their work from the major platforms in protest, while others, {{w:f}} a closer relationship with their fans, sell recordings and concert tickets directly through their own websites.",
 ]
 VII_WORDS = ["arise", "dismiss", "fall", "seek", "undergo", "withdraw"]
+# 「同じ動詞を二回以上選んだ場合は得点にならない」の判定用（解答の語形 → 元の動詞）
+VII_FORMS = {
+    "arise": ["arise", "arises", "arose", "arisen", "arising"],
+    "dismiss": ["dismiss", "dismisses", "dismissed", "dismissing"],
+    "fall": ["fall", "falls", "fell", "fallen", "falling"],
+    "seek": ["seek", "seeks", "sought", "seeking"],
+    "undergo": ["undergo", "undergoes", "underwent", "undergone", "undergoing"],
+    "withdraw": ["withdraw", "withdraws", "withdrew", "withdrawn", "withdrawing"],
+}
 q7 = [
     write("a", ["undergone"], "have + 過去分詞（現在完了）。undergo – underwent – undergone「（変化などを）経験する」。"),
     write("b", ["dismissed"], "would have been + 過去分詞（受動態・仮定法過去完了）。dismiss A as B「AをBとして退ける」。"),
@@ -347,9 +365,10 @@ q7 = [
 ]
 sections.append({
     "label": "VII",
-    "instruction": "次の英文の空所（a）〜（f）に入れるのに最も適切な語を下の語群から選び、必要に応じて適切な形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使うこと。また、解答は1語とする。",
-    "passage": {"paragraphs": p7},
-    "groups": [{"instruction": "", "wordBox": VII_WORDS, "questions": q7}],
+    "instruction": "次の英文を読み、空所（a）〜（f）に入る、文脈の上で最も適した動詞を下記の語群から選び、必要に応じて語形を変えて解答用紙Bの解答欄に記入しなさい。ただし、各解答欄に記入する語は一語のみとし、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+    "sheetNotice": "ここからは解答用紙Bを使用しなさい。",
+    "passage": {"paragraphs": p7, "source": SOURCE},
+    "groups": [{"instruction": "", "wordBox": VII_WORDS, "wordForms": VII_FORMS, "questions": q7}],
 })
 
 # ───────────────────────── VIII 記述：名詞形 ─────────────────────────
@@ -358,6 +377,13 @@ p8 = [
     "Such advice is easier to give than to follow. Founders are often admired for their {{w:c}}, and the line between determination and stubbornness is not always clear. A founder who ignores every warning may be praised as a visionary if the business succeeds, and criticized for {{w:d}} if it fails. The real skill lies in telling the difference between evidence and discouragement — and in the {{w:e}} of a team honest enough to point out which is which.",
 ]
 VIII_WORDS = ["assume", "deny", "maintain", "persist", "revise"]
+VIII_FORMS = {
+    "assume": ["assumption", "assumptions"],
+    "deny": ["denial", "denials"],
+    "maintain": ["maintenance"],
+    "persist": ["persistence"],
+    "revise": ["revision", "revisions"],
+}
 q8 = [
     write("a", ["assumptions"], "a set of + 複数名詞。assume → assumption（綴りの変化 -ume → -umption に注意）。複数形 assumptions。", category="noun-form"),
     write("b", ["revision"], "The + 名詞 + of ...。revise → revision「修正」。早期の計画の修正は失敗ではなく学習の証。", category="noun-form"),
@@ -367,10 +393,23 @@ q8 = [
 ]
 sections.append({
     "label": "VIII",
-    "instruction": "次の英文の空所（a）〜（e）に入れるのに最も適切な語を下の語群から選び、適切な名詞形に変えて、記述解答用紙の所定の欄に記入しなさい。ただし、語群の語はそれぞれ1回ずつ使い、名詞形の単数・複数にも注意すること。また、解答は1語とする。",
-    "passage": {"paragraphs": p8},
-    "groups": [{"instruction": "", "wordBox": VIII_WORDS, "questions": q8}],
+    "instruction": "次の英文を読み、空所（a）〜（e）に入る、文脈の上で最も適した名詞を解答用紙Bの解答欄に記入しなさい。下記の動詞の最も適切な名詞形のみを使用すること。ただし、〜ing 形は使用してはいけない。また、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+    "example": "例： decide → decision",
+    "passage": {"paragraphs": p8, "source": SOURCE},
+    "groups": [{"instruction": "", "wordBox": VIII_WORDS, "wordForms": VIII_FORMS, "questions": q8}],
 })
+
+# 設問番号を振る（マークは 1〜46 の通し番号、記述は 1〜11 の内部番号＋表示ラベル (a)〜）
+n_mark = n_write = 0
+for sec in sections:
+    for g in sec["groups"]:
+        for q in g["questions"]:
+            if q["kind"] == "mark":
+                n_mark += 1
+                q["id"], q["no"] = f"m{n_mark}", n_mark
+            else:
+                n_write += 1
+                q["id"], q["no"] = f"w{n_write}", n_write
 
 exam = {
     "id": "keio-shogaku-eigo-01",
@@ -382,13 +421,12 @@ exam = {
     "durationMin": 90,
     "totalPoints": 200,
     "coverNotes": [
-        "試験開始の合図があるまで、この問題冊子を開いてはいけません。",
-        "この問題冊子は、表紙を除き本文が I から VIII まであります。落丁、乱丁、印刷不鮮明の箇所等があった場合は、手を挙げて監督者に知らせてください。",
-        "解答用紙は、マーク解答用紙と記述解答用紙の2種類です。I〜VI の解答はマーク解答用紙に、VII・VIII の解答は記述解答用紙に記入してください。",
-        "マーク解答用紙には、HBの黒鉛筆を使用し、所定の解答欄の該当する番号を濃く正確にマークしてください。訂正する場合は、プラスチック製の消しゴムできれいに消してください。",
-        "記述解答用紙には、所定の解答欄に、はっきりと記入してください。",
-        "解答用紙の受験番号欄・氏名欄は必ず記入してください。",
-        "問題冊子の余白は、適宜下書きに使用してかまいません。",
+        "受験番号と氏名は、解答用紙A（マークシート）と解答用紙Bのそれぞれ所定の欄に必ず記入すること。さらに、解答用紙A（マークシート）の受験番号欄をマークすること。",
+        "解答は、すべて指定された解答用紙の所定の欄に記入またはマークすること。I〜VI は解答用紙A（マークシート）、VII・VIII は解答用紙Bを使用する。",
+        "解答用紙A（マークシート）への記入に先立って、用紙上に記載された注意事項を必ず読むこと。",
+        "解答用紙A（マークシート）にはHBの黒鉛筆を使用し、たとえば（12）と表示のある問いに対して 3 と解答する場合は、解答欄（12）の 3 をマークすること。",
+        "問題冊子の余白は下書きに用いてよい。",
+        "試験開始の合図とともに全てのページが揃っているか確認し、ページの抜けや重複があった場合は直ちに監督者に申し出ること。",
     ],
     "disclaimer": "本模試は、過去の出題形式（大問構成・設問形式・分量）を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。配点は大学から公表されていないため、本模試独自の想定配点です。",
     "sections": sections,
