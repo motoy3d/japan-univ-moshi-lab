@@ -76,6 +76,36 @@ export function SettingsPage() {
         <span className="small">{user?.email ?? user?.name}</span>
         <button className="btn" onClick={logout}>ログアウト</button>
       </div>
+      <DeleteAccount />
     </div>
+  );
+}
+
+/** 退会（受験記録などのデータとアカウントを削除）。押し間違いを防ぐため、確認の文字を入力してもらう */
+function DeleteAccount() {
+  const [open, setOpen] = useState(false);
+  const [text, setText] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string>();
+  const run = async () => {
+    setBusy(true);
+    try {
+      await api.deleteMe();
+      logout();
+    } catch (e) {
+      setError((e as Error).message);
+      setBusy(false);
+    }
+  };
+  return (
+    <details className="danger-zone" open={open} onToggle={(e) => setOpen((e.target as HTMLDetailsElement).open)}>
+      <summary className="small muted">退会する（データを削除）</summary>
+      <div className="grid" style={{ gap: 8, marginTop: 8 }}>
+        <p className="small" style={{ margin: 0 }}>受験記録・志望校などの設定・ログイン用のアカウントを削除します。元に戻せません。偏差値の計算に使った匿名の集計値は残ります。</p>
+        <input type="text" placeholder="確認のため「削除」と入力" value={text} onChange={(e) => setText(e.target.value)} />
+        {error && <p className="error">{error}</p>}
+        <button className="btn btn-danger" disabled={text !== "削除" || busy} onClick={run}>{busy ? "削除中…" : "退会してデータを削除する"}</button>
+      </div>
+    </details>
   );
 }

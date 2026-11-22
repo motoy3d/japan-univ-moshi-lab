@@ -5,11 +5,12 @@
   --surface-2: #f0efea;
   --ink: #1b1b19;
   --ink-2: #52514e;
-  --muted: #898781;
+  --muted: #6b6a65; /* 背景・白地で 4.5:1 以上（WCAG AA） */
   --line: #e1e0d9;
   --brand: #1f3a5f;
   --brand-ink: #ffffff;
-  --accent: #2a78d6;
+  --accent: #1f66bf;
+  --accent-ink: #ffffff;
   --accent-soft: #dbe8f8;
   --ok: #1f8a4c;
   --ok-soft: #e1f2e7;
@@ -33,11 +34,12 @@
     --surface-2: #232321;
     --ink: #f0efec;
     --ink-2: #c3c2b7;
-    --muted: #898781;
+    --muted: #a3a29b;
     --line: #2f2f2c;
     --brand: #9cc1ef;
     --brand-ink: #10213a;
     --accent: #3987e5;
+    --accent-ink: #0b1a2e; /* 明るい青の上は濃い文字（4.5:1 以上） */
     --accent-soft: #1d3350;
     --ok: #4fbf7d;
     --ok-soft: #173525;
@@ -99,7 +101,7 @@ h3 { font-size: 16px; margin: 20px 0 8px; }
   background: var(--surface); color: var(--ink); cursor: pointer; text-decoration: none; font-weight: 600; font-size: 15px;
 }
 .btn:hover { background: var(--surface-2); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn-primary:hover { background: var(--accent); filter: brightness(1.08); }
 .btn-block { width: 100%; }
 .btn:disabled { opacity: 0.5; cursor: default; }
@@ -705,7 +707,7 @@ h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
 .rating-q { margin: 0; font-weight: 600; }
 .rating-scale { display: flex; gap: 8px; }
 .rating-btn { flex: 1; min-height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: inherit; font-size: 16px; font-weight: 700; cursor: pointer; }
-.rating-btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rating-btn.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .rating-legend { display: flex; justify-content: space-between; }
 
 .review-q { position: relative; }
@@ -730,3 +732,7 @@ h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
 .admin-flag td { background: color-mix(in srgb, var(--warn) 10%, transparent); }
 .admin-text { max-width: 28em; white-space: pre-wrap; word-break: break-word; }
 .nowrap { white-space: nowrap; }
+.danger-zone { margin-top: 24px; }
+.danger-zone summary { cursor: pointer; }
+.btn-danger { background: #b3261e; border-color: #b3261e; color: #fff; }
+.btn-danger:disabled { opacity: 0.5; }

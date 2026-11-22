@@ -237,6 +237,9 @@ export class MoshiLabStack extends Stack {
       preventUserExistenceErrors: true,
     });
     if (google) client.node.addDependency(google);
+    // 退会時に API がアカウントを削除できるようにする
+    fn.addEnvironment("USER_POOL_ID", userPool.userPoolId);
+    userPool.grant(fn, "cognito-idp:AdminDeleteUser");
 
     // 運営者のグループ。管理画面（/admin）と /api/admin/* はこのグループの人だけが使える。
     // 自分のユーザーを追加: aws cognito-idp admin-add-user-to-group --user-pool-id <UserPoolId> --username <ユーザー名> --group-name admin
@@ -254,7 +257,7 @@ export class MoshiLabStack extends Stack {
     httpApi.addRoutes({ path: "/api/exams/{proxy+}", methods: [apigw.HttpMethod.GET], integration });
     httpApi.addRoutes({ path: "/api/guest/attempts", methods: [apigw.HttpMethod.POST], integration });
     httpApi.addRoutes({ path: "/api/feedback", methods: [apigw.HttpMethod.POST], integration });
-    httpApi.addRoutes({ path: "/api/{proxy+}", methods: [apigw.HttpMethod.GET, apigw.HttpMethod.POST, apigw.HttpMethod.PUT], integration, authorizer });
+    httpApi.addRoutes({ path: "/api/{proxy+}", methods: [apigw.HttpMethod.GET, apigw.HttpMethod.POST, apigw.HttpMethod.PUT, apigw.HttpMethod.DELETE], integration, authorizer });
 
     // 濫用対策のスロットリング（デフォルトステージ）
     const stage = httpApi.defaultStage!.node.defaultChild as apigw.CfnStage;

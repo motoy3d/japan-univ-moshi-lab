@@ -4,6 +4,7 @@ import {
   GetCommand,
   PutCommand,
   QueryCommand,
+  BatchWriteCommand,
   ScanCommand,
   TransactWriteCommand,
   UpdateCommand,
@@ -11,6 +12,7 @@ import {
 import type { AttemptDetail, PhotoJob, Profile } from "../../shared/types";
 import type { RawStats } from "../../shared/stats";
 import type { FeedbackRecord, Repo } from "./repo";
+import { EXAMS } from "../../content/index";
 
 /**
  * シングルテーブル設計（オンデマンド課金）
@@ -206,6 +208,31 @@ export class DynamoRepo implements Repo {
   async listAllPhotoJobs(since: string) {
     const items = await this.scan("begins_with(SK, :p) AND createdAt >= :since", { ":p": "PHOTO#", ":since": since });
     return items.map(({ PK: _p, SK: _s, ...rest }) => rest as unknown as PhotoJob);
+  }
+
+  async deleteUserData(userId: string) {
+    const keys: { PK: string; SK: string }[] = [];
+    let ExclusiveStartKey: Record<string, unknown> | undefined;
+    do {
+      const r = await this.doc.send(
+        new QueryCommand({
+          TableName: this.table,
+          KeyConditionExpression: "PK = :pk",
+          ExpressionAttributeValues: { ":pk": `USER#${userId}` },
+          ProjectionExpression: "PK, SK",
+          ExclusiveStartKey,
+        }),
+      );
+      keys.push(...((r.Items ?? []) as { PK: string; SK: string }[]));
+      ExclusiveStartKey = r.LastEvaluatedKey;
+    } while (ExclusiveStartKey);
+    const all = [...keys, ...EXAMS.map((e) => ({ PK: `EXAM#${e.id}`, SK: `FIRST#${userId}` }))];
+    for (let i = 0; i < all.length; i += 25) {
+      await this.doc.send(
+        new BatchWriteCommand({ RequestItems: { [this.table]: all.slice(i, i + 25).map((Key) => ({ DeleteRequest: { Key } })) } }),
+      );
+    }
+    return keys.length;
   }
 }
 

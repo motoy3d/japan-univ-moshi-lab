@@ -60,11 +60,15 @@ export interface RequestContext {
   admin?: boolean;
   /** 送信元 IP（回数制限に使う。保存はしない） */
   ip?: string;
+  /** Cognito のユーザー名（退会でアカウントを消すのに使う） */
+  username?: string;
 }
 
 /** 環境ごとに差し替える外部処理（本番: S3 + 読み取り用 Lambda。ローカル・デモ: なし） */
 export interface Services {
   photo?: { start(userId: string, job: PhotoJob, images: string[]): Promise<void> };
+  /** 退会時にログイン用のアカウント（Cognito）を削除する */
+  deleteAccount?: (username: string) => Promise<void>;
 }
 
 const ok = (body: unknown): ApiResponse => ({ status: 200, body });
@@ -310,6 +314,14 @@ export async function route(
       return items ? ok(items) : err(404, "模試が見つかりません");
     }
     return err(404, "Not Found");
+  }
+
+  // DELETE /me （退会: 受験記録などのデータとログイン用のアカウントを削除）
+  if (p === "/me" && method === "DELETE") {
+    const deleted = await repo.deleteUserData(userId);
+    if (services.deleteAccount && ctx.username) await services.deleteAccount(ctx.username);
+    console.log(JSON.stringify({ msg: "account deleted", items: deleted }));
+    return ok({ ok: true });
   }
 
   // GET /me ・ PUT /me （目標設定）

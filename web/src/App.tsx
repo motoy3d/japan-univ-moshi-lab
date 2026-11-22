@@ -5,6 +5,7 @@ import { trackPage } from "./analytics";
 import { importLocalResults } from "./guest";
 import { PhotoPage } from "./pages/PhotoPage";
 import { AdminPage } from "./pages/AdminPage";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { LocalResultPage } from "./pages/ResultPage";
 import { CallbackPage, LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
@@ -82,7 +83,7 @@ const open = (el: ReactNode, shell = true) => (shell ? <Shell>{el}</Shell> : el)
 
 export function App() {
   return (
-    <>
+    <ErrorBoundary>
     <Effects />
     <Routes>
       <Route path="/login" element={<Shell><LoginPage /></Shell>} />
@@ -102,6 +103,6 @@ export function App() {
       <Route path="/admin" element={authed(<AdminPage />)} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-    </>
+    </ErrorBoundary>
   );
 }

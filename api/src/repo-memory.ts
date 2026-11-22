@@ -95,4 +95,13 @@ export class MemoryRepo implements Repo {
   async listAllPhotoJobs(since: string) {
     return Object.values(this.data.photoJobs ?? {}).flat().filter((j) => j.createdAt >= since);
   }
+  async deleteUserData(userId: string) {
+    const n = (this.data.attempts[userId]?.length ?? 0) + (this.data.photoJobs?.[userId]?.length ?? 0) + (this.data.profiles[userId] ? 1 : 0);
+    delete this.data.attempts[userId];
+    delete this.data.profiles[userId];
+    if (this.data.photoJobs) delete this.data.photoJobs[userId];
+    for (const k of Object.keys(this.data.firsts)) if (k.endsWith(`#${userId}`)) delete this.data.firsts[k];
+    this.save();
+    return n;
+  }
 }

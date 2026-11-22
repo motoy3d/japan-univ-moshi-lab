@@ -1,6 +1,5 @@
 // 志望校データ（content/admissions.ts）の検索・表示用ヘルパー
 import { ADMISSIONS, findTarget, firstExamDate, type Admission, type Faculty, type TargetRef } from "../../content/admissions";
-import { EXAMS } from "../../content/index";
 
 export type { TargetRef };
 export { ADMISSIONS, findTarget, firstExamDate };
@@ -36,7 +35,7 @@ export function searchFaculties(query: string): FacultyHit[] {
     for (const faculty of admission.faculties) {
       const hay = [admission.name, admission.shortName, ...admission.aliases, faculty.name, faculty.department, ...faculty.aliases].map(norm);
       if (tokens.every((t) => hay.some((h) => h.includes(norm(t)))))
-        hits.push({ admission, faculty, hasMock: faculty.mockExamIds.some((id) => EXAMS.some((e) => e.id === id)) });
+        hits.push({ admission, faculty, hasMock: faculty.mockExamIds.length > 0 /* 模試の存在は npm run validate が保証する。問題データ（正解入り）を画面のコードに含めないため参照しない */ });
     }
   return hits.sort((a, b) => Number(b.hasMock) - Number(a.hasMock));
 }

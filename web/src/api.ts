@@ -45,6 +45,7 @@ export const api = {
   attempt: (id: string) => call<AttemptReview>("GET", `/attempts/${id}`),
   me: () => call<Profile>("GET", "/me"),
   saveMe: (p: Profile) => call<Profile>("PUT", "/me", p),
+  deleteMe: () => call<{ ok: true }>("DELETE", "/me"),
   guestSubmit: (req: GuestSubmitRequest) => call<AttemptReview>("POST", "/guest/attempts", req),
   feedback: (req: FeedbackRequest) => call<{ ok: true }>("POST", "/feedback", req),
   photoJob: (req: PhotoJobRequest) => call<PhotoJob>("POST", "/photo-jobs", req),

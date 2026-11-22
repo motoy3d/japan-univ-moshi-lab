@@ -1,8 +1,10 @@
 import type { APIGatewayProxyEventV2WithJWTAuthorizer, APIGatewayProxyResultV2 } from "aws-lambda";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { InvokeCommand, LambdaClient } from "@aws-sdk/client-lambda";
+import { AdminDeleteUserCommand, CognitoIdentityProviderClient } from "@aws-sdk/client-cognito-identity-provider";
 import { route, type Services } from "./app";
 import { DynamoRepo } from "./repo-dynamo";
+import { clientIp } from "./client-ip";
 import type { PhotoWorkerEvent } from "./photo-worker";
 
 const repo = new DynamoRepo(process.env.TABLE_NAME!);
@@ -27,7 +29,15 @@ function photoService(): Services["photo"] {
     },
   };
 }
-const services: Services = { photo: photoService() };
+const userPoolId = process.env.USER_POOL_ID;
+const services: Services = {
+  photo: photoService(),
+  deleteAccount: userPoolId
+    ? async (username) => {
+        await new CognitoIdentityProviderClient({}).send(new AdminDeleteUserCommand({ UserPoolId: userPoolId, Username: username }));
+      }
+    : undefined,
+};
 
 export async function handler(event: APIGatewayProxyEventV2WithJWTAuthorizer): Promise<APIGatewayProxyResultV2> {
   // HTTP API の JWT オーソライザ（Cognito）が検証済みのクレーム（公開ルートでは無い）
@@ -37,7 +47,11 @@ export async function handler(event: APIGatewayProxyEventV2WithJWTAuthorizer): P
     // Cognito のグループ（アクセストークンの cognito:groups）。HTTP API は配列を "[admin other]" の文字列で渡すことがある
     const groups = String(event.requestContext.authorizer?.jwt?.claims?.["cognito:groups"] ?? "");
     const admin = !!sub && /(^|[\s,\[])admin([\s,\]]|$)/.test(groups);
-    const res = await route(repo, event.requestContext.http.method, event.rawPath, sub, body, services, { admin, ip: event.requestContext.http.sourceIp });
+    const res = await route(repo, event.requestContext.http.method, event.rawPath, sub, body, services, {
+      admin,
+      ip: clientIp(event.headers, event.requestContext.http.sourceIp),
+      username: event.requestContext.authorizer?.jwt?.claims?.username as string | undefined,
+    });
     return {
       statusCode: res.status,
       headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },

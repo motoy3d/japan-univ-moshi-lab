@@ -83,3 +83,26 @@ test("登録なしの採点結果に、受験前に送らない採点専用デ�
   assert.ok(!json.includes("wordForms") && !json.includes("explanation"));
   assert.equal(r.status, 200);
 });
+
+test("回数制限の IP: CloudFront が付け足した末尾の値を使い、利用者が書いた先頭は無視する", async () => {
+  const { clientIp } = await import("../api/src/client-ip");
+  assert.equal(clientIp({ "x-forwarded-for": "1.2.3.4, 203.0.113.7" }, "130.176.0.1"), "203.0.113.7");
+  assert.equal(clientIp({ "x-forwarded-for": "203.0.113.7" }, "130.176.0.1"), "203.0.113.7");
+  assert.equal(clientIp({}, "198.51.100.2"), "198.51.100.2");
+  assert.equal(clientIp({ "x-forwarded-for": "evil<script>" }, "198.51.100.2"), "198.51.100.2");
+});
+
+test("退会: 自分の受験記録・設定・母集団の印を消し、アカウント削除を呼ぶ", async () => {
+  const repo = new MemoryRepo();
+  await route(repo, "PUT", "/api/me", "u9", JSON.stringify({ nickname: "x" }));
+  await route(repo, "POST", "/api/attempts", "u9", JSON.stringify({ examId: exam.id, answers: perfect, durationSec: 900, mode: "web" }));
+  await route(repo, "POST", "/api/attempts", "u8", JSON.stringify({ examId: exam.id, answers: perfect, durationSec: 900, mode: "web" }));
+  const deleted: string[] = [];
+  const r = await route(repo, "DELETE", "/api/me", "u9", undefined, { deleteAccount: async (u) => void deleted.push(u) }, { username: "Google_123" });
+  assert.equal(r.status, 200);
+  assert.deepEqual(deleted, ["Google_123"]);
+  assert.deepEqual((await route(repo, "GET", "/api/attempts", "u9", undefined)).body, []);
+  assert.deepEqual((await route(repo, "GET", "/api/me", "u9", undefined)).body, {});
+  assert.equal(((await route(repo, "GET", "/api/attempts", "u8", undefined)).body as unknown[]).length, 1); // 他人の記録は残る
+  assert.equal((await route(repo, "DELETE", "/api/me", undefined, undefined)).status, 401);
+});

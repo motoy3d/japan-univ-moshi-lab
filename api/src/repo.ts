@@ -33,6 +33,8 @@ export interface Repo {
    * ttlSec 後に自動で消える
    */
   hit(key: string, bucket: string, ttlSec: number): Promise<number>;
+  /** 退会: ユーザーの受験記録・設定・撮影採点のジョブと、母集団の印を削除する（偏差値の集計値は匿名の合計なので残る） */
+  deleteUserData(userId: string): Promise<number>;
 
   // ---------- 運営の管理画面用（件数が少ない検証期間向け。全件を読む） ----------
   /** since 以降の受験（ゲスト・ログインユーザーの両方） */
