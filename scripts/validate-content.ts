@@ -1,4 +1,7 @@
 // 模試データの整合性チェック: npm run validate
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { EXAMS } from "../content/index";
 import { allQuestions, normalizeWritten } from "../shared/scoring";
 import { CATEGORY_LABELS } from "../shared/types";
@@ -6,6 +9,60 @@ import { ADMISSIONS } from "../content/admissions";
 import { findExam } from "../content/index";
 
 let errors = 0;
+const here = path.dirname(fileURLToPath(import.meta.url));
+
+interface Profile {
+  totalPoints: number;
+  durationMin: number;
+  markQuestions: number;
+  writeQuestions: number;
+  choicesPerMark: number;
+  longPassages: { sections: string[]; wordsEach: [number, number]; wordsTotal: [number, number]; questionTypes: Record<string, [number, number]> };
+  sections: { label: string; kind: string; mark: [number, number]; write: number; words?: [number, number]; wordsEach?: [number, number] }[];
+}
+
+const countWords = (paras: string[] = []) =>
+  paras.join(" ").replace(/\{\{[buw]:\w+\|?/g, " ").replace(/\}\}/g, " ").split(/\s+/).filter(Boolean).length;
+const inRange = (v: number, [lo, hi]: [number, number]) => v >= lo && v <= hi;
+
+function checkProfile(exam: (typeof EXAMS)[number], qs: ReturnType<typeof allQuestions<(typeof EXAMS)[number]["sections"][number]["groups"][number]["questions"][number]>>) {
+  const file = path.join(here, "../content/profiles", `${exam.profile}.json`);
+  if (!fs.existsSync(file)) return fail(exam.id, `プロファイル ${exam.profile} が見つからない`);
+  const pr: Profile = JSON.parse(fs.readFileSync(file, "utf8"));
+  const tag = `プロファイル ${exam.profile}`;
+  if (exam.totalPoints !== pr.totalPoints || exam.durationMin !== pr.durationMin) fail(exam.id, `${tag}: 配点・試験時間が違う`);
+  const marks = qs.filter((q) => q.kind === "mark"), writes = qs.filter((q) => q.kind === "write");
+  if (marks.length !== pr.markQuestions || writes.length !== pr.writeQuestions)
+    fail(exam.id, `${tag}: 設問数 マーク${marks.length}/記述${writes.length}（基準 ${pr.markQuestions}/${pr.writeQuestions}）`);
+  for (const q of marks) if (q.choices?.length !== pr.choicesPerMark) fail(exam.id, `${tag}: ${q.id} の選択肢が${pr.choicesPerMark}つでない`);
+  if (exam.sections.map((s) => s.label).join(",") !== pr.sections.map((s) => s.label).join(","))
+    return fail(exam.id, `${tag}: 大問の並びが違う`);
+  let longTotal = 0;
+  const typeCount: Record<string, number> = {};
+  pr.sections.forEach((ps, i) => {
+    const s = exam.sections[i];
+    const sq = s.groups.flatMap((g) => g.questions);
+    const m = sq.filter((q) => q.kind === "mark").length, w = sq.filter((q) => q.kind === "write").length;
+    if (!inRange(m, ps.mark) || w !== ps.write) fail(exam.id, `${tag}: 大問${s.label} の設問数 ${m}/${w}`);
+    if (ps.kind === "long") {
+      const wc = countWords(s.passage?.paragraphs);
+      longTotal += wc;
+      if (!inRange(wc, pr.longPassages.wordsEach)) fail(exam.id, `${tag}: 大問${s.label} の語数 ${wc}（基準 ${pr.longPassages.wordsEach.join("〜")}）`);
+      if (s.groups.length !== 2 || s.groups[0].questions.some((q) => q.prompt) || s.groups[1].questions.some((q) => !q.prompt))
+        fail(exam.id, `${tag}: 大問${s.label} は (i) 空所 → (ii) その他 の2グループにする`);
+      for (const q of sq) {
+        const k = q.category === "logic" || q.category === "vocab" ? "logic+vocab" : q.category;
+        typeCount[k] = (typeCount[k] ?? 0) + 1;
+      }
+    }
+    if (ps.words && !inRange(countWords(s.passage?.paragraphs), ps.words)) fail(exam.id, `${tag}: 大問${s.label} の語数が基準外`);
+    if (ps.wordsEach) for (const g of s.groups) if (!inRange(countWords(g.passage?.paragraphs), ps.wordsEach)) fail(exam.id, `${tag}: 大問${s.label} の短文の語数が基準外（${countWords(g.passage?.paragraphs)}語）`);
+  });
+  if (!inRange(longTotal, pr.longPassages.wordsTotal)) fail(exam.id, `${tag}: 長文の総語数 ${longTotal}`);
+  for (const [k, range] of Object.entries(pr.longPassages.questionTypes))
+    if (!inRange(typeCount[k] ?? 0, range)) fail(exam.id, `${tag}: 長文の設問の種類 ${k} が ${typeCount[k] ?? 0} 問（基準 ${range.join("〜")}）`);
+  console.log(`  ↳ ${tag} に適合（長文 計${longTotal}語、設問の種類 ${Object.entries(typeCount).map(([k, v]) => `${k}:${v}`).join(" ")}）`);
+}
 const fail = (examId: string, msg: string) => {
   errors++;
   console.error(`✗ [${examId}] ${msg}`);
@@ -90,6 +147,9 @@ for (const exam of EXAMS) {
       if (!secQs.some((q) => q.kind === "write" && q.label === t)) fail(exam.id, `大問${section.label}: 本文の記述空所 ${t} に対応する設問がない`);
     if (new Set(allMarkTokens).size !== allMarkTokens.length) fail(exam.id, `大問${section.label}: 本文の番号が重複`);
   }
+  // 入試プロファイルへの適合（content/profiles/<profile>.json）
+  if (exam.profile) checkProfile(exam, qs);
+
   // 正解の位置の偏り（4択で一つの番号に集中すると、当て推量で点が取れてしまう）
   const four = qs.filter((q) => q.kind === "mark" && (q.choices?.length ?? 0) === 4);
   const counts = [1, 2, 3, 4].map((n) => four.filter((q) => q.answer === n).length);

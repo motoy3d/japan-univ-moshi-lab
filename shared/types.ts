@@ -100,6 +100,8 @@ export interface Section<Q = Question> {
 
 export interface ExamMeta {
   id: string;
+  /** 準拠する入試プロファイル（content/profiles/<id>.json）。validate が形式を検査する */
+  profile?: string;
   university: string;
   faculty: string;
   subject: string;
