@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../api";
-import { currentUser, logout } from "../auth";
+import { cognitoUserCall, currentUser, logout } from "../auth";
+import { getConfig } from "../config";
 import { daysUntil } from "../components/Motivation";
 import { TargetPicker } from "../components/TargetPicker";
 import type { TargetRef } from "../targets";
@@ -76,6 +77,7 @@ export function SettingsPage() {
         <span className="small">{user?.email ?? user?.name}</span>
         <button className="btn" onClick={logout}>ログアウト</button>
       </div>
+      <AccountSecurity />
       <DeleteAccount />
     </div>
   );
@@ -106,6 +108,102 @@ function DeleteAccount() {
         {error && <p className="error">{error}</p>}
         <button className="btn btn-danger" disabled={text !== "削除" || busy} onClick={run}>{busy ? "削除中…" : "退会してデータを削除する"}</button>
       </div>
+    </details>
+  );
+}
+
+/** メールアドレス・パスワードの変更（メールで登録した人のみ。Google でログインした人は Google 側で管理） */
+function AccountSecurity() {
+  const user = currentUser();
+  if (getConfig().authMode !== "cognito")
+    return <p className="small muted">メールアドレス・パスワードの変更は、本番環境（メールで登録したアカウント）で使えます。表示名は上の「表示名」で変えられます。</p>;
+  if (user?.federated)
+    return <p className="small muted">Google でログインしています。メールアドレスとパスワードは Google アカウントで管理されています。表示名は上の「表示名」で変えられます。</p>;
+  return (
+    <div className="grid" style={{ gap: 12, marginTop: 12 }}>
+      <ChangeEmail current={user?.email} />
+      <ChangePassword />
+    </div>
+  );
+}
+
+function ChangeEmail({ current }: { current?: string }) {
+  const [email, setEmail] = useState("");
+  const [code, setCode] = useState("");
+  const [step, setStep] = useState<"input" | "code" | "done">("input");
+  const [error, setError] = useState<string>();
+  const [busy, setBusy] = useState(false);
+  const act = async (fn: () => Promise<void>) => {
+    setBusy(true);
+    setError(undefined);
+    try {
+      await fn();
+    } catch (e) {
+      setError((e as Error).message);
+    }
+    setBusy(false);
+  };
+  return (
+    <details className="card">
+      <summary><b>メールアドレスを変更</b> <span className="small muted">{current}</span></summary>
+      <div className="grid" style={{ gap: 8, marginTop: 10 }}>
+        {step === "input" && (
+          <>
+            <input type="email" autoComplete="email" placeholder="新しいメールアドレス" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="新しいメールアドレス" />
+            <button className="btn btn-primary" disabled={busy || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)}
+              onClick={() => act(async () => { await cognitoUserCall("UpdateUserAttributes", { UserAttributes: [{ Name: "email", Value: email }] }); setStep("code"); })}>
+              確認コードを送る
+            </button>
+          </>
+        )}
+        {step === "code" && (
+          <>
+            <p className="small" style={{ margin: 0 }}>{email} に届いた6桁の確認コードを入力してください。確認できるまでは、今のメールアドレスのままです。</p>
+            <input type="text" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="確認コード" value={code} onChange={(e) => setCode(e.target.value.trim())} aria-label="確認コード" />
+            <button className="btn btn-primary" disabled={busy || code.length < 6}
+              onClick={() => act(async () => { await cognitoUserCall("VerifyUserAttribute", { AttributeName: "email", Code: code }); setStep("done"); })}>
+              確認する
+            </button>
+          </>
+        )}
+        {step === "done" && <p className="small" style={{ margin: 0 }}>メールアドレスを変更しました。次回から新しいアドレスでログインしてください。</p>}
+        {error && <p className="error">{error}</p>}
+      </div>
+    </details>
+  );
+}
+
+function ChangePassword() {
+  const [cur, setCur] = useState("");
+  const [next, setNext] = useState("");
+  const [msg, setMsg] = useState<string>();
+  const [error, setError] = useState<string>();
+  const [busy, setBusy] = useState(false);
+  const submit = async () => {
+    setBusy(true);
+    setError(undefined);
+    setMsg(undefined);
+    try {
+      await cognitoUserCall("ChangePassword", { PreviousPassword: cur, ProposedPassword: next });
+      setMsg("パスワードを変更しました");
+      setCur("");
+      setNext("");
+    } catch (e) {
+      setError((e as Error).message);
+    }
+    setBusy(false);
+  };
+  return (
+    <details className="card">
+      <summary><b>パスワードを変更</b></summary>
+      <form className="grid" style={{ gap: 8, marginTop: 10 }} onSubmit={(e) => { e.preventDefault(); void submit(); }}>
+        <input type="password" autoComplete="current-password" placeholder="現在のパスワード" value={cur} onChange={(e) => setCur(e.target.value)} aria-label="現在のパスワード" />
+        <input type="password" autoComplete="new-password" placeholder="新しいパスワード（8文字以上・英大小文字と数字）" value={next} onChange={(e) => setNext(e.target.value)} aria-label="新しいパスワード" />
+        <button className="btn btn-primary" type="submit" disabled={busy || !cur || next.length < 8}>変更する</button>
+        <p className="small muted" style={{ margin: 0 }}>パスワードを忘れた場合は、ログアウトしてからログイン画面の「パスワードを忘れた場合」で再設定できます。</p>
+        {msg && <p className="notice small">{msg}</p>}
+        {error && <p className="error">{error}</p>}
+      </form>
     </details>
   );
 }

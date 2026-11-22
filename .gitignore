@@ -10,3 +10,4 @@ dist-demo/
 __pycache__/
 test-results/
 playwright-report/
+print/

@@ -6,6 +6,9 @@ import { importLocalResults } from "./guest";
 import { PhotoPage } from "./pages/PhotoPage";
 import { AdminPage } from "./pages/AdminPage";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { Logo } from "./components/Logo";
+import { DesignPanel } from "./components/DesignPanel";
+import { DesignGallery } from "./pages/DesignGallery";
 import { LocalResultPage } from "./pages/ResultPage";
 import { CallbackPage, LoginPage } from "./pages/LoginPage";
 import { HomePage } from "./pages/HomePage";
@@ -41,7 +44,7 @@ function Shell({ children }: { children: ReactNode }) {
   return (
     <>
       <header className="app-header no-print">
-        <Link to="/" className="brand"><span className="logo" aria-hidden>模</span>模試ラボ</Link>
+        <Link to="/" className="brand" aria-label="模試ラボ ホーム"><Logo /></Link>
         {user ? (
           <nav className="top-nav">
             <NavLink to="/" end>ホーム</NavLink>
@@ -81,10 +84,11 @@ function TabIcon({ d }: { d: string }) {
 const authed = (el: ReactNode, shell = true) => <RequireAuth>{shell ? <Shell>{el}</Shell> : el}</RequireAuth>;
 const open = (el: ReactNode, shell = true) => (shell ? <Shell>{el}</Shell> : el);
 
-export function App() {
+export function App({ designPreview = false }: { designPreview?: boolean }) {
   return (
     <ErrorBoundary>
     <Effects />
+    {designPreview && <DesignPanel />}
     <Routes>
       <Route path="/login" element={<Shell><LoginPage /></Shell>} />
       <Route path="/callback" element={<Shell><CallbackPage /></Shell>} />
@@ -101,6 +105,7 @@ export function App() {
       <Route path="/history" element={authed(<HistoryPage />)} />
       <Route path="/settings" element={authed(<SettingsPage />)} />
       <Route path="/admin" element={authed(<AdminPage />)} />
+      <Route path="/design" element={open(<DesignGallery />)} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
     </ErrorBoundary>

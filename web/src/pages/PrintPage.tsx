@@ -304,7 +304,10 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
               </div>
             </div>
           ))}
-          <div className="ms-foot">解答番号（{used + 1}）以降の欄は使用しません。VII・VIII は解答用紙Bに記入すること。</div>
+          <div className="ms-foot">
+            解答番号（{used + 1}）以降の欄は使用しません。
+            {allQuestions(exam).some((q) => q.kind === "write") && "記述の設問は解答用紙Bに記入すること。"}
+          </div>
         </div>
       </div>
     </div>

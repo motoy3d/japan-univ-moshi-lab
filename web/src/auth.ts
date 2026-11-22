@@ -13,6 +13,8 @@ interface Tokens {
 }
 
 export interface User {
+  /** Google でログインした人（メールアドレス・パスワードは Google 側で管理） */
+  federated?: boolean;
   id: string;
   name: string;
   email?: string;
@@ -66,6 +68,7 @@ export function currentUser(): User | null {
     name: String(c.name ?? c.given_name ?? (c.email as string | undefined)?.split("@")[0] ?? "ユーザー"),
     email: c.email as string | undefined,
     admin: Array.isArray(c["cognito:groups"]) && (c["cognito:groups"] as string[]).includes("admin"),
+    federated: Array.isArray(c.identities) && (c.identities as unknown[]).length > 0,
   };
 }
 
@@ -85,7 +88,7 @@ export async function login(provider?: "Google", returnTo = "/") {
     response_type: "code",
     client_id: clientId!,
     redirect_uri: redirectUri(),
-    scope: "openid email profile",
+    scope: "openid email profile aws.cognito.signin.user.admin",
     code_challenge_method: "S256",
     code_challenge: challenge,
     state,
@@ -156,4 +159,32 @@ export function logout() {
   } else {
     location.assign("/");
   }
+}
+
+/**
+ * 本人のアカウント操作（Cognito のユーザー API をアクセストークンで直接呼ぶ）。
+ * ChangePassword / UpdateUserAttributes / VerifyUserAttribute
+ */
+export async function cognitoUserCall(action: "ChangePassword" | "UpdateUserAttributes" | "VerifyUserAttribute", body: Record<string, unknown>) {
+  const { region } = getConfig();
+  const token = await getAccessToken();
+  if (!token || !region) throw new Error("ログインし直してください");
+  const r = await fetch(`https://cognito-idp.${region}.amazonaws.com/`, {
+    method: "POST",
+    headers: { "content-type": "application/x-amz-json-1.1", "x-amz-target": `AWSCognitoIdentityProviderService.${action}` },
+    body: JSON.stringify({ AccessToken: token, ...body }),
+  });
+  if (r.ok) return r.json().catch(() => ({}));
+  const j = await r.json().catch(() => ({}));
+  const type = String(j.__type ?? "");
+  const messages: Record<string, string> = {
+    NotAuthorizedException: "現在のパスワードが違います",
+    InvalidPasswordException: "新しいパスワードは8文字以上で、英小文字・英大文字・数字を含めてください",
+    LimitExceededException: "試行回数が多すぎます。しばらくしてからお試しください",
+    CodeMismatchException: "確認コードが違います",
+    ExpiredCodeException: "確認コードの有効期限が切れました。もう一度送ってください",
+    AliasExistsException: "このメールアドレスはすでに使われています",
+    InvalidParameterException: "入力内容を確認してください",
+  };
+  throw new Error(messages[type] ?? "変更できませんでした。時間をおいてお試しください");
 }

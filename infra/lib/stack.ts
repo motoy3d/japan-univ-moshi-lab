@@ -193,6 +193,8 @@ export class MoshiLabStack extends Stack {
       signInAliases: { email: true },
       autoVerify: { email: true },
       standardAttributes: { email: { required: true, mutable: true } },
+      // メールアドレスの変更は、新しいアドレスの確認コードが入力されるまで元のアドレスのまま（打ち間違いでログインできなくなるのを防ぐ）
+      keepOriginal: { email: true },
       passwordPolicy: { minLength: 8, requireSymbols: false },
       accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
       removalPolicy: RemovalPolicy.RETAIN,
@@ -227,7 +229,8 @@ export class MoshiLabStack extends Stack {
       supportedIdentityProviders: providers,
       oAuth: {
         flows: { authorizationCodeGrant: true },
-        scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE],
+        // COGNITO_ADMIN: 本人が自分のメールアドレス・パスワードを変更するため（自分の属性の読み書きだけ）
+        scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE, cognito.OAuthScope.COGNITO_ADMIN],
         callbackUrls: [`${siteUrl}/callback`, "http://localhost:5173/callback"],
         logoutUrls: [`${siteUrl}/`, "http://localhost:5173/"],
       },
@@ -339,6 +342,7 @@ export class MoshiLabStack extends Stack {
           authMode: "cognito",
           cognitoDomain: domain.baseUrl(),
           clientId: client.userPoolClientId,
+          region: this.region,
           googleEnabled: !!google,
           ...(props.gaId ? { gaId: props.gaId } : {}),
           photoGrading: !!props.photoGrading,

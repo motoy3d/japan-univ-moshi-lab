@@ -27,3 +27,18 @@ test("アクセシビリティ: ダークモードのホームと受験画面", 
     expect(serious.map((v) => `${path} ${v.id}（${v.nodes.slice(0, 2).map((n) => n.target.join(" ")).join(", ")}）`)).toEqual([]);
   }
 });
+
+test("アクセシビリティ: デザイン確認用の各配色（明るいモード）", async ({ page }) => {
+  const palettes = ["navy", "soft", "sakura", "mint", "lavender", "sky"];
+  for (const palette of palettes) {
+    for (const variant of [{ hero: "bold", header: "dark" }, { hero: "light", header: "light" }]) {
+      await page.goto("/?design=1");
+      await page.evaluate((d) => localStorage.setItem("moshi.design.v1", JSON.stringify(d)), { palette, ...variant });
+      await page.reload();
+      await page.waitForLoadState("networkidle");
+      const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).exclude(".design-panel").analyze();
+      const serious = r.violations.filter((v) => v.impact === "critical" || v.impact === "serious");
+      expect(serious.map((v) => `${palette}/${variant.hero} ${v.id}（${v.nodes.slice(0, 2).map((n) => n.target.join(" ")).join(", ")}）`)).toEqual([]);
+    }
+  }
+});

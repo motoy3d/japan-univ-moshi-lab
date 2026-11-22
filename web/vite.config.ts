@@ -14,7 +14,7 @@ const CSP = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://*.google-analytics.com https://www.googletagmanager.com",
-  "connect-src 'self' https://*.amazoncognito.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+  "connect-src 'self' https://*.amazoncognito.com https://cognito-idp.ap-northeast-1.amazonaws.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
   "base-uri 'self'",
   "form-action 'self' https://*.amazoncognito.com",
   "object-src 'none'",

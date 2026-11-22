@@ -3,6 +3,8 @@ export interface AppConfig {
   authMode: "cognito" | "local";
   cognitoDomain?: string; // 例: https://moshi-lab.auth.ap-northeast-1.amazoncognito.com
   clientId?: string;
+  /** AWS のリージョン（本人のパスワード・メール変更の API に使う） */
+  region?: string;
   googleEnabled?: boolean;
   /** Google アナリティクス（GA4）の測定ID。無ければ計測しない */
   gaId?: string;

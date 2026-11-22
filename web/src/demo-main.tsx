@@ -6,6 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import { App } from "./App";
 import { loadConfig } from "./config";
 import { route } from "../../api/src/app";
+import { applyDesign, loadDesign } from "./design";
 import { BrowserRepo } from "./demo/browser-repo";
 import { EXAMS } from "../../content/index";
 import { allQuestions } from "../../shared/scoring";
@@ -56,12 +57,15 @@ function DemoBanner() {
   );
 }
 
+// デモ版はデザインの切り替えを常に有効にする
+applyDesign(loadDesign(true));
+
 Promise.all([loadConfig(), seed()]).then(() => {
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <MemoryRouter>
         <DemoBanner />
-        <App />
+        <App designPreview />
       </MemoryRouter>
     </StrictMode>,
   );
