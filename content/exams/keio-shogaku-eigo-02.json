@@ -1,0 +1,1185 @@
+{
+  "id": "keio-shogaku-eigo-02",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "慶應義塾大学 商学部 英語 予想模試",
+  "edition": "第2回",
+  "durationMin": 90,
+  "totalPoints": 200,
+  "coverNotes": [
+    "受験番号と氏名は、解答用紙A（マークシート）と解答用紙Bのそれぞれ所定の欄に必ず記入すること。さらに、解答用紙A（マークシート）の受験番号欄をマークすること。",
+    "解答は、すべて指定された解答用紙の所定の欄に記入またはマークすること。I〜VI は解答用紙A（マークシート）、VII・VIII は解答用紙Bを使用する。",
+    "解答用紙A（マークシート）への記入に先立って、用紙上に記載された注意事項を必ず読むこと。",
+    "解答用紙A（マークシート）にはHBの黒鉛筆を使用し、たとえば（12）と表示のある問いに対して 3 と解答する場合は、解答欄（12）の 3 をマークすること。",
+    "問題冊子の余白は下書きに用いてよい。",
+    "試験開始の合図とともに全てのページが揃っているか確認し、ページの抜けや重複があった場合は直ちに監督者に申し出ること。"
+  ],
+  "disclaimer": "本模試は、過去の出題形式（大問構成・設問形式・分量）を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。配点は大学から公表されていないため、本模試独自の想定配点です。",
+  "sections": [
+    {
+      "label": "I",
+      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（10）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "Long-distance trade has always confronted a problem that is easy to state and difficult to solve. A merchant who dispatches goods to a distant port must rely on an agent whose conduct he cannot observe, whose honesty he cannot verify, and whom, should the agent abscond with the proceeds, he can rarely pursue through any court. {{b:1}} considerable the profits of such trade may have been, the risks of entrusting one's capital to a stranger were greater still, and historians have long asked how commerce across seas and borders managed to flourish in the absence of the legal institutions that modern traders take for granted.",
+          "One influential answer emphasizes the role of the coalition. Studying letters preserved in the storeroom of a medieval synagogue in Cairo, economic historians have reconstructed the practices of a community of eleventh-century traders who operated across the Mediterranean. These merchants routinely served as agents for one another, and they shared information about the conduct of the agents they employed. An agent discovered to have cheated one member would find that no member of the coalition was willing to hire him again. Because the future income forfeited by a dishonest agent exceeded anything he could gain by a single act of fraud, honesty was, in effect, {{b:2}}. The mechanism required no judge and no police; {{u:5|it required only that information circulate faster than the cheat could move}}.",
+          "{{u:6|The elegance of this account has made it a fixture of textbooks}}, yet it has not gone unchallenged. Critics have pointed out that the same letters contain frequent references to courts, contracts, and witnesses, suggesting that the merchants relied on formal legal remedies far more than the coalition model allows. Others have questioned whether the community was as closed as the theory requires: a reputation mechanism works only if those who are excluded have nowhere else to go, and the archival evidence suggests that agents moved fairly freely between networks. {{b:3}}, the debate is less about whether reputation mattered than about whether it operated in isolation from law or in combination with it.",
+          "This distinction matters because the two possibilities imply very different paths of development. If reputation substitutes for law, then the growth of impersonal markets, in which strangers trade with strangers, must await the arrival of a state capable of enforcing contracts. If, {{b:4}}, reputation and law complement each other, then informal networks may have served as a kind of scaffolding, allowing commercial practices to mature before the formal institutions that would eventually supersede them were in place. On this second reading, the coalition was not an alternative to the rule of law but one of its precursors.",
+          "Studies of other trading communities lend some support to the complementary view. Among the merchant guilds of medieval Europe, for example, collective punishment was frequently directed not at individual cheats but at entire cities: if a trader from one town defaulted on a debt, a guild elsewhere might impose an embargo on all merchants from that town until the debt was repaid. Such sanctions were crude and occasionally unjust, since they penalized the innocent along with the guilty, but they gave civic authorities a powerful incentive to adjudicate disputes impartially and to compel their own citizens to honor their obligations. Reputation, in this arrangement, attached to communities rather than to persons, and its enforcement depended on the very political institutions that the coalition model treats as absent.",
+          "{{u:7|The question is not merely of antiquarian interest}}. Much of the world's commerce still takes place in settings where courts are slow, expensive, or unreliable, and where traders depend on personal networks to decide whom to trust. Online marketplaces have, in a sense, reinvented the coalition: ratings and reviews allow a buyer in one country to judge the reliability of a seller in another whom she will never meet. Yet these systems also reproduce the weaknesses of their predecessors. Reviews can be purchased, ratings inflated, and a seller excluded from one platform can reappear on another under a new name. The platforms, moreover, are not neutral communities of equals but private firms with commercial interests of their own, and their decisions about whom to exclude are rarely subject to appeal.",
+          "What the historical record suggests, then, is that trust in markets has seldom rested on a single foundation. Reputation, kinship, religious affiliation, written contracts, and the threat of litigation have typically operated together, each compensating for the deficiencies of the others. Scholars who search for the one institution that made long-distance trade possible are likely to be disappointed. The more productive inquiry asks how particular combinations of formal and informal enforcement arose, why some proved more durable than others, and under what conditions merchants were willing to extend credit to people whom they would never see."
+        ],
+        "notes": [
+          "abscond 持ち逃げする",
+          "embargo 取引停止、禁輸",
+          "antiquarian 好古趣味の、骨董的な"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "vocab",
+              "choices": [
+                "However",
+                "Whatever",
+                "Whenever",
+                "Moreover"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "However + 形容詞 + S + V「どれほど〜でも」（譲歩）。However considerable the profits may have been で「利益がどれほど大きくても、リスクはさらに大きかった」。Whatever は名詞を伴う（whatever profits）、Whenever は時、Moreover は接続副詞で節をつなげない。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "vocab",
+              "choices": [
+                "self-enforcing",
+                "self-defeating",
+                "self-evident",
+                "self-effacing"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "不正をした代理人は将来の収入をすべて失うので、裁判所がなくても正直さが『自然に守られる』＝ self-enforcing（自己拘束的な）。直後の「判事も警察もいらない」と一致。self-defeating（自滅的な）は逆、self-evident（自明の）は仕組みの説明にならず、self-effacing（控えめな）は人柄の語。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "logic",
+              "choices": [
+                "By contrast",
+                "In short",
+                "For instance",
+                "Otherwise"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "批判の内容（法的手段も使っていた・共同体は閉じていなかった）を受けて、論争の焦点を『要するに』とまとめる In short。By contrast（対照的に）・For instance（例えば）は前後の関係に合わず、Otherwise（さもなければ）は条件の逆。"
+            },
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "logic",
+              "choices": [
+                "as a result",
+                "on the other hand",
+                "for this reason",
+                "in addition"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "If reputation substitutes for law ... と If ... reputation and law complement each other ... の二つの可能性を対比している。on the other hand が適切。as a result・for this reason は因果、in addition は追加で、対立する仮定をつなげない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "Which one of the following best explains what is meant by underlined (5)? The mechanism depended on the condition that ___.",
+              "choices": [
+                "agents had to travel more quickly than the merchants who employed them",
+                "news of an agent's dishonesty had to spread before he could find new employers",
+                "written contracts had to reach the courts before the agent could escape",
+                "merchants had to keep information about their agents secret from rivals"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "仕組みが機能するには、不正の情報が『ごまかした者が動くよりも速く』仲間に広まる必要がある。つまり、不正の知らせが次の雇い主に届くのが先でなければならない。1 は移動の速さの比較を取り違えている。3 は「判事は不要」と矛盾、4 は情報共有と逆。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (6)?",
+              "choices": [
+                "Textbook writers have deliberately ignored evidence found in the letters.",
+                "Historians agree that the coalition model is the final word on the subject.",
+                "The account was first proposed in textbooks rather than in historical research.",
+                "The coalition explanation is widely taught partly because it is simple and persuasive."
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "elegance（簡潔で美しいこと）のために教科書の定番（fixture）になった、という意味。4 が一致。直後に yet it has not gone unchallenged とあるので 2 は誤り。1・3 は本文にない。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "paraphrase",
+              "prompt": "Underlined (7) suggests that ___.",
+              "choices": [
+                "the question is of interest mainly to collectors of ancient objects",
+                "modern courts have solved the problems faced by medieval merchants",
+                "historians have exaggerated the importance of personal networks",
+                "the issues raised by medieval trade remain relevant to commerce today"
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "antiquarian「骨董的・好古趣味の」。単なる昔話ではない、と述べたあとで、裁判所が頼りにならない現代の商取引やオンライン市場の評価制度に話を広げている。4 が一致。2 は「裁判所が遅く高く信頼できない地域が多い」と矛盾。"
+            },
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "detail",
+              "prompt": "According to the passage, which one of the following was a criticism of the coalition model?",
+              "choices": [
+                "The merchants kept no written records of their business dealings.",
+                "Agents appear to have been able to move fairly freely between networks.",
+                "The coalition punished honest agents more harshly than dishonest ones.",
+                "Reputation played no role whatsoever in medieval long-distance trade."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第3段落の二つ目の批判「排除された者に行き場がなければ機能しないが、代理人はネットワーク間をかなり自由に移っていた」と一致する 2。1 は手紙が残っていることと矛盾、4 は「評判が重要だったかどうかより…」の部分と矛盾（言い過ぎ）。3 は本文にない。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "detail",
+              "prompt": "Which one of the following is NOT mentioned in the passage as a weakness of online rating systems?",
+              "choices": [
+                "Buyers are unable to understand reviews written in foreign languages.",
+                "Sellers who have been excluded can return under a different name.",
+                "Reviews can be bought.",
+                "Decisions to exclude sellers can seldom be challenged."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "第6段落で挙げられている弱点は、レビューの買収・評価の水増し・名前を変えての再登場・排除の決定に異議を申し立てにくいこと。言語の問題は述べられていないので 1。"
+            },
+            {
+              "id": "m10",
+              "kind": "mark",
+              "no": 10,
+              "category": "main-idea",
+              "prompt": "Which one of the following titles best captures the main idea of the passage?",
+              "choices": [
+                "How Online Platforms Replaced Medieval Courts",
+                "Why Honest Agents Earned Less Than Dishonest Ones",
+                "The Decline of Merchant Guilds in Medieval Europe",
+                "Reputation, Law, and the Foundations of Trust in Long-Distance Trade"
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "遠隔地交易での信用の問題、評判の仕組み（同盟）への批判、評判と法の補完関係、現代への示唆を経て「信用は単一の基盤に依らない」と結ぶ。4 が全体を表す。1 はオンライン市場の話に偏り、裁判所に取って代わったとも言っていない。3・2 は本文にない。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "II",
+      "instruction": "次の英文を読み、（11）〜（19）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（11）〜（19）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "In 1948, a graduate student named Bernard Silver overheard the president of a local food chain asking a dean at his college to develop a system that would read product information automatically at the checkout. The dean declined, but Silver mentioned the conversation to his friend Norman Joseph Woodland, a fellow student with a talent for practical problems. Woodland became so {{b:11}} with the idea that he left school, moved into his grandfather's apartment in Florida, and spent the winter thinking of little else.",
+          "The breakthrough, as Woodland later told the story, came on a beach. He had learned Morse code as a Boy Scout, and while sitting on the sand he absent-mindedly pushed his fingers into it and drew them toward himself, leaving four parallel lines. {{u:14|It occurred to him that the dots and dashes of Morse code could be stretched into thin and thick lines}}, and that a light shone across such a pattern would be reflected differently by each line. Woodland and Silver applied for a patent in 1949 for a design made of circles, one inside another, so that the code could be read from any direction.",
+          "The invention, however, was far ahead of the technology needed to use it. Reading the code required a powerful light source and a way of converting reflected light into electrical signals, and the machine the two men built was the size of a desk and so hot that it was dangerous to touch. No store could have afforded it, and even if one had, few products at the time carried anything that such a machine could read. The patent was sold for a modest sum in 1952, and Silver died young in 1963, having earned almost nothing from the idea. It was the arrival of cheap lasers and computer chips in the late 1960s that finally made automatic scanning {{b:12}}.",
+          "{{u:15|Even then, technology alone was not enough}}. A code is useful only if everyone agrees to use the same one, and in the early 1970s American food manufacturers and retailers were deeply divided. Manufacturers would bear the cost of printing codes on their packaging, while the savings would go mainly to retailers, who could reduce the number of cashiers and keep more accurate records of their stock. An industry committee was formed to choose a single standard. After considering proposals from several companies, it selected a rectangular design developed at IBM, in part because it could be printed more reliably than circles, which tended to smear when the ink ran in the direction the printing press was moving. Woodland, by then an IBM employee, had worked on the project.",
+          "On June 26, 1974, a cashier at a supermarket in Troy, Ohio, scanned a packet of chewing gum, the first product sold using the new Universal Product Code. The choice of item was partly symbolic: the organizers wanted to show that even the smallest packages could carry a code. Yet adoption was slow at first. Scanners were expensive, few products carried codes, and some consumer groups protested that stores would stop marking prices on individual items, making it harder for shoppers to compare costs. {{b:13}} the end of the decade, only a small fraction of American supermarkets had installed scanners.",
+          "What eventually tipped the balance was not the checkout but the stockroom. Once codes became common, retailers discovered that the data collected at the register could tell them precisely which products sold, where, and when. Orders could be placed automatically, shelves restocked before they emptied, and slow-selling goods removed. Power within the industry shifted gradually from manufacturers, who had once largely decided what stores would sell, to large retailers, who now knew more about their customers than anyone else did. {{u:16|The humble stripes, in other words, did far more than shorten the line at the register}}.",
+          "Woodland received the National Medal of Technology in 1992. By then, codes descended from his drawing in the sand were being scanned billions of times a day, on everything from airline luggage to hospital wristbands. The two friends who had first imagined the system, however, had seen almost none of the fortune that it eventually helped others to make."
+        ],
+        "notes": [
+          "absent-mindedly ぼんやりと",
+          "smear （インクが）にじむ",
+          "wristband リストバンド"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m11",
+              "kind": "mark",
+              "no": 11,
+              "category": "vocab",
+              "choices": [
+                "obsessed",
+                "acquainted",
+                "disappointed",
+                "familiar"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "be obsessed with ~「〜に取りつかれる」。学校を辞めてその冬はほかのことをほとんど考えなかったのだから obsessed。acquainted / familiar with は「知っている」程度、disappointed（がっかりした）では大学を辞めて没頭する流れに合わない。"
+            },
+            {
+              "id": "m12",
+              "kind": "mark",
+              "no": 12,
+              "category": "vocab",
+              "choices": [
+                "obsolete",
+                "illegal",
+                "unnecessary",
+                "practical"
+              ],
+              "points": 3,
+              "answer": 4,
+              "explanation": "机ほどの大きさで熱くて危険、どの店も買えなかった装置が、安価なレーザーとチップの登場で『実用的』になった。make O practical。obsolete（時代遅れの）・unnecessary は逆、illegal は文脈にない。"
+            },
+            {
+              "id": "m13",
+              "kind": "mark",
+              "no": 13,
+              "category": "vocab",
+              "choices": [
+                "By",
+                "Despite",
+                "Without",
+                "Beyond"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "by the end of the decade「その10年の終わりまでに（なっても）」＋過去完了 had installed。導入が遅かったという流れに合う。Despite・Without は意味が通らず、Beyond the end of the decade は「10年の終わりを越えて」で過去完了と合わない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m14",
+              "kind": "mark",
+              "no": 14,
+              "category": "paraphrase",
+              "prompt": "The idea described in underlined (14) was that ___.",
+              "choices": [
+                "Morse code could be sent to stores by shining a light on the sand",
+                "circles would be easier for a machine to read than straight lines",
+                "information could be represented by lines of different widths",
+                "customers could use Morse code to tell cashiers what they had bought"
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "モールス信号の点と線を『細い線と太い線』に引き延ばせば、情報を線の太さの違いで表せる、という着想。3 が一致。2 の円形は読む方向の問題として後で出てくるが、下線部の内容ではない。1・4 は本文にない。"
+            },
+            {
+              "id": "m15",
+              "kind": "mark",
+              "no": 15,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (15)?",
+              "choices": [
+                "Lasers were still too expensive for most stores to buy.",
+                "IBM refused to share its design with other companies.",
+                "Businesses also had to agree on a single, shared code.",
+                "Cashiers needed a long period of training to use scanners."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "直後に「コードはみんなが同じものを使うと合意して初めて役に立つ」とあり、業界委員会で単一の規格を選ぶ話が続く。技術に加えて『共通規格への合意』が必要だったので 3。1 は前段落で安価になったと述べている。2・4 は本文にない。"
+            },
+            {
+              "id": "m16",
+              "kind": "mark",
+              "no": 16,
+              "category": "paraphrase",
+              "prompt": "Which one of the following best explains underlined (16)?",
+              "choices": [
+                "barcodes made lines at the register longer because of scanning errors",
+                "barcodes changed who held information and power in the retail industry",
+                "manufacturers gained more control over what stores would sell",
+                "the main benefit of barcodes was the speed of the checkout"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "段落全体で、レジのデータにより小売店が商品の動きを把握し、力がメーカーから大手小売店に移ったと述べている。『レジの列を短くした以上のこと』とは 2。3 は力の移動の向きが逆、4 は下線部の否定する内容。"
+            },
+            {
+              "id": "m17",
+              "kind": "mark",
+              "no": 17,
+              "category": "detail",
+              "prompt": "Why was the first design made of circles?",
+              "choices": [
+                "Because circles were less likely to smear during printing.",
+                "Because circles reflected more light than straight lines.",
+                "Because IBM had already patented the rectangular design.",
+                "Because the code could then be read from any direction."
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "第2段落末 so that the code could be read from any direction。1 は逆で、円形はにじみやすいことが後に長方形が選ばれた理由。3・2 は本文にない。"
+            },
+            {
+              "id": "m18",
+              "kind": "mark",
+              "no": 18,
+              "category": "detail",
+              "prompt": "Which one of the following is NOT given as a reason why the new system was adopted slowly at first?",
+              "choices": [
+                "Scanners cost a great deal of money.",
+                "Only a small number of products carried codes.",
+                "Cashiers refused to operate the new machines.",
+                "Some people worried that prices would no longer be marked on items."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "第5段落の理由は、スキャナーが高価・コード付き商品が少ない・個々の商品に価格が表示されなくなるという消費者団体の抗議の三つ。レジ係の拒否は述べられていないので 3。"
+            },
+            {
+              "id": "m19",
+              "kind": "mark",
+              "no": 19,
+              "category": "detail",
+              "prompt": "Which one of the following is true according to the passage?",
+              "choices": [
+                "Silver and Woodland became wealthy after selling their patent.",
+                "The first item scanned was chosen because it was the most expensive product in the store.",
+                "In the early days, retailers stood to gain more directly from the system than manufacturers did.",
+                "The industry committee chose IBM's design because Woodland was the chairman of the committee."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "第4段落「印刷の費用はメーカーが負担し、節約の恩恵は主に小売店に」と一致する 3。1 は最終段落・第3段落と矛盾。2 は「最も小さな商品でも」という象徴的な理由と矛盾。4 は本文にない（Woodland は IBM の社員としてプロジェクトに関わっただけ）。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "III",
+      "instruction": "次の英文を読み、（20）〜（29）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（20）〜（29）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "Not long ago, owning a toaster meant owning it for decades. When it broke, someone in the household dismantled it, or carried it to a shop down the street where a technician replaced the faulty part for a modest fee. Today, the same breakdown usually ends with the appliance in a landfill and a new one in a delivery box. The change is often explained as a matter of simple economics: labor has become expensive, manufactured goods have become cheap, and so repair no longer makes sense. {{b:20}}, I want to argue that this explanation, though not wrong, leaves out most of the story.",
+          "Consider how products are now designed. Many devices are held together with adhesive rather than screws, so that opening them without damage is all but impossible. Batteries are sealed inside their cases. Spare parts, when they are available at all, are sold only to authorized dealers, and the diagnostic software needed to identify a fault is often proprietary. None of these choices is required by the laws of physics. They reflect decisions by manufacturers who have discovered that a customer who cannot repair a product is a customer who must buy another one. {{u:23|Repair has not simply become uneconomic; in many cases it has been made uneconomic}}.",
+          "Manufacturers offer plausible-sounding justifications. Sealed designs, they say, make products thinner, lighter, and more resistant to water. Restricting repairs to trained technicians protects customers from botched work and dangerous batteries, and protects the company's reputation when an amateur's mistake causes a fire. There is some truth in these claims. {{b:21}} they would be more persuasive if the same companies did not also charge prices for authorized repairs that approach the cost of a new device, or refuse to supply parts for models only a few years old.",
+          "The costs of this arrangement do not appear on any receipt. Electronic waste is now one of the fastest-growing kinds of rubbish in the world, and only a small portion of it is properly recycled. The rest is burned, buried, or shipped to poorer countries, where workers extract valuable metals under hazardous conditions. Every discarded device also represents the energy and raw materials consumed in manufacturing it, much of which could have been saved had the product lasted a few more years. When we compare the price of a repair with the price of a replacement, {{u:24|we are comparing numbers that leave these costs out}}.",
+          "There is also a subtler loss. Repair was once a source of steady, skilled employment in almost every neighborhood, and a way for ordinary people to understand the objects they depended on. A person who has replaced a broken screen knows something about how a phone is made, and is less likely to feel helpless before it. {{b:22}} we have handed that understanding over to manufacturers, we have become {{u:25|consumers in the narrowest sense}}: people who use things but cannot look after them.",
+          "In recent years, volunteers in many cities have tried to revive these skills through so-called repair cafés, informal gatherings at which residents bring broken lamps, bicycles, and clothing to be fixed with the help of experienced amateurs. The organizers are usually careful to say that their aim is not to replace professional repairers but to change attitudes. Visitors are encouraged to watch, ask questions, and do as much of the work as they can themselves. Many arrive expecting a service and leave, somewhat to their surprise, with the feeling that the object in their hands is no longer a mystery.",
+          "Some governments have begun to respond. Laws in several places now require manufacturers to make spare parts and repair manuals available for a set number of years, and to design products whose batteries can be replaced by their owners. Skeptics warn that such rules will raise prices and slow innovation. Perhaps they will, a little. But a modest rise in the price of a phone that lasts six years instead of three is not a loss to the consumer; it is a saving. The real question is not whether we can afford to protect repair, but whether we can afford not to.",
+          "None of this requires nostalgia for a world of mended socks and radio shops. It requires only that we stop treating the short life of our possessions as a natural fact, and recognize it for what it largely is: the result of choices that could have been made differently, and still can be."
+        ],
+        "notes": [
+          "landfill ごみ埋め立て地",
+          "hazardous 危険な",
+          "nostalgia 郷愁"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m20",
+              "kind": "mark",
+              "no": 20,
+              "category": "logic",
+              "choices": [
+                "Even so",
+                "In the same way",
+                "For example",
+                "As a result"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "直前は「修理が割に合わないのは人件費が高く製品が安いから」という一般的な説明。空所の後で「その説明は間違いではないが大部分を見落としている」と反論するので、譲歩・逆接の Even so「そうだとしても」。As a result（結果として）・In the same way（同様に）・For example（例えば）はいずれも反論につながらない。"
+            },
+            {
+              "id": "m21",
+              "kind": "mark",
+              "no": 21,
+              "category": "logic",
+              "choices": [
+                "But",
+                "Because",
+                "Unless",
+                "So"
+              ],
+              "points": 3,
+              "answer": 1,
+              "explanation": "There is some truth in these claims.（一理ある）と認めたうえで「しかし、同じ企業が…でなければもっと説得力があるのだが」と続く。譲歩→逆接の But。Because・Unless は節が主節につながらず、So では「一理ある」から「説得力が落ちる」が導けない。"
+            },
+            {
+              "id": "m22",
+              "kind": "mark",
+              "no": 22,
+              "category": "logic",
+              "choices": [
+                "Even if",
+                "Now that",
+                "Unless",
+                "Before"
+              ],
+              "points": 3,
+              "answer": 2,
+              "explanation": "now that ~「今や〜なので」。理解をメーカーに委ねてしまった『今』、私たちは最も狭い意味での消費者になった。現在完了 we have handed / we have become と自然に対応する。Even if（たとえ〜でも）・Unless（〜しない限り）・Before（〜する前に）では因果が成り立たない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m23",
+              "kind": "mark",
+              "no": 23,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (23)?",
+              "choices": [
+                "Repair costs have risen only because the wages of technicians have increased.",
+                "Consumers today simply prefer new products to repaired ones.",
+                "Governments have placed heavy taxes on repair services.",
+                "The difficulty of repair is often the result of deliberate decisions by manufacturers."
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "『割に合わなくなった』のではなく『割に合わなくされた』。接着剤・密閉電池・部品や診断ソフトの囲い込みはメーカーの選択だという段落の主張なので 4。1 は筆者が「それだけではない」と言っている説明、2・3 は本文にない。"
+            },
+            {
+              "id": "m24",
+              "kind": "mark",
+              "no": 24,
+              "category": "paraphrase",
+              "prompt": "Underlined (24) suggests that ___.",
+              "choices": [
+                "repair shops hide their real prices from their customers",
+                "the prices we compare ignore the environmental and social costs of throwing products away",
+                "recycling has made new products cheaper than repairs",
+                "receipts often contain mistakes that benefit the store"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "these costs は段落で述べた電子ごみ・危険な環境での金属回収・製造時のエネルギーと原材料。修理代と買い替え代の比較にはそれらが含まれていない、ということなので 2。3 は「適切にリサイクルされるのはごく一部」と矛盾。"
+            },
+            {
+              "id": "m25",
+              "kind": "mark",
+              "no": 25,
+              "category": "paraphrase",
+              "prompt": "In underlined (25), the author refers to ___.",
+              "choices": [
+                "people who use products without being able to maintain them",
+                "people who buy only the cheapest goods available",
+                "people who refuse to spend money on anything new",
+                "people who prefer to repair everything themselves"
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "コロンの後で people who use things but cannot look after them と言い換えている。1 が一致。4 は逆、2・3 は本文にない。"
+            },
+            {
+              "id": "m26",
+              "kind": "mark",
+              "no": 26,
+              "category": "detail",
+              "prompt": "How does the author respond to the manufacturers' justifications described in the third paragraph?",
+              "choices": [
+                "The author admits they are partly true but doubts them in light of the companies' other practices.",
+                "The author accepts them without reservation.",
+                "The author rejects them as completely false.",
+                "The author argues that water resistance is unimportant to most customers."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "There is some truth in these claims. と一部認めたうえで、正規修理の価格の高さや部品供給の打ち切りを挙げて説得力を疑っている。1 が一致。3・2 はどちらも極端、4 は本文にない。"
+            },
+            {
+              "id": "m27",
+              "kind": "mark",
+              "no": 27,
+              "category": "detail",
+              "prompt": "According to the passage, what is the main aim of repair cafés?",
+              "choices": [
+                "To replace professional repairers with volunteers.",
+                "To sell second-hand goods at low prices.",
+                "To change the way people think about the things they own.",
+                "To train technicians to work for manufacturers."
+              ],
+              "points": 5,
+              "answer": 3,
+              "explanation": "The organizers ... say that their aim is not to replace professional repairers but to change attitudes. 3 が一致。1 は明確に否定されている。2・4 は本文にない。"
+            },
+            {
+              "id": "m28",
+              "kind": "mark",
+              "no": 28,
+              "category": "detail",
+              "prompt": "Which one of the following does the author NOT claim?",
+              "choices": [
+                "A product that lasts longer can save consumers money even if it costs more.",
+                "Electronic waste is growing faster than most other kinds of rubbish.",
+                "Some laws now require spare parts to be available for a certain period.",
+                "Labor costs play no part at all in the decline of repair."
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "筆者は人件費の説明を though not wrong（間違いではない）と認めているので、4 は筆者の主張ではない。2 は第4段落、3・1 は第7段落の内容。"
+            },
+            {
+              "id": "m29",
+              "kind": "mark",
+              "no": 29,
+              "category": "main-idea",
+              "prompt": "Which one of the following titles best captures the main idea of the passage?",
+              "choices": [
+                "The Rising Cost of Labor in the Repair Industry",
+                "Made to Be Replaced: Why Repair Deserves Protection",
+                "How to Fix Your Own Phone: A Beginner's Guide",
+                "Recycling Electronic Waste: A Global Success Story"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "製品の短命さはメーカーの選択の結果であり、修理を守る価値がある、というのが全体の主張。2 が一致。1 は筆者が不十分とする説明、3 は手引きではない、4 は「適切にリサイクルされるのはごく一部」と矛盾。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "IV",
+      "instruction": "次の英文（30）〜（36）の空所に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（30）〜（36）にマークしなさい。",
+      "groups": [
+        {
+          "instruction": "",
+          "questions": [
+            {
+              "id": "m30",
+              "kind": "mark",
+              "no": 30,
+              "category": "grammar",
+              "prompt": "Hardly _____ the meeting begun when the fire alarm went off.",
+              "choices": [
+                "did",
+                "has",
+                "had",
+                "would"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "Hardly had S p.p. when ~「SがVするとすぐに〜」。否定の副詞 Hardly が文頭に出て倒置。主節は過去完了、when 節は過去形（went off）。"
+            },
+            {
+              "id": "m31",
+              "kind": "mark",
+              "no": 31,
+              "category": "grammar",
+              "prompt": "The committee recommended that the new rules _____ into effect immediately.",
+              "choices": [
+                "came",
+                "comes",
+                "come",
+                "coming"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "recommend that S (should) 原形。提案・要求・推薦の動詞に続く that 節では動詞の原形（仮定法現在）を使う。主語が複数でも過去でも come のまま。"
+            },
+            {
+              "id": "m32",
+              "kind": "mark",
+              "no": 32,
+              "category": "grammar",
+              "prompt": "_____ from a distance, the island looks like a sleeping whale.",
+              "choices": [
+                "Seeing",
+                "Seen",
+                "To see",
+                "Having seen"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "分詞構文の意味上の主語は主節の主語 the island。島は『見られる』側なので過去分詞 Seen（= When it is seen）。Seeing・Having seen では島が見ることになる。"
+            },
+            {
+              "id": "m33",
+              "kind": "mark",
+              "no": 33,
+              "category": "grammar",
+              "prompt": "The new manager is said _____ several companies before joining us.",
+              "choices": [
+                "to run",
+                "having run",
+                "that he ran",
+                "to have run"
+              ],
+              "points": 2,
+              "answer": 4,
+              "explanation": "be said to have p.p.「〜したと言われている」。言われているのは現在、経営したのはそれ以前なので完了不定詞。to run では現在の習慣になり before joining us と合わない。"
+            },
+            {
+              "id": "m34",
+              "kind": "mark",
+              "no": 34,
+              "category": "grammar",
+              "prompt": "It is about time the government _____ serious action on the housing shortage.",
+              "choices": [
+                "will take",
+                "takes",
+                "took",
+                "has taken"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "It is (about) time + S + 過去形（仮定法過去）「もう〜してよい頃だ」。現在の話でも過去形を使う。"
+            },
+            {
+              "id": "m35",
+              "kind": "mark",
+              "no": 35,
+              "category": "grammar",
+              "prompt": "I would appreciate _____ if you could send me the documents by Friday.",
+              "choices": [
+                "that",
+                "it",
+                "this",
+                "what"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "I would appreciate it if ~「〜していただけるとありがたい」。appreciate は他動詞で目的語が必要なので、if 節を受ける形式目的語 it を置く。"
+            },
+            {
+              "id": "m36",
+              "kind": "mark",
+              "no": 36,
+              "category": "grammar",
+              "prompt": "Tickets bought online remain _____ for one year from the date of purchase.",
+              "choices": [
+                "validity",
+                "valid",
+                "validate",
+                "validly"
+              ],
+              "points": 2,
+              "answer": 2,
+              "explanation": "remain + 形容詞（補語）「〜のままである」。valid「有効な」。validity は名詞、validate は動詞、validly は副詞で、いずれも remain の補語にならない。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "V",
+      "instruction": "次の英文の空所（37）〜（42）に入る最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（37）〜（42）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "Airline frequent-flyer programs were introduced in the early 1980s as a simple way to {{b:37}} passengers to fly with the same company again and again. Travelers earned points for every journey and could exchange them for free tickets. The idea proved so successful that it was soon copied by hotels, supermarkets, and coffee shops, and today it is hard to find a business that does not offer some kind of reward for repeat purchases.",
+          "Yet the economics of these programs have changed in ways that few members fully {{b:38}}. Airlines now earn far more by selling points to banks, which give them to credit-card holders, than they spend on the flights that points are used to buy. Because the company alone decides how many points a seat costs, it can quietly reduce the value of points already earned, a practice critics compare to a government printing money. Members may find that a reward which once required 25,000 points now requires 40,000, with no advance {{b:39}} given.",
+          "Supermarket schemes raise a different concern. In return for modest discounts, shoppers allow stores to build a detailed {{b:40}} of their habits: what they buy, when, and in what quantities. This information is valuable not only for setting prices but also for selling to advertisers. Most customers accept the bargain without reading the terms, and it is far from clear that they would {{b:41}} to it if they understood how much they were giving away.",
+          "None of this means that loyalty programs are a {{b:42}}. Frequent customers do receive real benefits, and many enjoy the sense of progress that comes from collecting points. But a reward that can be changed at the company's convenience is less a gift than a tool, and members would be wise to treat it as such."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "questions": [
+            {
+              "id": "m37",
+              "kind": "mark",
+              "no": 37,
+              "category": "vocab",
+              "choices": [
+                "excuse",
+                "discourage",
+                "prohibit",
+                "encourage"
+              ],
+              "points": 2,
+              "answer": 4,
+              "explanation": "encourage O to do「Oに〜するよう促す」。ポイントは同じ会社を繰り返し使ってもらうための仕組み。discourage は逆、prohibit O to do は語法も意味も合わず（prohibit O from -ing）、excuse は「許す・免除する」。"
+            },
+            {
+              "id": "m38",
+              "kind": "mark",
+              "no": 38,
+              "category": "vocab",
+              "choices": [
+                "appreciate",
+                "depreciate",
+                "accommodate",
+                "substitute"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "appreciate「（真価・重要性を）正しく理解する」。仕組みの変化を十分に理解している会員は少ない。depreciate（価値が下がる・下げる）は形が似ているだけで目的語の関係が合わない。accommodate（収容する・適応させる）・substitute（代わりに使う）も不適。"
+            },
+            {
+              "id": "m39",
+              "kind": "mark",
+              "no": 39,
+              "category": "vocab",
+              "choices": [
+                "notice",
+                "license",
+                "patience",
+                "mercy"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "advance notice「事前の通知」。必要ポイントが予告なく引き上げられることを言っている。license（許可）・patience（忍耐）・mercy（慈悲）は「与えられる事前の〜」として文脈に合わない。"
+            },
+            {
+              "id": "m40",
+              "kind": "mark",
+              "no": 40,
+              "category": "vocab",
+              "choices": [
+                "proverb",
+                "protest",
+                "profile",
+                "prospect"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "build a detailed profile of ~「〜の詳細な人物像（記録）を作る」。コロン以下の「何を・いつ・どれだけ買うか」がその中身。proverb（ことわざ）・protest（抗議）・prospect（見込み）は形が似ているだけ。"
+            },
+            {
+              "id": "m41",
+              "kind": "mark",
+              "no": 41,
+              "category": "vocab",
+              "choices": [
+                "consent",
+                "complain",
+                "insist",
+                "retire"
+              ],
+              "points": 2,
+              "answer": 1,
+              "explanation": "consent to ~「〜に同意する」。条件を理解していたら、その取引に同意するかは疑わしい。complain to は「（人）に苦情を言う」で取引が目的語にならず、insist（on が必要）・retire は意味が合わない。"
+            },
+            {
+              "id": "m42",
+              "kind": "mark",
+              "no": 42,
+              "category": "vocab",
+              "choices": [
+                "virtue",
+                "fashion",
+                "fraud",
+                "triumph"
+              ],
+              "points": 2,
+              "answer": 3,
+              "explanation": "None of this means ...「だからといって〜というわけではない」の後で、直後に「常連客は本当に恩恵を受けている」と続く。批判の流れから当然出てくる極端な結論『詐欺だ』を打ち消している。virtue（美徳）・triumph（大成功）では前段落の批判とつながらず、fashion（流行）は打ち消す意味がない。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "VI",
+      "instruction": "次の英文（43）〜（46）を読み、それぞれの設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（43）〜（46）にマークしなさい。",
+      "groups": [
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(43)",
+            "paragraphs": [
+              "In a series of experiments, researchers asked participants to assemble simple storage boxes from flat-packed kits or to fold sheets of paper into origami animals. The participants were then asked how much they would be willing to pay for the objects. Those who had made the objects themselves consistently offered more than participants who were shown identical objects made by someone else, and they valued their own creations almost as highly as those made by experts, even when their own work was visibly clumsy. The effect vanished, however, when participants were asked to build an object and then take it apart before it was finished, or when they were given a kit that was too difficult to complete."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m43",
+              "kind": "mark",
+              "no": 43,
+              "category": "inference",
+              "prompt": "Which one of the following can be inferred from the passage?",
+              "choices": [
+                "People value objects made by others more highly than objects they have made themselves.",
+                "Participants who were skilled at assembly valued their work less than clumsy participants did.",
+                "Simple products are generally overvalued by the consumers who buy them.",
+                "Finishing a task seems to be necessary for people to place extra value on their own work."
+              ],
+              "points": 4,
+              "answer": 4,
+              "explanation": "作った物を高く評価する効果は、完成前に分解させたり完成できないキットを渡したりすると消えた。そこから『完成させること』が必要だと推測できる 4。1 は「自分で作った人のほうが高い値をつけた」と逆。2・3 は本文から推測できない。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(44)",
+            "paragraphs": [
+              "Before the late nineteenth century, most towns kept their own local time, set by the position of the sun. Noon in one city might fall several minutes earlier or later than noon in another city a short distance to the east or west. This caused few problems when travel was slow, but the spread of railways made it a serious inconvenience: timetables had to list dozens of different local times, and travelers frequently missed their connections. In 1883, railway companies in the United States and Canada agreed to divide the continent into a small number of standard time zones. Many towns adopted railway time, though some resisted for years, and the system did not become federal law in the United States until 1918."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m44",
+              "kind": "mark",
+              "no": 44,
+              "category": "inference",
+              "prompt": "Which one of the following statements is consistent with the content of the passage?",
+              "choices": [
+                "Neighboring towns once kept local times that differed by several hours.",
+                "Standard time zones were introduced by private companies before they were required by law.",
+                "Every town in North America adopted the standard time zones immediately in 1883.",
+                "Railway companies opposed the creation of standard time zones."
+              ],
+              "points": 4,
+              "answer": 2,
+              "explanation": "1883年に鉄道会社が標準時を取り決め、合衆国の連邦法になったのは1918年。民間企業が法律より先に導入したので 2。1 は「数分」と矛盾、3 は「何年も抵抗した町もあった」と矛盾、4 は逆。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(45)",
+            "paragraphs": [
+              "It has become fashionable to blame smartphones for the decline in reading among young people. The explanation is convenient, but it overlooks how little time many schools now devote to reading whole books. When students encounter literature mainly as short extracts accompanied by comprehension questions, they learn to read for answers rather than for pleasure, and it is hardly surprising that few of them choose to read once the questions stop. Phones compete for attention, certainly, but a habit that was never formed cannot be destroyed. If we want young people to read, we should give them the time and the freedom to finish books they have chosen themselves."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m45",
+              "kind": "mark",
+              "no": 45,
+              "category": "inference",
+              "prompt": "With which one of the following statements would the author most likely agree?",
+              "choices": [
+                "Smartphones are the main reason why young people have stopped reading.",
+                "Comprehension questions are the most effective way to build a reading habit.",
+                "Students should be required to read the same books as their classmates.",
+                "Schools share responsibility for young people's lack of interest in reading."
+              ],
+              "points": 4,
+              "answer": 4,
+              "explanation": "スマホのせいにするのは都合がよいが、学校が本を丸ごと読む時間をほとんど取らず、抜粋と設問で『答えのために読む』ことを教えている点を見落としている、という主張。4 に同意するはず。1 は筆者が退ける説明、2 は逆、3 は「自分で選んだ本」と矛盾。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(46)",
+            "paragraphs": [
+              "Cities that host the Olympic Games routinely promise that the event will bring lasting benefits through tourism, investment, and improved infrastructure. The record suggests otherwise. Studies of recent Games have found that costs almost always exceed the original estimates, often by a wide margin, while the expected rise in tourism is frequently offset by regular visitors who stay away to avoid crowds and high prices. Stadiums built for a few weeks of competition can become expensive to maintain and difficult to use afterward. This does not mean that hosting is never worthwhile, but cities would do better to judge proposals by realistic estimates than by the optimistic forecasts of those who stand to profit from them."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m46",
+              "kind": "mark",
+              "no": 46,
+              "category": "inference",
+              "prompt": "Which one of the following statements best captures the main argument of the passage?",
+              "choices": [
+                "Tourism is the most reliable source of profit for host cities.",
+                "Hosting the Olympic Games always causes a city lasting financial harm.",
+                "Cities should judge the costs and benefits of hosting the Games more realistically.",
+                "Stadiums should be designed to be used only during the Games."
+              ],
+              "points": 4,
+              "answer": 3,
+              "explanation": "費用の超過や観光客の相殺などを挙げたうえで、最後に『利益を得る人々の楽観的な予測ではなく現実的な見積もりで判断すべきだ』と結論している。3 が主張。2 は This does not mean that hosting is never worthwhile と矛盾（言い過ぎ）、1 は逆、4 は本文にない。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "VII",
+      "instruction": "次の英文を読み、空所（a）〜（f）に入る、文脈の上で最も適した動詞を下記の語群から選び、必要に応じて語形を変えて解答用紙Bの解答欄に記入しなさい。ただし、各解答欄に記入する語は一語のみとし、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "sheetNotice": "ここからは解答用紙Bを使用しなさい。",
+      "passage": {
+        "paragraphs": [
+          "In the late seventeenth century, a coffeehouse near the River Thames run by a man named Edward Lloyd had {{w:a}} a reputation as the best place in London to hear news about ships. Lloyd employed reliable messengers, and the information they brought back from the docks was read aloud to customers several times a day. Merchants who wished to insure a cargo would write the details of the voyage on a slip of paper and pass it around the room, and those willing to accept a share of the risk {{w:b}} their names beneath them, which is thought to be the origin of the word \"underwriter.\"",
+          "Over the following century, these informal gatherings gradually {{w:c}} into an organized market. The members eventually moved out of the coffeehouse altogether, but its name has never been {{w:d}}, and the market that grew out of Lloyd's tables remains one of the largest centers of insurance in the world. Its history is a reminder that institutions which now seem permanent were often {{w:e}} almost by accident, by people who could hardly have {{w:f}} what their arrangements would one day become."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "wordBox": [
+            "abandon",
+            "acquire",
+            "evolve",
+            "foresee",
+            "found",
+            "sign"
+          ],
+          "wordForms": {
+            "abandon": [
+              "abandon",
+              "abandons",
+              "abandoned",
+              "abandoning"
+            ],
+            "acquire": [
+              "acquire",
+              "acquires",
+              "acquired",
+              "acquiring"
+            ],
+            "evolve": [
+              "evolve",
+              "evolves",
+              "evolved",
+              "evolving"
+            ],
+            "foresee": [
+              "foresee",
+              "foresees",
+              "foresaw",
+              "foreseen",
+              "foreseeing"
+            ],
+            "found": [
+              "found",
+              "founds",
+              "founded",
+              "founding"
+            ],
+            "sign": [
+              "sign",
+              "signs",
+              "signed",
+              "signing"
+            ]
+          },
+          "questions": [
+            {
+              "id": "w1",
+              "kind": "write",
+              "no": 1,
+              "label": "a",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "acquired"
+              ],
+              "explanation": "had + 過去分詞（過去完了）。acquire a reputation「評判を得る」。"
+            },
+            {
+              "id": "w2",
+              "kind": "write",
+              "no": 2,
+              "label": "b",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "signed"
+              ],
+              "explanation": "would write ... and pass it around（過去の習慣）に続く過去の出来事なので過去形 signed（would sign も意味は通るが一語で答える）。sign one's name「署名する」。"
+            },
+            {
+              "id": "w3",
+              "kind": "write",
+              "no": 3,
+              "label": "c",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "evolved"
+              ],
+              "explanation": "Over the following century の過去の変化。evolve into ~「〜へと発展する」。自動詞なので受動態にしない。"
+            },
+            {
+              "id": "w4",
+              "kind": "write",
+              "no": 4,
+              "label": "d",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "abandoned"
+              ],
+              "explanation": "has never been + 過去分詞（現在完了の受動態）。名前が『捨てられた』ことはない＝今も Lloyd's の名が使われている。"
+            },
+            {
+              "id": "w5",
+              "kind": "write",
+              "no": 5,
+              "label": "e",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "founded"
+              ],
+              "explanation": "were + 過去分詞（受動態）。found – founded – founded「設立する」。find の過去形 found と混同しないこと（found の過去分詞は founded）。"
+            },
+            {
+              "id": "w6",
+              "kind": "write",
+              "no": 6,
+              "label": "f",
+              "category": "verb-form",
+              "points": 3,
+              "answer": [
+                "foreseen"
+              ],
+              "explanation": "could hardly have + 過去分詞「ほとんど予見できなかっただろう」。foresee – foresaw – foreseen。"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "VIII",
+      "instruction": "次の英文を読み、空所（a）〜（e）に入る、文脈の上で最も適した名詞を解答用紙Bの解答欄に記入しなさい。下記の動詞の最も適切な名詞形のみを使用すること。ただし、〜ing 形は使用してはいけない。また、同じ動詞を二回以上選んではいけない。同じ動詞を二回以上選んだ場合は、正解が含まれていてもその解答は得点にならない。",
+      "example": "例： arrive → arrival",
+      "passage": {
+        "paragraphs": [
+          "Successful negotiation depends less on clever tactics than on careful {{w:a}}. Before meeting the other side, experienced negotiators study the interests of everyone involved and decide in advance the point at which they will walk away. Without such a clear {{w:b}} of their own limits, it is easy to accept a poor deal simply to escape the discomfort of disagreement.",
+          "At the table, the most common mistake is to treat the other party's first offer as an insult rather than as information. An extreme demand may be no more than an {{w:c}} designed to test how much the other side will give, but it may also reveal what that side values most. Good negotiators respond with questions instead of {{w:d}}, and they look for trades that cost them little but matter greatly to their counterpart. The aim is not victory but an {{w:e}} that both sides can defend to the people they represent."
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "",
+          "wordBox": [
+            "accuse",
+            "agree",
+            "define",
+            "exaggerate",
+            "prepare"
+          ],
+          "wordForms": {
+            "accuse": [
+              "accusation",
+              "accusations"
+            ],
+            "agree": [
+              "agreement",
+              "agreements"
+            ],
+            "define": [
+              "definition",
+              "definitions"
+            ],
+            "exaggerate": [
+              "exaggeration",
+              "exaggerations"
+            ],
+            "prepare": [
+              "preparation",
+              "preparations"
+            ]
+          },
+          "questions": [
+            {
+              "id": "w7",
+              "kind": "write",
+              "no": 7,
+              "label": "a",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "preparation",
+                "preparations"
+              ],
+              "explanation": "careful + 名詞。prepare → preparation「準備」。直後の「会う前に利害を調べ、席を立つ点を決めておく」がその中身。"
+            },
+            {
+              "id": "w8",
+              "kind": "write",
+              "no": 8,
+              "label": "b",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "definition"
+              ],
+              "explanation": "a clear + 名詞 + of ~。define → definition「明確化・定義」。自分の限界（譲れる線）を明確にしておくこと。"
+            },
+            {
+              "id": "w9",
+              "kind": "write",
+              "no": 9,
+              "label": "c",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "exaggeration"
+              ],
+              "explanation": "an + 名詞。exaggerate → exaggeration「誇張」。極端な要求は、相手がどこまで譲るかを試すための誇張にすぎないこともある。"
+            },
+            {
+              "id": "w10",
+              "kind": "write",
+              "no": 10,
+              "label": "d",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "accusations",
+                "accusation"
+              ],
+              "explanation": "instead of + 名詞。accuse → accusation「非難」。質問で応じるのであって、非難で応じるのではない。一般論なので複数形 accusations が自然（単数も可）。"
+            },
+            {
+              "id": "w11",
+              "kind": "write",
+              "no": 11,
+              "label": "e",
+              "category": "noun-form",
+              "points": 3,
+              "answer": [
+                "agreement"
+              ],
+              "explanation": "an + 名詞 + that 節。agree → agreement「合意」。勝つことではなく、双方が自分の側に説明できる合意が目的。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

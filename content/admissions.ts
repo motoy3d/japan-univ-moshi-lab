@@ -95,7 +95,7 @@ export const ADMISSIONS: Admission[] = [
         department: "商学科",
         aliases: ["しょうがくぶ", "商", "しょう"],
         totalPoints: 400,
-        mockExamIds: ["keio-shogaku-eigo-01"],
+        mockExamIds: ["keio-shogaku-eigo-01", "keio-shogaku-eigo-02"],
         url: "https://www.keio.ac.jp/ja/fbc/",
         stages: [
           {

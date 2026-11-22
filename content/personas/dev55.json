@@ -1,0 +1,40 @@
+{
+  "id": "dev55",
+  "label": "偏差値55前後（MARCH中位〜日東駒専上位レベル）",
+  "deviation": 55,
+  "description": "高3の秋。単語帳は標準レベル（約3000語）をほぼ覚え、上級レベルは手つかず。英文解釈の参考書を1冊終えたところ。長い英文になると前半の内容を忘れがちで、選択肢の言い換えに気づけないことが多い。",
+  "vocab": {
+    "zipf50": 4.45,
+    "spread": 0.15
+  },
+  "readingWpm": 85,
+  "secondsPerMark": 45,
+  "secondsPerWrite": 70,
+  "order": [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI",
+    "VII",
+    "VIII"
+  ],
+  "grammarWeak": [
+    "倒置（Hardly / Not until / Had S p.p. など否定語や条件の倒置）",
+    "仮定法現在（recommend / insist that S 原形）、It is time + 過去形",
+    "完了不定詞（be said to have p.p.）、分詞構文の受動",
+    "複合関係詞（whatever / however + 形容詞）",
+    "形式目的語 it（appreciate it if）",
+    "語形の紛らわしい語の区別（-able / -ive / -ity など）",
+    "不規則動詞の過去分詞のうち頻度の低いもの（foresee, undergo, withdraw など）と名詞化の語尾（-tion / -ment / -ence / -ance の使い分け）"
+  ],
+  "behavior": [
+    "本文を頭から読み、わからない語が3つ以上続く文は意味を推測しきれずに読み飛ばす。",
+    "選択肢は本文と同じ語が入っているものを選びがち。言い換え（パラフレーズ）に気づけないと間違える。",
+    "NOT を含む設問を読み落とすことがある。",
+    "時間が足りなくなったら、残りは選択肢だけを見て勘でマークする（空欄にはしない）。"
+  ],
+  "sentenceCollapse": 3,
+  "grammarKnown": 0.4
+}
