@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { api } from "../api";
+import { getConfig } from "../config";
 import { currentUser } from "../auth";
 import { localResults } from "../guest";
 import { fmtDate, useAsync } from "../hooks";
@@ -11,6 +12,12 @@ import { jpDate, jpDateTime, nextDeadline, primaryExamDate, targetName } from ".
 function greeting() {
   const h = new Date().getHours();
   return h < 5 ? "遅くまでお疲れさまです" : h < 11 ? "おはようございます" : h < 18 ? "こんにちは" : "こんばんは";
+}
+
+/** 演習の見出し。「大問演習1 長文（論説）返品無料の代償」→「返品無料の代償」（種類はバッジで見せる） */
+function practiceTitle(e: ExamListItem) {
+  const t = e.title.replace(/^大問演習\d+\s*/, "");
+  return e.practiceType && t.startsWith(e.practiceType) ? t.slice(e.practiceType.length).trim() || t : t;
 }
 
 /** 模試と大問演習の一覧（ログインしていなくても見られる） */
@@ -32,7 +39,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
                 <span className="badge">{e.practiceType}</span>
                 <span className={`status ${mine.length ? "done" : ""}`}>{mine.length ? `済 ${Math.max(...mine.map((a) => a.score))}/${e.totalPoints}` : `${e.durationMin}分`}</span>
               </div>
-              <h3>{e.title.replace(/^大問演習\d+\s*/, "")}</h3>
+              <h3>{practiceTitle(e)}</h3>
               <div className="meta">{e.questionCount}問 ・ {e.totalPoints}点</div>
             </Link>
           );
@@ -40,7 +47,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
       </div>
 
       <h2 id="mocks">模試 <small className="muted">本番と同じ90分・大問8題</small></h2>
-      <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。解答用紙は撮影して採点できます。</p>
+      <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。{getConfig().photoGrading ? "解答用紙は撮影して採点できます。" : "解き終えた答えを入力すると採点できます。"}</p>
       <div className="grid grid-2">
         {mocks.map((e) => {
           const mine = list.filter((a) => a.examId === e.id);
@@ -69,7 +76,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
             {list.slice(0, 5).map((a) => (
               <Link key={a.attemptId} to={resultLink(a)} className="recent-row">
                 <span className="recent-date">{fmtDate(a.createdAt)}</span>
-                <span className="recent-title">{a.examTitle}</span>
+                <span className="recent-title">{shortTitle(a.examTitle)}</span>
                 <span className="recent-score">{a.score}<small>/{a.maxScore}</small></span>
               </Link>
             ))}
@@ -78,6 +85,11 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
       )}
     </>
   );
+}
+
+/** 「第1回 慶應義塾大学 商学部 英語 予想模試」→「第1回 予想模試」。科目が増えたら大学名を残す */
+function shortTitle(t: string) {
+  return t.replace(/慶應義塾大学 商学部 英語\s*/, "");
 }
 
 export function HomePage() {
@@ -94,12 +106,14 @@ function GuestHome() {
     <>
       <section className="hero hero-guest">
         <div className="hero-main">
-          <h1 className="hero-title">慶應義塾大学 商学部 英語の予想模試</h1>
-          <p className="hero-sub">本番と同じ形式・同じ90分。登録なし・無料ですぐ受けられます。印刷して紙で解き、撮影して採点することもできます。</p>
+          <p className="hero-greet">慶應義塾大学 商学部 英語</p>
+          <h1 className="hero-title">本番と同じ形の予想模試</h1>
+          <p className="hero-sub">大問の並びも、設問の数も、紙の大きさも本番どおり。<b>無料・登録なし</b>で、すぐ受けられます。</p>
           <div className="row" style={{ marginTop: 14 }}>
             {firstPractice && <a className="btn btn-hero" href="#practice">大問演習（15〜25分）</a>}
             {firstMock && <Link className="btn btn-ghost" to={`/exams/${firstMock.id}`}>模試（90分）</Link>}
           </div>
+          <p className="hero-more"><Link to="/about">模試ラボのこだわり →</Link></p>
         </div>
       </section>
       <ExamLists exams={exams.data} list={list} error={exams.error} />
@@ -148,7 +162,7 @@ function MemberHome() {
           </p>
           {deadline && (
             <p className="hero-deadline">
-              📮 {deadline.label.replace(/（.*）/, "")}：{jpDateTime(deadline.start)} 〜 <b>{jpDateTime(deadline.end)}</b>
+              {deadline.label.replace(/（.*）/, "")}：{jpDateTime(deadline.start)} 〜 <b>{jpDateTime(deadline.end)}</b>
             </p>
           )}
           <div className="row" style={{ marginTop: 14 }}>

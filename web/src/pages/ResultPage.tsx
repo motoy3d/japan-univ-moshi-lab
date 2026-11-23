@@ -44,11 +44,11 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
   const loggedIn = !!currentUser();
   useEffect(() => track("result_view", { exam_id: exam.id, kind: exam.kind ?? "mock" }), [exam.id, exam.kind]);
   const pct = a.score / a.maxScore;
-  const msg = cheer(pct);
 
   // 同じ模試の過去の受験（この回より前）
   const sameExam = history.filter((h) => h.examId === a.examId);
   const before = sameExam.filter((h) => h.attemptId < a.attemptId);
+  const msg = cheer(pct, before.length === 0);
   const prev = before[0];
   const delta = prev ? a.score - prev.score : null;
   const isBest = before.length > 0 && before.every((h) => a.score > h.score);
@@ -71,6 +71,7 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
       <h1>{a.examTitle}</h1>
 
       <section className="result-hero">
+        <Stamp pct={pct} />
         <Ring value={a.score} max={a.maxScore} size={156} label={String(a.score)} sub={`/ ${a.maxScore}点`} />
         <div className="result-hero-body">
           <div className="badges">
@@ -233,8 +234,8 @@ function Rating({ examId, attemptRef, kind }: { examId: string; attemptRef: stri
       <p className="rating-q">この{kind === "practice" ? "演習" : "模試"}を、また受けたいと思いますか？</p>
       <div className="rating-scale" role="radiogroup" aria-label="5段階">
         {[1, 2, 3, 4, 5].map((n) => (
-          <button key={n} role="radio" aria-checked={value === n} className={`rating-btn ${value === n ? "on" : ""}`} onClick={() => setValue(n)}>
-            {n}
+          <button key={n} role="radio" aria-checked={value === n} aria-label={`${n}`} className={`rating-btn ${value === n ? "on" : ""}`} onClick={() => setValue(n)}>
+            <span className="ms-o">{n}</span>
           </button>
         ))}
       </div>
@@ -283,6 +284,21 @@ function QuestionFeedback({ examId, questionId, attemptRef }: { examId: string; 
           <button className="btn" disabled={busy} onClick={send}>送る</button>
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * 高得点のはんこ。得点率8割以上で「高得点！！」、満点で「満点！！」を、赤ペンのはんこのように押す。
+ * 結果を開いた最初の1回だけ動かし、動きを減らす設定の人には動かさずに見せる。
+ */
+function Stamp({ pct }: { pct: number }) {
+  if (pct < 0.8) return null;
+  const text = pct >= 1 ? "満点" : "高得点";
+  return (
+    <div className="stamp" role="img" aria-label={`${text}！`}>
+      <span className="stamp-text">{text}<em>！！</em></span>
+      {[0, 1, 2, 3, 4, 5].map((i) => <i key={i} className="spark" style={{ ["--a" as string]: `${i * 60 + 15}deg` }} />)}
     </div>
   );
 }

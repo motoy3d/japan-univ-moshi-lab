@@ -845,3 +845,145 @@ h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
 .large-print .ak { font-size: 12.5pt; }
 .large-print .ak h3 { font-size: 14pt; }
 .large-print .ak .you { font-size: 11pt; }
+
+/* =====================================================================
+   v3: マイページのメニュー・説明ページ・遊び心（マークシートの楕円）
+   方針: グラデーション・絵文字・アイコンの並んだ機能紹介は使わない。
+   飾りは「試験の紙」から借りる（明朝の見出し、細い罫線、赤い楕円、赤ペンのはんこ）。
+   ===================================================================== */
+:root { --sheet-red: #c2453a; --pencil: #2b2b2b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --sheet-red: #ef8a7e; --pencil: #e9e7e1; } }
+
+/* ---- マークシートの楕円（共通） ---- */
+.ms-o {
+  display: inline-grid; place-items: center; width: 1.25em; height: 1.85em; border-radius: 50%;
+  border: 1.5px solid var(--sheet-red); color: var(--sheet-red); font-size: 13px; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums; transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.ms-o.fill { background: var(--pencil); border-color: var(--pencil); color: transparent; }
+.mark-strip { display: flex; gap: 8px; margin: 18px 0 6px; }
+.mark-strip .ms-o.fill { animation: pencil 0.35s ease-out both; }
+.mark-strip.quiet { justify-content: center; opacity: 0.7; }
+@keyframes pencil {
+  from { background: transparent; border-color: var(--sheet-red); color: var(--sheet-red); clip-path: inset(100% 0 0 0); }
+  60% { clip-path: inset(0 0 0 0); }
+  to { background: var(--pencil); border-color: var(--pencil); color: transparent; }
+}
+
+/* ---- ヘッダー: マイページのメニュー ---- */
+.guest-nav { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+.guest-nav a:not(.header-login) { font-size: 14px; padding: 6px 10px; border-radius: 8px; }
+.guest-nav a.active { background: var(--surface-2); }
+.guest-nav .header-login { margin-left: 0; }
+@media (max-width: 420px) { .guest-nav a:not(.header-login) { font-size: 13px; padding: 6px 6px; } }
+.user-menu { position: relative; }
+.user-btn { display: inline-flex; align-items: center; gap: 6px; }
+.user-btn.active { background: var(--surface-2); }
+.avatar {
+  display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 700;
+}
+.menu {
+  position: absolute; right: 0; top: calc(100% + 6px); min-width: 200px; z-index: 50;
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; padding: 6px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.12); display: grid; animation: drop 0.14s ease-out;
+}
+.menu a, .menu button {
+  display: block; text-align: left; padding: 9px 12px !important; border-radius: 8px; font-size: 14px; color: inherit; text-decoration: none;
+  background: none; border: 0; cursor: pointer; width: 100%;
+}
+.menu a:hover, .menu button:hover { background: var(--surface-2) !important; }
+.menu hr { border: 0; border-top: 1px solid var(--line); margin: 6px 4px; }
+.menu-who { margin: 4px 12px 6px; font-size: 12px; color: var(--muted); }
+@keyframes drop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* ---- タブバー: 選ばれているタブに小さな印 ---- */
+@media (max-width: 720px) {
+  .tabbar a { position: relative; }
+  .tabbar a.active::after { content: ""; position: absolute; top: 3px; width: 5px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .tabbar a.active svg { animation: tap 0.25s ease-out; }
+}
+@keyframes tap { 50% { transform: scale(1.12); } }
+
+/* ---- ホーム ---- */
+.hero-more { margin: 12px 0 0; font-size: 14px; }
+.hero-more a { color: inherit; opacity: 0.9; }
+[data-hero="light"] .hero-more a { color: var(--accent); }
+h2.first { margin-top: 8px; }
+
+/* ---- 模試の案内 ---- */
+.or { display: flex; align-items: center; gap: 10px; margin: 2px 0; font-size: 12px; color: var(--muted); }
+.or::before, .or::after { content: ""; flex: 1; border-top: 1px solid var(--line); }
+.disclaimer { margin-top: 18px; }
+
+/* ---- 成績: 履歴の行・記録がないとき ---- */
+.history-row .recent-title { white-space: normal; }
+.history-meta { display: block; font-size: 12px; color: var(--muted); }
+.empty { text-align: center; padding: 28px 12px; color: var(--ink-2); }
+.empty p { margin: 8px 0 16px; }
+
+/* ---- 受験: 選んだ番号を鉛筆で塗ったように ---- */
+.choice.selected .num, .num-btn.selected { animation: pencil-pop 0.22s ease-out; }
+@keyframes pencil-pop { from { transform: scale(0.7); } 70% { transform: scale(1.1); } to { transform: scale(1); } }
+
+/* ---- 結果: 評価をマークシートの楕円で ---- */
+.rating-scale { gap: 0; justify-content: space-between; max-width: 360px; }
+.rating-btn { flex: none; min-width: 52px; min-height: 52px; border: 0; background: none; display: grid; place-items: center; }
+.rating-btn .ms-o { font-size: 16px; }
+.rating-btn:hover .ms-o { background: color-mix(in srgb, var(--sheet-red) 10%, transparent); }
+.rating-btn.on { background: none; }
+.rating-btn.on .ms-o { background: var(--pencil); border-color: var(--pencil); color: var(--surface); animation: pencil-pop 0.22s ease-out; }
+.rating-legend { max-width: 360px; }
+
+/* ---- 結果: 高得点のはんこ ---- */
+.result-hero { position: relative; }
+.stamp {
+  position: absolute; right: 18px; top: 14px; z-index: 2; pointer-events: none;
+  width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center;
+  border: 3px double var(--sheet-red); color: var(--sheet-red); transform: rotate(-14deg);
+  font-family: var(--font-jp-serif); font-weight: 800; mix-blend-mode: multiply;
+  animation: stamp 0.5s cubic-bezier(0.2, 1.3, 0.4, 1) 0.6s both;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .stamp { mix-blend-mode: normal; } }
+.stamp-text { font-size: 21px; line-height: 1.05; text-align: center; letter-spacing: 0.04em; }
+.stamp-text em { display: block; font-style: normal; font-size: 17px; letter-spacing: -0.1em; }
+.stamp .spark {
+  position: absolute; left: 50%; top: 50%; width: 7px; height: 11px; margin: -5px 0 0 -3px; border-radius: 50%;
+  background: var(--sheet-red); opacity: 0; transform: rotate(var(--a)) translateY(0);
+  animation: spark 0.6s ease-out 0.9s both;
+}
+@keyframes stamp { from { opacity: 0; transform: rotate(-14deg) scale(1.9); } to { opacity: 0.92; transform: rotate(-14deg) scale(1); } }
+@keyframes spark { 0% { opacity: 0.9; transform: rotate(var(--a)) translateY(-40px); } 100% { opacity: 0; transform: rotate(var(--a)) translateY(-78px); } }
+@media (max-width: 560px) { .stamp { width: 84px; height: 84px; right: 8px; top: 8px; } .stamp-text { font-size: 17px; } .stamp-text em { font-size: 14px; } }
+
+/* ---- 説明ページ（模試ラボについて） ---- */
+.about { max-width: 680px; margin: 0 auto; }
+.about-head { padding: 12px 0 28px; border-bottom: 1px solid var(--ink); }
+.about-kicker { margin: 0 0 10px; font-size: 13px; color: var(--muted); letter-spacing: 0.08em; }
+.about-title { font-family: var(--font-jp-serif); font-size: clamp(28px, 6.4vw, 40px); line-height: 1.4; letter-spacing: 0.02em; margin: 0 0 16px; font-weight: 700; }
+.about-lead { font-size: 16px; color: var(--ink-2); margin: 0; max-width: 32em; }
+.about-lead b { color: var(--ink); }
+.about-cta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.about-sec { padding: 26px 0 22px; border-bottom: 1px solid var(--line); }
+.about-sec h2 { font-family: var(--font-jp-serif); font-size: 21px; margin: 0 0 12px; display: flex; align-items: center; gap: 12px; letter-spacing: 0.02em; }
+.about-sec p { margin: 0 0 10px; line-height: 1.9; color: var(--ink-2); }
+.h-oval {
+  flex: none; display: inline-grid; place-items: center; width: 22px; height: 32px; border-radius: 50%;
+  background: var(--pencil); color: var(--bg); font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+}
+.about-table { width: 100%; border-collapse: collapse; margin: 10px 0 6px; font-size: 14px; font-variant-numeric: tabular-nums; }
+.about-table th, .about-table td { padding: 9px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.about-table thead th { font-size: 12px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--ink); }
+.about-table tbody th { font-weight: 600; color: var(--ink-2); white-space: nowrap; }
+.about-table td:last-child { font-weight: 700; color: var(--ink); }
+.about-note { font-size: 12px !important; color: var(--muted) !important; }
+.about-zero { font-family: var(--font-jp-serif); font-size: 22px; margin: 0 0 8px !important; color: var(--ink) !important; }
+.about-zero span { font-size: 64px; line-height: 1; margin-right: 4px; font-weight: 700; }
+.about-foot { padding: 28px 0 8px; }
+.about-disclaimer { font-size: 12px; color: var(--muted); margin-top: 22px; line-height: 1.8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mark-strip .ms-o.fill, .stamp, .stamp .spark, .menu, .choice.selected .num, .num-btn.selected, .rating-btn.on .ms-o, .tabbar a.active svg { animation: none !important; }
+  .stamp { opacity: 0.92; }
+  .stamp .spark { display: none; }
+}

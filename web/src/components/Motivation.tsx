@@ -62,12 +62,14 @@ export function opportunities(categories: PartScore[], n = 3) {
 }
 
 /** 得点率に応じた一言（事実ベースで前向きに） */
-export function cheer(pct: number): { title: string; body: string } {
+export function cheer(pct: number, first = true): { title: string; body: string } {
   if (pct >= 0.8)
     return { title: "合格ラインの目安を突破", body: "一般に目安と言われる8割を超えました。本番まで、この精度とスピードを保ちましょう。" };
   if (pct >= 0.65)
     return { title: "あと一歩で合格圏", body: "8割まであと少し。失点の多い分野を1つ潰すだけで届く位置です。" };
   if (pct >= 0.5)
     return { title: "土台はできています", body: "得点源を作る段階です。下の「伸びしろ」から1分野ずつ固めていきましょう。" };
-  return { title: "ここがスタートライン", body: "最初の1回は現在地を知るためのもの。解説を読み、伸びしろの大きい分野から取り組みましょう。" };
+  return first
+    ? { title: "ここがスタートライン", body: "最初の1回は現在地を知るためのもの。解説を読み、伸びしろの大きい分野から取り組みましょう。" }
+    : { title: "解き直しが、いちばん効きます", body: "間違えた問題の解説を読み、伸びしろの大きい分野から1つずつ固めていきましょう。" };
 }

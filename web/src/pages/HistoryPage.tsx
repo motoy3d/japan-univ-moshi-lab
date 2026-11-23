@@ -40,7 +40,14 @@ export function HistoryPage() {
     return (
       <>
         <h1>成績分析</h1>
-        <p className="muted">まだ受験記録がありません。<Link to="/">模試を受験する</Link></p>
+        <div className="empty">
+          <EmptyMarks />
+          <p>まだ受験の記録がありません。<br />1回受けると、ここに得点の推移と、伸ばしたい分野が出ます。</p>
+          <div className="row" style={{ justifyContent: "center" }}>
+            <Link className="btn btn-primary" to="/#practice">15分の大問演習から</Link>
+            <Link className="btn" to="/#mocks">90分の模試</Link>
+          </div>
+        </div>
       </>
     );
   const chrono = [...list].reverse();
@@ -85,25 +92,28 @@ export function HistoryPage() {
       </div>
 
       <h2>受験履歴</h2>
-      <div className="table-wrap card" style={{ padding: 0 }}>
-        <table className="table">
-          <thead>
-            <tr><th>日時</th><th>模試</th><th className="num">得点</th><th className="num">偏差値</th><th className="num">時間</th><th></th></tr>
-          </thead>
-          <tbody>
-            {list.map((a) => (
-              <tr key={a.attemptId}>
-                <td>{fmtDate(a.createdAt)}</td>
-                <td>{a.examTitle}{a.mode === "paper" && <span className="badge" style={{ marginLeft: 6 }}>紙</span>}</td>
-                <td className="num">{a.score}/{a.maxScore}</td>
-                <td className="num">{a.deviation?.toFixed(1) ?? "—"}</td>
-                <td className="num">{fmtDuration(a.durationSec)}</td>
-                <td><Link to={`/results/${a.attemptId}`}>詳細</Link></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="recent">
+        {list.map((a) => (
+          <Link key={a.attemptId} to={`/results/${a.attemptId}`} className="recent-row history-row">
+            <span className="recent-date">{fmtDate(a.createdAt)}</span>
+            <span className="recent-title">
+              {a.examTitle.replace(/慶應義塾大学 商学部 英語\s*/, "")}
+              {a.mode === "paper" && <span className="badge" style={{ marginLeft: 6 }}>紙</span>}
+              <span className="history-meta">偏差値 {a.deviation?.toFixed(1) ?? "—"} ・ {fmtDuration(a.durationSec)}</span>
+            </span>
+            <span className="recent-score">{a.score}<small>/{a.maxScore}</small></span>
+          </Link>
+        ))}
       </div>
     </>
+  );
+}
+
+/** 記録がないときの絵: まだ何も塗られていないマークシートの1列 */
+function EmptyMarks() {
+  return (
+    <div className="mark-strip quiet" aria-hidden>
+      {["1", "2", "3", "4"].map((d) => <span key={d} className="ms-o">{d}</span>)}
+    </div>
   );
 }

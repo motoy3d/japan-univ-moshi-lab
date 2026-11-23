@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../api";
 import { cognitoUserCall, currentUser, logout } from "../auth";
 import { getConfig } from "../config";
@@ -27,6 +27,12 @@ export function SettingsPage() {
     });
   }, []);
 
+  // ヘッダーのメニューの「アカウント」（/settings#account）から来たときは、その見出しまで動かす
+  const loc = useLocation();
+  useEffect(() => {
+    if (loc.hash) requestAnimationFrame(() => document.getElementById(loc.hash.slice(1))?.scrollIntoView({ block: "start" }));
+  }, [loc.hash]);
+
   const days = daysUntil(examDate);
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +48,8 @@ export function SettingsPage() {
 
   return (
     <div style={{ maxWidth: 560 }}>
-      <h1>志望校と目標</h1>
+      <h1>マイページ</h1>
+      <h2 id="targets" className="first">志望校と目標</h2>
       <form className="card grid" style={{ gap: 18 }} onSubmit={save}>
         <div className="field">
           <span>志望校・学部・受験方式</span>
@@ -72,11 +79,12 @@ export function SettingsPage() {
           {state === "saved" ? "保存しました" : state === "saving" ? "保存中…" : "保存する"}
         </button>
       </form>
-      <h2>アカウント</h2>
+      <h2 id="account">アカウント</h2>
       <div className="card row" style={{ justifyContent: "space-between" }}>
         <span className="small">{user?.email ?? user?.name}</span>
         <button className="btn" onClick={logout}>ログアウト</button>
       </div>
+      {user?.admin && <p className="small" style={{ marginTop: 10 }}><Link to="/admin">運営（管理画面）を開く</Link></p>}
       <AccountSecurity />
       <DeleteAccount />
     </div>

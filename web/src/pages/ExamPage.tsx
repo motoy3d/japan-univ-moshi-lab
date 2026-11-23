@@ -30,7 +30,6 @@ export function ExamPage() {
             <dt>構成</dt><dd>大問 {e.sections.map((s) => s.label).join("・")}（マーク {qs.filter((q) => q.kind === "mark").length}問／記述 {qs.filter((q) => q.kind === "write").length}問）</dd>
             <dt>受験者数</dt><dd>{stats.data ? `${stats.data.count}人` : "—"}</dd>
           </dl>
-          <p className="small muted">{e.disclaimer}</p>
         </div>
         <div className="card grid" style={{ gap: 10, alignContent: "start" }}>
           {e.kind === "practice" ? (
@@ -48,7 +47,7 @@ export function ExamPage() {
                 </Link>
               )}
               <Link className="btn btn-block" to={`/exams/${id}/take?mode=paper`}>解き終えた答えを入力して採点</Link>
-              <hr />
+              <p className="or" aria-hidden>または</p>
               <Link className="btn btn-block" to={`/exams/${id}/take`}>Webで受験する（{e.durationMin}分）</Link>
             </>
           )}
@@ -58,7 +57,7 @@ export function ExamPage() {
       <h2>大問構成</h2>
       <div className="table-wrap">
         <table className="table">
-          <thead><tr><th>大問</th><th>内容</th><th className="num">問題数</th><th className="num">配点</th></tr></thead>
+          <thead><tr><th className="nowrap">大問</th><th>内容</th><th className="num nowrap">問題数</th><th className="num nowrap">配点</th></tr></thead>
           <tbody>
             {e.sections.map((s) => {
               const sq = s.groups.flatMap((g) => g.questions);
@@ -74,6 +73,7 @@ export function ExamPage() {
           </tbody>
         </table>
       </div>
+      <p className="small muted disclaimer">{e.disclaimer}</p>
     </>
   );
 }
