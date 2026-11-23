@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link } from "react-router-dom";
 import { api } from "../api";
 import { useAsync } from "../hooks";
 import { pageCss } from "./PrintPage";
@@ -8,14 +8,16 @@ import { questionLabel } from "../../../shared/scoring";
 /** 解答・解説冊子（自分の解答つき） */
 export function AnswerKeyPrintPage() {
   const { id = "" } = useParams();
+  const [params] = useSearchParams();
+  const large = params.get("text") === "large";
   const r = useAsync(() => api.attempt(id), [id]);
   if (r.error) return <div className="container"><p className="error">{r.error}</p></div>;
   if (!r.data) return <div className="container"><p className="muted">読み込み中…</p></div>;
   const { exam, attempt: a } = r.data;
   const res = new Map(a.results.map((x) => [x.id, x]));
   return (
-    <div className="paper-A4">
-      <style>{pageCss("A4")}</style>
+    <div className={`paper-A4 ${large ? "large-print" : ""}`}>
+      <style>{pageCss("A4", large)}</style>
       <div className="print-toolbar no-print">
         <Link to={`/results/${id}`} className="btn" style={{ minHeight: 36 }}>←</Link>
         <b>解答・解説</b>

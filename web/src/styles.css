@@ -830,3 +830,17 @@ h2 small { font-weight: 400; font-size: 13px; margin-left: 6px; }
 .palette-tile .pt-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px; }
 .palette-tile .swatches { display: flex; gap: 4px; }
 .palette-tile .swatches span { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--line); }
+
+/* ---- 印刷: 文字を大きく（本番の約1.3倍。余白を詰めて行数の増加を抑える） ---- */
+.large-print .booklet { font-size: 13pt; }
+.large-print .b-instruction, .large-print .b-group-inst { font-size: 13pt; }
+.large-print .b-passage { font-size: 14.5pt; line-height: 1.55; }
+.large-print .b-q .prompt, .large-print .b-choices, .large-print .b-shared, .large-print .word-box.print { font-size: 13.5pt; }
+.large-print .b-notes { font-size: 11pt; }
+.large-print .b-roman { font-size: 18pt; }
+.large-print .cover .notes-box li { font-size: 12pt; }
+.large-print .ws { font-size: 12.5pt; }
+.large-print .ws-table td.ans { font-size: 15pt; }
+.large-print .ak { font-size: 12.5pt; }
+.large-print .ak h3 { font-size: 14pt; }
+.large-print .ak .you { font-size: 11pt; }

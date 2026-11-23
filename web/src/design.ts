@@ -14,7 +14,8 @@ export const DESIGN_OPTIONS = {
 
 export type Design = { [K in keyof typeof DESIGN_OPTIONS]: keyof (typeof DESIGN_OPTIONS)[K] };
 
-export const DEFAULT: Design = { palette: "navy", shape: "standard", hero: "bold", header: "dark", font: "sans", logo: "kanji" };
+// 2026-11-23 決定: 空色・標準・トップ濃い色・ヘッダー白・ゴシック・マークシートのロゴ
+export const DEFAULT: Design = { palette: "sky", shape: "standard", hero: "bold", header: "light", font: "sans", logo: "bubbles" };
 
 const KEY = "moshi.design.v1";
 const PREVIEW_KEY = "moshi.design.preview";

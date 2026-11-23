@@ -16,8 +16,8 @@ const PARTS = [
 type Part = (typeof PARTS)[number][0];
 
 /** 用紙サイズに応じた @page ルール（ページ番号は本文のみ） */
-export function pageCss(paper: Paper) {
-  const m = paper === "A4" ? "20mm 18mm 22mm" : "16mm 15mm 18mm";
+export function pageCss(paper: Paper, large = false) {
+  const m = large ? "12mm 11mm 14mm" : paper === "A4" ? "20mm 18mm 22mm" : "16mm 15mm 18mm";
   return `
 @page { size: ${paper} portrait; margin: ${m};
   @bottom-center { content: "— " counter(page) " —"; font-family: "Tinos", "Times New Roman", serif; font-size: 9pt; } }
@@ -34,10 +34,12 @@ export function PrintPage() {
   const [paper, setPaper] = useState<Paper>((params.get("paper") as Paper) === "B5" ? "B5" : "A4");
   const initParts = (params.get("parts")?.split(",") as Part[] | undefined) ?? ["cover", "booklet", "mark", "write"];
   const [parts, setParts] = useState<Set<Part>>(new Set(initParts));
+  // 文字を大きく: 1枚に2ページ並べて印刷したり、スマホ・タブレットで読んだりするとき用
+  const [large, setLarge] = useState(params.get("text") === "large");
 
   useEffect(() => {
-    setParams({ paper, parts: [...parts].join(",") }, { replace: true });
-  }, [paper, parts, setParams]);
+    setParams({ paper, parts: [...parts].join(","), ...(large ? { text: "large" } : {}) }, { replace: true });
+  }, [paper, parts, large, setParams]);
 
   useEffect(() => {
     if (exam.data) document.title = `${exam.data.edition} ${exam.data.title}`;
@@ -55,8 +57,8 @@ export function PrintPage() {
     });
 
   return (
-    <div className={`paper-${paper}`}>
-      <style>{pageCss(paper)}</style>
+    <div className={`paper-${paper} ${large ? "large-print" : ""}`}>
+      <style>{pageCss(paper, large)}</style>
       <div className="print-toolbar no-print">
         <Link to={`/exams/${id}`} className="btn" style={{ minHeight: 36 }}>←</Link>
         <label>
@@ -65,6 +67,9 @@ export function PrintPage() {
             <option value="A4">A4</option>
             <option value="B5">B5</option>
           </select>
+        </label>
+        <label>
+          <input type="checkbox" checked={large} onChange={() => setLarge((v) => !v)} /> 文字を大きく
         </label>
         {PARTS.map(([k, label]) => (
           <label key={k}>
