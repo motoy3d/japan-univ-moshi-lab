@@ -72,7 +72,17 @@ cd infra && npx cdk deploy --profile motoikataoka \
   -c domainName=moshi-lab.com -c certificateArn=<us-east-1 の証明書の ARN>
 ```
 
-Google ログイン・GA4・撮影採点を有効にしたあとは、`-c googleClientId=... -c gaId=... -c photoGrading=true` も毎回付ける（付け忘れると無効に戻る）。Node.js 26 が必要。
+Google ログイン・GA4・撮影採点を有効にしたあとは、`-c googleClientId=... -c gaId=... -c googleSecretVersionId=... -c photoGrading=true` も毎回付ける（付け忘れると無効に戻る）。Node.js 26 が必要。
+
+### Google のクライアントシークレットを入れ替えるとき
+
+1. Google Cloud のクライアントの画面で「Add secret」を押し、新しいシークレットをコピーする。
+2. Secrets Manager の `moshi-lab/google-oauth` の値を新しいシークレットにする（`put-secret-value`。使えない場合は、`delete-secret --force-delete-without-recovery` で消してから `create-secret`）。
+3. 新しいバージョンID を調べ、`-c googleSecretVersionId=<バージョンID>` を足して再デプロイする。**CloudFormation はテンプレートが変わらないと Secrets Manager を読み直さないので、これを付けないと Cognito が古い値のまま残る。**
+   ```bash
+   aws secretsmanager list-secret-version-ids --secret-id moshi-lab/google-oauth --query "Versions[?contains(VersionStages,'AWSCURRENT')].VersionId" --output text
+   ```
+4. Google ログインできることを確かめてから、Google Cloud で古いシークレットを無効にして削除する。
 
 ## 7. デプロイ
 

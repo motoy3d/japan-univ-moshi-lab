@@ -10,6 +10,8 @@ new MoshiLabStack(app, "MoshiLab", {
   // クライアントシークレットは Secrets Manager の googleSecretName に {"clientSecret":"..."} で保存しておく
   googleClientId: app.node.tryGetContext("googleClientId") || undefined,
   googleSecretName: app.node.tryGetContext("googleSecretName"),
+  // シークレットを入れ替えたら、その新しいバージョンID を指定して再デプロイする（docs/deploy.md）
+  googleSecretVersionId: app.node.tryGetContext("googleSecretVersionId") || undefined,
   // エラー通知の送信先: -c alertEmail=you@example.com （個人情報なので cdk.json やリポジトリには書かない）
   alertEmail: app.node.tryGetContext("alertEmail") || undefined,
   // Google アナリティクス（GA4）の測定ID: -c gaId=G-XXXXXXXXXX （無ければ計測しない）

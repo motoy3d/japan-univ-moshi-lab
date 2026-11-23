@@ -30,6 +30,11 @@ export interface MoshiLabProps extends StackProps {
   domainPrefix?: string;
   googleClientId?: string;
   googleSecretName?: string;
+  /**
+   * Google のシークレットのバージョンID。シークレットを入れ替えたときに指定すると、Cognito が新しい値を読み直す
+   * （CloudFormation はテンプレートが変わらないと Secrets Manager を読み直さないため）
+   */
+  googleSecretVersionId?: string;
   /** エラー通知の送信先メールアドレス（デプロイ時に -c alertEmail=... で指定。リポジトリには書かない） */
   alertEmail?: string;
   /** GA4 の測定ID（G-XXXX）。config.json 経由でフロントに渡す */
@@ -238,7 +243,7 @@ export class MoshiLabStack extends Stack {
       google = new cognito.UserPoolIdentityProviderGoogle(this, "Google", {
         userPool,
         clientId: props.googleClientId,
-        clientSecretValue: SecretValue.secretsManager(props.googleSecretName ?? "moshi-lab/google-oauth", { jsonField: "clientSecret" }),
+        clientSecretValue: SecretValue.secretsManager(props.googleSecretName ?? "moshi-lab/google-oauth", { jsonField: "clientSecret", ...(props.googleSecretVersionId ? { versionId: props.googleSecretVersionId } : {}) }),
         scopes: ["openid", "email", "profile"],
         attributeMapping: {
           email: cognito.ProviderAttribute.GOOGLE_EMAIL,
