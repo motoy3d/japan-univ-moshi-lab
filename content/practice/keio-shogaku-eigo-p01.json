@@ -1,0 +1,214 @@
+{
+  "id": "keio-shogaku-eigo-p01",
+  "kind": "practice",
+  "practiceType": "長文（論説）",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習1 長文（論説）返品無料の代償",
+  "edition": "大問演習",
+  "durationMin": 25,
+  "totalPoints": 44,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "III",
+      "instruction": "次の英文を読み、（1）〜（10）の設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（10）にマークしなさい。",
+      "passage": {
+        "paragraphs": [
+          "When online retailers first began offering free returns, the policy seemed like a simple way to overcome the main obstacle to buying clothes on the internet: customers could not try anything on. If a jacket did not fit, it could be sent back at no cost, and the risk of an unsuccessful purchase shifted from the buyer to the seller. The strategy worked. Sales of clothing and shoes online grew rapidly, and free returns soon became an expectation rather than a privilege. {{b:1}}, the generosity that helped build online fashion has created problems that few companies anticipated.",
+          "The most obvious problem is cost. A returned item must be collected, transported, inspected, cleaned or repackaged, and either returned to stock or disposed of. For inexpensive goods, these steps can cost more than the item itself, which is why some retailers quietly throw away returned products rather than resell them. Industry estimates suggest that a significant share of returned clothing never reaches a shelf again. {{u:4|What the customer experiences as a free service is, in reality, a cost that has simply been moved elsewhere}}: into higher prices for everyone, into thinner profit margins, or into landfills.",
+          "The environmental consequences are no less serious. Each return adds another journey by truck, and sometimes by plane, to the journey the product has already made. Packaging is used twice. Products that cannot be resold may be shredded or burned, and the materials and energy used in making them are lost. Several governments have begun to consider rules that would prevent retailers from destroying unsold or returned goods, a measure that would make the true scale of the problem harder to ignore.",
+          "Customer behavior has also changed. Because returning a product costs nothing, many shoppers now order several sizes or colors of the same item, keep one, and send the rest back. This practice, sometimes called bracketing, is entirely rational from the buyer's point of view. For the retailer, however, it means that a single sale may require handling three or four parcels. A smaller group of customers goes further, wearing clothes once for a special occasion and then returning them as though they were unused. {{b:2}} such behavior is difficult to prove, it is impossible to prevent entirely without inconveniencing honest customers.",
+          "Some companies have responded by charging a small fee for returns, and their experience is instructive. When a few well-known retailers introduced such charges, critics predicted that customers would abandon them. In several cases, the opposite happened: the number of returns fell sharply, while sales declined only slightly. It seems that a modest fee does not discourage people from buying, but it does encourage them to think more carefully before they buy. {{u:5|The fee, in other words, works less as a source of revenue than as a signal}}.",
+          "Other approaches rely on technology. Virtual fitting tools, which ask shoppers for their measurements or use photographs to recommend a size, promise to reduce the uncertainty that leads to bracketing. Detailed reviews in which customers describe how an item fits, whether it runs small, for instance, can serve a similar purpose. Such tools are useful, but they address only part of the problem. A customer who orders five dresses for a wedding because she cannot decide which one she likes best is not uncertain about her size; she is using the retailer's warehouse as a fitting room.",
+          "The calculation is further complicated by the speed of modern delivery. Customers who once waited a week for a parcel now expect it the next day, and many retailers promise that refunds will be issued within hours of a return being dropped off. Every such promise adds to the pressure on warehouses, where returned items compete for space and staff with new orders that must be dispatched on time. Returns that arrive in the busy weeks after a holiday can take so long to process that the goods are out of season before they are ready to sell again.",
+          "Underlying all of this is a question about fairness. Under the current system, customers who rarely return anything help to pay for the habits of those who return a great deal. {{b:3}} retailers are reluctant to say so openly, since no company wishes to be seen as accusing its own customers, a growing number now monitor return rates and limit or refuse service in the most extreme cases.",
+          "None of this means that free returns should disappear. For many shoppers, particularly those in rural areas without nearby stores, the ability to return goods easily is what makes online shopping practical at all. But the policy was designed for a world in which returns were an exception. {{u:6|Now that they have become part of the routine, the price of that convenience deserves to be seen rather than hidden}}."
+        ],
+        "notes": [
+          "bracketing 同じ商品を複数のサイズ・色で注文し、合わない物を返品すること",
+          "shred 細かく裁断する",
+          "warehouse 倉庫"
+        ],
+        "source": "[Original passage written for this mock exam]"
+      },
+      "groups": [
+        {
+          "instruction": "(i) In the context of this passage, choose the most suitable expression to fill in each blank.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "logic",
+              "choices": [
+                "Thus",
+                "Likewise",
+                "Yet",
+                "For example"
+              ],
+              "points": 3,
+              "answer": 3,
+              "explanation": "前段落は「返品無料は成功し、当たり前になった」。空所の後は「その気前のよさが予想外の問題を生んだ」。逆接の Yet。Thus（だから）・Likewise（同様に）・For example（例えば）では成功から問題への転換を表せない。"
+            },
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "logic",
+              "choices": [
+                "Unless",
+                "Whether",
+                "Until",
+                "Since"
+              ],
+              "points": 3,
+              "answer": 4,
+              "explanation": "since ~「〜なので」。証明が難しいので、正直な客に不便をかけずに完全に防ぐことはできない。Unless（〜しない限り）・Until（〜まで）は意味が通らず、Whether は「〜かどうか」で主節につながらない。"
+            },
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "logic",
+              "choices": [
+                "Because",
+                "If",
+                "Although",
+                "Once"
+              ],
+              "points": 3,
+              "answer": 3,
+              "explanation": "although ~「〜だが」。小売業者は公には言いたがらないが、返品率を監視する企業は増えている。譲歩。Because では「言いたがらないから監視する」となり因果が合わない。If・Once も文意が通らない。"
+            }
+          ]
+        },
+        {
+          "instruction": "(ii) In the context of this passage, choose the best answer for each question.",
+          "answerLine": true,
+          "questions": [
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "paraphrase",
+              "prompt": "What does the author mean by underlined (4)?",
+              "choices": [
+                "customers who return items are charged hidden fees by the retailer",
+                "the expense of returns is ultimately paid by someone, even if not by the person returning the item",
+                "returns cost retailers almost nothing because most products are resold",
+                "governments pay for the disposal of products that are returned"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "コロンの後に「全員の値上げ・利益の縮小・埋め立て地へ」とあり、費用は消えたのではなく別の所へ移っただけ、という意味。2 が一致。1 は返品した本人が払うことになり逆、3 は「再販されないものも多い」と矛盾、4 は本文にない。"
+            },
+            {
+              "id": "m5",
+              "kind": "mark",
+              "no": 5,
+              "category": "paraphrase",
+              "prompt": "Which one of the following best explains underlined (5)?",
+              "choices": [
+                "The main effect of the fee is to change customers' behavior rather than to earn money.",
+                "The fee shows customers which products are most likely to be returned.",
+                "Customers pay the fee to prove that they are serious buyers.",
+                "Retailers introduced the fee mainly to increase their income."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "直前に「手数料は購入を減らさないが、買う前によく考えさせる」とある。収入源としてより、行動を変える合図として働くという意味で 1。4 は逆。2・3 は signal を取り違えている。"
+            },
+            {
+              "id": "m6",
+              "kind": "mark",
+              "no": 6,
+              "category": "paraphrase",
+              "prompt": "Underlined (6) suggests that ___.",
+              "choices": [
+                "the costs of returns should be made visible instead of being concealed in other prices",
+                "returns should no longer be allowed for products bought online",
+                "online shopping should be offered only to customers in rural areas",
+                "customers should stop worrying about how much returns cost"
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "返品が日常になった今、その便利さの「値段」は隠すのではなく見えるようにすべきだ、という主張。1 が一致。2 は直前の「返品無料をなくすべきではない」と矛盾。3・4 は本文にない。"
+            },
+            {
+              "id": "m7",
+              "kind": "mark",
+              "no": 7,
+              "category": "detail",
+              "prompt": "According to the passage, why do some retailers throw away returned products?",
+              "choices": [
+                "Because processing them can cost more than the products are worth.",
+                "Because the law does not allow returned goods to be resold.",
+                "Because returned clothing is always damaged.",
+                "Because customers prefer to buy brand-new products."
+              ],
+              "points": 5,
+              "answer": 1,
+              "explanation": "第2段落「安い商品は、返品の処理の費用が商品の値段を上回ることがある。だから再販せず捨てる」。1 が一致。3 は always が言い過ぎ、2 は逆（廃棄を禁じる規制が検討されている）、4 は本文にない。"
+            },
+            {
+              "id": "m8",
+              "kind": "mark",
+              "no": 8,
+              "category": "detail",
+              "prompt": "What happened when some retailers introduced a fee for returns?",
+              "choices": [
+                "Customers stopped shopping at those retailers altogether.",
+                "Returns decreased considerably, while sales fell only a little.",
+                "Both sales and returns increased.",
+                "Returns stayed the same, but sales fell sharply."
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "第5段落 the number of returns fell sharply, while sales declined only slightly。2 が一致。1 は批判者の予想で、実際は逆。3・4 は本文と矛盾。"
+            },
+            {
+              "id": "m9",
+              "kind": "mark",
+              "no": 9,
+              "category": "detail",
+              "prompt": "Which one of the following does the author NOT mention as a response to the problem of returns?",
+              "choices": [
+                "Charging customers a small fee for returns.",
+                "Monitoring return rates and limiting service in extreme cases.",
+                "Recommending sizes with virtual fitting tools.",
+                "Offering discounts to customers who keep everything they order."
+              ],
+              "points": 5,
+              "answer": 4,
+              "explanation": "返品手数料（第5段落）、仮想試着（第6段落）、返品率の監視（第7段落）は述べられている。注文をすべて手元に残す客への割引は述べられていないので 4。"
+            },
+            {
+              "id": "m10",
+              "kind": "mark",
+              "no": 10,
+              "category": "main-idea",
+              "prompt": "Which one of the following titles best captures the main idea of the passage?",
+              "choices": [
+                "How to Choose the Right Size When Shopping Online",
+                "The Hidden Price of Free Returns",
+                "Virtual Fitting Rooms: The End of Returns",
+                "Why Online Shopping Will Soon Replace Stores"
+              ],
+              "points": 5,
+              "answer": 2,
+              "explanation": "返品無料の費用・環境負荷・客の行動・公平さを論じ、便利さの代償を見えるようにすべきだと結ぶ。2 が全体を表す。3 は技術の部分だけで、しかも「問題の一部しか解決しない」と述べている。1・4 は本文にない。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

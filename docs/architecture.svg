@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" font-family="'Noto Sans JP','Hiragino Sans','Yu Gothic',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#52514e"/></marker>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#2a78d6"/></marker>
+    <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#c26a00"/></marker>
+    <style>
+      .box{fill:#fff;stroke:#c9c8c1;stroke-width:1.2}
+      .plan{fill:#fffaf2;stroke:#d58a2a;stroke-width:1.4;stroke-dasharray:6 4}
+      .t{font-size:14px;font-weight:700;fill:#1b1b19}
+      .s{font-size:11.5px;fill:#52514e}
+      .lab{font-size:11px;fill:#52514e}
+      .labb{font-size:11px;fill:#2a78d6;font-weight:700}
+      .labp{font-size:11px;fill:#c26a00;font-weight:700}
+      .ln{stroke:#52514e;stroke-width:1.6;fill:none}
+      .lnb{stroke:#2a78d6;stroke-width:2;fill:none}
+      .lnp{stroke:#c26a00;stroke-width:1.8;fill:none;stroke-dasharray:6 4}
+      .dash{stroke-dasharray:5 4}
+      .tag{fill:#c26a00}
+      .tagt{font-size:10px;font-weight:700;fill:#fff}
+    </style>
+  </defs>
+  <rect width="1200" height="950" fill="#fcfcfb"/>
+  <text x="24" y="34" font-size="20" font-weight="700" fill="#14284b">模試ラボ　アーキテクチャ</text>
+  <text x="24" y="56" class="s">サーバー常駐なし・すべて従量課金（東京リージョン ap-northeast-1）／ AWS CDK で一括構築。点線の枠「予定」は設計済み・未実装の部分</text>
+
+  <!-- AWS クラウド境界 -->
+  <rect x="190" y="78" width="986" height="682" rx="14" fill="#f3f7fd" stroke="#2a78d6" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="206" y="98" font-size="12" font-weight="700" fill="#2a78d6">AWS Cloud</text>
+
+  <!-- 利用者 -->
+  <rect x="24" y="236" width="140" height="104" rx="12" fill="#14284b"/>
+  <text x="94" y="268" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">受験生</text>
+  <text x="94" y="289" text-anchor="middle" font-size="11.5" fill="#dbe8f8">PC・スマホ</text>
+  <text x="94" y="306" text-anchor="middle" font-size="11.5" fill="#dbe8f8">印刷・PDF</text>
+  <text x="94" y="323" text-anchor="middle" font-size="11.5" fill="#dbe8f8">答案の撮影</text>
+
+  <!-- Google -->
+  <rect x="24" y="440" width="140" height="76" rx="12" class="box"/>
+  <text x="94" y="472" text-anchor="middle" class="t">Google</text>
+  <text x="94" y="492" text-anchor="middle" class="s">OAuth ログイン</text>
+
+  <!-- Stripe（予定） -->
+  <rect x="24" y="620" width="140" height="92" rx="12" class="plan"/>
+  <rect x="122" y="612" width="38" height="16" rx="8" class="tag"/><text x="141" y="624" text-anchor="middle" class="tagt">予定</text>
+  <text x="94" y="650" text-anchor="middle" class="t">Stripe</text>
+  <text x="94" y="670" text-anchor="middle" class="s">決済（回数券・月額）</text>
+  <text x="94" y="686" text-anchor="middle" class="s">完了をWebhookで通知</text>
+
+  <!-- CloudFront -->
+  <rect x="220" y="196" width="210" height="184" rx="12" class="box" stroke="#8c4fff" stroke-width="1.6"/>
+  <text x="325" y="222" text-anchor="middle" class="t">CloudFront</text>
+  <text x="325" y="241" text-anchor="middle" class="s">CDN・HTTPS</text>
+  <text x="325" y="258" text-anchor="middle" class="s">SPA 振り分け（CF Function）</text>
+  <text x="325" y="275" text-anchor="middle" class="s">/api/* はキャッシュしない</text>
+  <text x="325" y="292" text-anchor="middle" class="s">AWS 管理ポリシーのみ</text>
+  <line x1="236" y1="304" x2="414" y2="304" stroke="#e1e0d9"/>
+  <text x="325" y="322" text-anchor="middle" class="t" font-size="12.5">WAF（任意）</text>
+  <text x="325" y="340" text-anchor="middle" class="s">定額 Free プラン 月額 $0</text>
+  <text x="325" y="356" text-anchor="middle" class="s">IP レート制限・地域ブロック</text>
+
+  <!-- Cognito -->
+  <rect x="220" y="420" width="210" height="110" rx="12" class="box" stroke="#dd344c" stroke-width="1.6"/>
+  <text x="325" y="448" text-anchor="middle" class="t">Cognito</text>
+  <text x="325" y="468" text-anchor="middle" class="s">User Pool（Lite プラン）</text>
+  <text x="325" y="484" text-anchor="middle" class="s">Hosted UI・メール認証</text>
+  <text x="325" y="500" text-anchor="middle" class="s">Google 連携（任意）</text>
+
+  <!-- S3 サイト -->
+  <rect x="470" y="106" width="200" height="80" rx="12" class="box" stroke="#3f8624" stroke-width="1.6"/>
+  <text x="570" y="136" text-anchor="middle" class="t">S3（サイト）</text>
+  <text x="570" y="156" text-anchor="middle" class="s">React SPA・config.json</text>
+  <text x="570" y="172" text-anchor="middle" class="s">非公開（OAC 経由のみ）</text>
+
+  <!-- API Gateway -->
+  <rect x="470" y="236" width="200" height="104" rx="12" class="box" stroke="#e7157b" stroke-width="1.6"/>
+  <text x="570" y="262" text-anchor="middle" class="t">API Gateway</text>
+  <text x="570" y="282" text-anchor="middle" class="s">HTTP API・JWT オーソライザー</text>
+  <text x="570" y="298" text-anchor="middle" class="s">スロットリング 20req/s</text>
+  <text x="570" y="314" text-anchor="middle" class="s">アクセスログ（IP・UA）</text>
+  <text x="570" y="330" text-anchor="middle" class="s">Stripe 通知の受け口（予定）</text>
+
+  <!-- Secrets Manager -->
+  <rect x="470" y="430" width="200" height="72" rx="12" class="box" stroke="#dd344c" stroke-width="1.2"/>
+  <text x="570" y="458" text-anchor="middle" class="t">Secrets Manager</text>
+  <text x="570" y="478" text-anchor="middle" class="s">Google・Stripe の秘密鍵</text>
+
+  <!-- S3 答案写真（予定） -->
+  <rect x="470" y="600" width="200" height="100" rx="12" class="plan"/>
+  <rect x="628" y="592" width="38" height="16" rx="8" class="tag"/><text x="647" y="604" text-anchor="middle" class="tagt">予定</text>
+  <text x="570" y="628" text-anchor="middle" class="t">S3（答案写真）</text>
+  <text x="570" y="648" text-anchor="middle" class="s">署名付き URL で直接アップ</text>
+  <text x="570" y="664" text-anchor="middle" class="s">非公開・7〜30日で自動削除</text>
+  <text x="570" y="680" text-anchor="middle" class="s">氏名欄は AI に送らない</text>
+
+  <!-- CloudWatch Logs -->
+  <rect x="720" y="106" width="200" height="80" rx="12" class="box" stroke="#e7157b" stroke-width="1.2"/>
+  <text x="820" y="136" text-anchor="middle" class="t">CloudWatch Logs</text>
+  <text x="820" y="156" text-anchor="middle" class="s">Lambda（JSON）・API アクセス</text>
+  <text x="820" y="172" text-anchor="middle" class="s">保管 90日</text>
+
+  <!-- Lambda API -->
+  <rect x="720" y="236" width="200" height="104" rx="12" class="box" stroke="#ed7100" stroke-width="1.6"/>
+  <text x="820" y="262" text-anchor="middle" class="t">Lambda（API）</text>
+  <text x="820" y="282" text-anchor="middle" class="s">Node.js 26・arm64</text>
+  <text x="820" y="298" text-anchor="middle" class="s">採点・偏差値・志望校</text>
+  <text x="820" y="314" text-anchor="middle" class="s">ボット的な提出を集計から除外</text>
+  <text x="820" y="330" text-anchor="middle" class="s">（正解は採点時のみ使用）</text>
+
+  <!-- DynamoDB -->
+  <rect x="720" y="400" width="200" height="150" rx="12" class="box" stroke="#2e27ad" stroke-width="1.6"/>
+  <text x="820" y="426" text-anchor="middle" class="t">DynamoDB</text>
+  <text x="820" y="445" text-anchor="middle" class="s">オンデマンド・1テーブル</text>
+  <text x="734" y="468" class="s">・受験記録（ユーザー別）</text>
+  <text x="734" y="485" class="s">・志望校・目標偏差値</text>
+  <text x="734" y="502" class="s">・模試ごとの集計値（Σx・Σx²・分布）</text>
+  <text x="734" y="519" class="s" fill="#c26a00">・利用権（無料体験・残り回数）予定</text>
+  <text x="734" y="536" class="s" fill="#c26a00">・撮影採点の処理状況　予定</text>
+
+  <!-- SQS + Lambda 撮影採点（予定） -->
+  <rect x="720" y="600" width="200" height="100" rx="12" class="plan"/>
+  <rect x="878" y="592" width="38" height="16" rx="8" class="tag"/><text x="897" y="604" text-anchor="middle" class="tagt">予定</text>
+  <text x="820" y="628" text-anchor="middle" class="t">SQS → Lambda</text>
+  <text x="820" y="648" text-anchor="middle" class="s">撮影採点（非同期）</text>
+  <text x="820" y="664" text-anchor="middle" class="s">マーク46問は画像処理で判定</text>
+  <text x="820" y="680" text-anchor="middle" class="s">記述11枠だけ切り出して AI へ</text>
+
+  <!-- アラーム -->
+  <rect x="960" y="106" width="200" height="80" rx="12" class="box" stroke="#e7157b" stroke-width="1.2"/>
+  <text x="1060" y="134" text-anchor="middle" class="t">アラーム → SNS</text>
+  <text x="1060" y="154" text-anchor="middle" class="s">例外・5xx・4xx急増・エラーログ</text>
+  <text x="1060" y="170" text-anchor="middle" class="s">→ 運営者にメール通知</text>
+
+  <!-- 問題バンク -->
+  <rect x="960" y="236" width="200" height="120" rx="12" class="box" stroke="#3f8624" stroke-width="1.4"/>
+  <text x="1060" y="262" text-anchor="middle" class="t">問題バンク・入試データ</text>
+  <text x="1060" y="282" text-anchor="middle" class="s">Lambda に同梱（DB 不要）</text>
+  <text x="974" y="304" class="s">・模試（問題・正解・解説）</text>
+  <text x="974" y="321" class="s">・入試日程・時間割</text>
+  <text x="974" y="338" class="s">　（公式要項・出典・確認日）</text>
+
+  <!-- Claude（予定） -->
+  <rect x="960" y="600" width="200" height="100" rx="12" class="plan"/>
+  <rect x="1118" y="592" width="38" height="16" rx="8" class="tag"/><text x="1137" y="604" text-anchor="middle" class="tagt">予定</text>
+  <text x="1060" y="628" text-anchor="middle" class="t">Claude</text>
+  <text x="1060" y="646" text-anchor="middle" class="s">Bedrock / Claude Platform on AWS</text>
+  <text x="1060" y="664" text-anchor="middle" class="s">手書き1語の書き起こしのみ</text>
+  <text x="1060" y="680" text-anchor="middle" class="s">綴りは直さない・正解は渡さない</text>
+
+  <!-- 矢印: 受験データ -->
+  <path class="lnb" d="M164 280 H216" marker-end="url(#b)"/>
+  <text x="190" y="272" text-anchor="middle" class="labb">HTTPS</text>
+  <path class="ln" d="M430 222 C452 222 450 146 466 146" marker-end="url(#a)"/>
+  <text x="446" y="176" text-anchor="middle" class="lab">画面</text>
+  <path class="lnb" d="M430 280 H466" marker-end="url(#b)"/>
+  <text x="448" y="272" text-anchor="middle" class="labb">/api/*</text>
+  <path class="lnb" d="M670 280 H716" marker-end="url(#b)"/>
+  <text x="693" y="272" text-anchor="middle" class="labb">検証済み</text>
+  <path class="lnb" d="M820 340 V396" marker-end="url(#b)"/>
+  <text x="828" y="374" class="labb">読み書き</text>
+  <path class="ln" d="M960 296 H924" marker-end="url(#a)"/>
+  <text x="942" y="288" text-anchor="middle" class="lab">同梱</text>
+
+  <!-- ログ・通知 -->
+  <path class="ln dash" d="M820 236 V190" marker-end="url(#a)"/>
+  <path class="ln dash" d="M570 236 V214 H760 V190" marker-end="url(#a)"/>
+  <path class="ln dash" d="M920 146 H956" marker-end="url(#a)"/>
+
+  <!-- 認証 -->
+  <path class="ln" d="M94 340 V392 H300 V416" marker-end="url(#a)"/>
+  <text x="100" y="362" class="lab">ログイン（PKCE）</text>
+  <path class="ln" d="M220 478 H168" marker-end="url(#a)" marker-start="url(#a)"/>
+  <text x="194" y="470" text-anchor="middle" class="lab">連携</text>
+  <path class="ln dash" d="M470 466 H434" marker-end="url(#a)"/>
+  <path class="ln dash" d="M600 340 V404 H380 V416" marker-end="url(#a)"/>
+  <text x="490" y="398" text-anchor="middle" class="lab">トークンの署名を検証</text>
+
+  <!-- 予定の流れ -->
+  <path class="lnp" d="M164 322 H206 V648 H466" marker-end="url(#p)"/>
+  <text x="300" y="640" text-anchor="middle" class="labp">答案写真（署名付き URL）</text>
+  <path class="lnp" d="M164 690 H196 V366 H216" marker-end="url(#p)"/>
+  <text x="214" y="566" class="labp">決済完了 → 利用権を付与</text>
+  <path class="lnp" d="M670 650 H716" marker-end="url(#p)"/>
+  <text x="693" y="642" text-anchor="middle" class="labp">通知</text>
+  <path class="lnp" d="M920 650 H956" marker-end="url(#p)"/>
+  <text x="938" y="642" text-anchor="middle" class="labp">枠画像</text>
+  <path class="lnp" d="M820 600 V554" marker-end="url(#p)"/>
+  <text x="828" y="582" class="labp">読み取り結果 → 確認画面 → 採点</text>
+
+  <!-- 問題制作パイプライン（オフライン） -->
+  <rect x="24" y="776" width="1152" height="86" rx="12" fill="#fff" stroke="#3f8624" stroke-width="1.2"/>
+  <text x="40" y="798" font-size="13" font-weight="700" fill="#2d6a1a">問題制作パイプライン（オフライン・GitHub で管理）　生成と検証を分け、合格した問題だけを問題バンクに入れる</text>
+  <g font-size="11.5">
+    <rect x="40" y="810" width="170" height="40" rx="8" fill="#f1f7ee" stroke="#b9d6ad"/>
+    <text x="125" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">① 入試プロファイル</text>
+    <text x="125" y="843" text-anchor="middle" fill="#52514e">要項・予備校分析・出典</text>
+    <rect x="228" y="810" width="170" height="40" rx="8" class="plan"/>
+    <text x="313" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">② 問題生成（Claude）</text>
+    <text x="313" y="843" text-anchor="middle" fill="#52514e">形式・語数・配点を指定</text>
+    <rect x="416" y="810" width="170" height="40" rx="8" class="plan"/>
+    <text x="501" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">③ 独立検証（AI）</text>
+    <text x="501" y="843" text-anchor="middle" fill="#52514e">正解を伏せて解き直す</text>
+    <rect x="604" y="810" width="170" height="40" rx="8" fill="#f1f7ee" stroke="#b9d6ad"/>
+    <text x="689" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">④ 自動チェック</text>
+    <text x="689" y="843" text-anchor="middle" fill="#52514e">npm run validate</text>
+    <rect x="792" y="810" width="170" height="40" rx="8" fill="#f1f7ee" stroke="#b9d6ad"/>
+    <text x="877" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">⑤ 人手レビュー</text>
+    <text x="877" y="843" text-anchor="middle" fill="#52514e">通しで解いて確認</text>
+    <rect x="980" y="810" width="180" height="40" rx="8" fill="#f1f7ee" stroke="#b9d6ad"/>
+    <text x="1070" y="827" text-anchor="middle" fill="#1b1b19" font-weight="700">⑥ 問題バンクへ</text>
+    <text x="1070" y="843" text-anchor="middle" fill="#52514e">CDK デプロイで同梱</text>
+  </g>
+  <path class="ln" d="M210 830 H224" marker-end="url(#a)"/>
+  <path class="ln" d="M398 830 H412" marker-end="url(#a)"/>
+  <path class="ln" d="M586 830 H600" marker-end="url(#a)"/>
+  <path class="ln" d="M774 830 H788" marker-end="url(#a)"/>
+  <path class="ln" d="M962 830 H976" marker-end="url(#a)"/>
+  <path class="ln" d="M1168 810 V360 H1164" marker-end="url(#a)"/>
+
+  <!-- 凡例・コスト -->
+  <rect x="24" y="876" width="1152" height="58" rx="10" fill="#fff" stroke="#e1e0d9"/>
+  <path class="lnb" d="M40 896 H70" marker-end="url(#b)"/><text x="78" y="900" class="s">受験データ</text>
+  <path class="ln" d="M160 896 H190" marker-end="url(#a)"/><text x="198" y="900" class="s">画面配信・認証</text>
+  <path class="ln dash" d="M300 896 H330" marker-end="url(#a)"/><text x="338" y="900" class="s">設定・ログ</text>
+  <path class="lnp" d="M430 896 H460" marker-end="url(#p)"/><text x="468" y="900" class="s">予定（撮影採点・課金）</text>
+  <rect x="624" y="886" width="40" height="18" rx="5" class="plan"/><text x="672" y="900" class="s">予定のサービス</text>
+  <text x="40" y="922" class="s">費用の目安：現行は小規模なら月数十円〜数百円。撮影採点は AI 利用分（1枚あたり数円程度、モデル次第）が加わる。WAF は定額 Free プランなら $0。</text>
+</svg>

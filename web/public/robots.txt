@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /results/
+Disallow: /admin
+Disallow: /settings
+Disallow: /history
+Disallow: /callback

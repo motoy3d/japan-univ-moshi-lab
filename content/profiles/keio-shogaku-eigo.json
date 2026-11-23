@@ -1,0 +1,188 @@
+{
+  "id": "keio-shogaku-eigo",
+  "name": "慶應義塾大学 商学部 一般選抜 外国語（英語）",
+  "checkedAt": "2026-11-22",
+  "sources": [
+    {
+      "title": "慶應義塾大学 2027年度 一般選抜要項（試験時間・配点）",
+      "url": "https://www.keio.ac.jp/fixed-files/2027_ippan_youkou.pdf"
+    },
+    {
+      "title": "慶應義塾大学 2026年度 一般選抜 試験問題（公開。二次利用は要許諾）",
+      "url": "https://www.keio.ac.jp/ja/admissions/faculty/examinations/general-admissions/question-2026/"
+    },
+    {
+      "title": "河合塾 2026年度 慶應義塾大学 商学部 英語 分析",
+      "url": "https://kaisoku.kawai-juku.ac.jp/nyushi/honshi/26/k15-11c.pdf"
+    },
+    {
+      "title": "河合塾 2025年度 慶應義塾大学 商学部 英語 分析",
+      "url": "https://kaisoku.kawai-juku.ac.jp/nyushi/honshi/25/k15-11c.pdf"
+    }
+  ],
+  "durationMin": 90,
+  "totalPoints": 200,
+  "markQuestions": 46,
+  "writeQuestions": 11,
+  "choicesPerMark": 4,
+  "longPassages": {
+    "sections": [
+      "I",
+      "II",
+      "III"
+    ],
+    "wordsEach": [
+      740,
+      880
+    ],
+    "wordsTotal": [
+      1950,
+      2600
+    ],
+    "note": "長文1題 719〜837語（2025・2026年度の大学公表問題を実測。非公開の大問IIを除く）。2020〜2026年度の長文3題の総語数は 1,985〜2,533 語（河合塾）",
+    "questionTypes": {
+      "logic+vocab": [
+        9,
+        11
+      ],
+      "paraphrase": [
+        9,
+        11
+      ],
+      "detail": [
+        6,
+        8
+      ],
+      "main-idea": [
+        1,
+        2
+      ]
+    },
+    "numbering": "(i) 空所の設問 → (ii) その他の設問の順に通し番号"
+  },
+  "sections": [
+    {
+      "label": "I",
+      "kind": "long",
+      "mark": [
+        9,
+        10
+      ],
+      "write": 0
+    },
+    {
+      "label": "II",
+      "kind": "long",
+      "mark": [
+        9,
+        10
+      ],
+      "write": 0
+    },
+    {
+      "label": "III",
+      "kind": "long",
+      "mark": [
+        9,
+        10
+      ],
+      "write": 0
+    },
+    {
+      "label": "IV",
+      "kind": "grammar",
+      "mark": [
+        7,
+        7
+      ],
+      "write": 0
+    },
+    {
+      "label": "V",
+      "kind": "cloze",
+      "mark": [
+        6,
+        6
+      ],
+      "write": 0,
+      "words": [
+        200,
+        400
+      ]
+    },
+    {
+      "label": "VI",
+      "kind": "short",
+      "mark": [
+        4,
+        4
+      ],
+      "write": 0,
+      "wordsEach": [
+        100,
+        160
+      ]
+    },
+    {
+      "label": "VII",
+      "kind": "verb-form",
+      "mark": [
+        0,
+        0
+      ],
+      "write": 6,
+      "words": [
+        160,
+        230
+      ]
+    },
+    {
+      "label": "VIII",
+      "kind": "noun-form",
+      "mark": [
+        0,
+        0
+      ],
+      "write": 5,
+      "words": [
+        160,
+        230
+      ]
+    }
+  ],
+  "difficulty": {
+    "note": "2026年度の公開問題との比較（scripts/quality_metrics.py）。本番の長文IIは非公開",
+    "academicPassage": {
+      "count": 1,
+      "rareShare": [
+        0.16,
+        0.24
+      ],
+      "fkGrade": [
+        14,
+        19
+      ]
+    },
+    "otherPassages": {
+      "rareShare": [
+        0.11,
+        0.17
+      ],
+      "fkGrade": [
+        9.5,
+        14
+      ]
+    },
+    "partIIWordsPerSection": [
+      300,
+      460
+    ],
+    "clozeChoiceZipf": [
+      3.8,
+      4.5
+    ]
+  },
+  "answerBalance": {
+    "maxShare": 0.4
+  }
+}

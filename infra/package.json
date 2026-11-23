@@ -1,0 +1,18 @@
+{
+  "name": "infra",
+  "private": true,
+  "scripts": {
+    "synth": "cdk synth",
+    "deploy": "cdk deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.278.0",
+    "constructs": "^10.8.1"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.1149.0",
+    "typescript": "^6.0.2",
+    "tsx": "^4.23.15"
+  }
+}

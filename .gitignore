@@ -1,0 +1,13 @@
+node_modules/
+dist/
+cdk.out/
+.local-data.json
+*.tsbuildinfo
+.env*
+!.env.example
+dist-demo/
+.local/
+__pycache__/
+test-results/
+playwright-report/
+print/

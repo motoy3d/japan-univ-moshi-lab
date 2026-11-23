@@ -1,0 +1,142 @@
+{
+  "id": "keio-shogaku-eigo-p04",
+  "kind": "practice",
+  "practiceType": "短文の内容推測",
+  "profile": "keio-shogaku-eigo",
+  "university": "慶應義塾大学",
+  "faculty": "商学部",
+  "subject": "英語",
+  "title": "大問演習4 短文の内容推測",
+  "edition": "大問演習",
+  "durationMin": 15,
+  "totalPoints": 16,
+  "coverNotes": [
+    "解答は、マークの設問は番号を、記述の設問は英単語を解答欄に記入すること。",
+    "問題冊子の余白は下書きに用いてよい。"
+  ],
+  "disclaimer": "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試（第1回・第2回…）とは別の問題で、模試に再び出ることはありません。",
+  "sections": [
+    {
+      "label": "VI",
+      "instruction": "次の英文（1）〜（4）を読み、それぞれの設問について最も適切なものを選択肢 1〜4 から選び、その番号を解答用紙A（マークシート）の解答欄（1）〜（4）にマークしなさい。",
+      "groups": [
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(1)",
+            "paragraphs": [
+              "A cinema once offered popcorn in two sizes: a small box for three dollars and a large one for seven. Most customers chose the small box. When the cinema added a medium size priced at six and a half dollars, sales of the large box rose sharply, even though few people bought the medium. Economists call this the decoy effect. The medium option was not designed to be chosen; its purpose was to make the large box look like a bargain by comparison. Similar techniques appear in magazine subscriptions, restaurant menus, and software plans, where one option exists mainly to steer customers toward another."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m1",
+              "kind": "mark",
+              "no": 1,
+              "category": "inference",
+              "prompt": "Which one of the following can be inferred from the passage?",
+              "choices": [
+                "Customers always choose the most expensive option available.",
+                "An option can influence people's choices even if few of them select it.",
+                "The medium size became the cinema's most profitable product.",
+                "The decoy effect is found only in the sale of food."
+              ],
+              "points": 4,
+              "answer": 2,
+              "explanation": "ほとんど売れない中サイズを加えただけで大サイズが売れた。選ばれない選択肢でも選択に影響する、と推測できる 2。1 は「多くは小を選んだ」と矛盾、3 は「中はほとんど売れない」と矛盾、4 は雑誌・ソフトなどの例と矛盾。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(2)",
+            "paragraphs": [
+              "When a honeybee finds a rich source of food, it returns to the hive and performs a movement known as the waggle dance. The direction of the dance on the vertical surface of the comb indicates the direction of the food relative to the sun, and the length of the waggle portion indicates the distance. Other bees follow the dancer closely and then fly out to search. Remarkably, the information is not perfectly precise: bees that follow a dance often land some distance from the target and must search the area. Some researchers believe this imprecision may be useful, since it leads bees to discover nearby flowers that the original forager missed."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m2",
+              "kind": "mark",
+              "no": 2,
+              "category": "inference",
+              "prompt": "Which one of the following statements is consistent with the content of the passage?",
+              "choices": [
+                "Bees that follow a dance always land exactly on the food source.",
+                "The waggle dance is performed outside the hive.",
+                "The waggle dance communicates both the direction and the distance of food.",
+                "Researchers agree that the imprecision of the dance is harmful to bees."
+              ],
+              "points": 4,
+              "answer": 3,
+              "explanation": "ダンスの向きが方向を、尻振りの長さが距離を示すので 3。1 は「目標から離れた所に降りることが多い」と矛盾、2 は「巣に戻って踊る」と矛盾、4 は「役に立つかもしれない」と矛盾。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(3)",
+            "paragraphs": [
+              "Many students now take lecture notes on laptops, which allow them to record far more of what is said than they could by hand. Yet more is not necessarily better. Students who type tend to copy the lecturer's words almost exactly, while those who write by hand are forced to summarize, because they cannot keep up otherwise. Summarizing requires deciding what matters, and that decision is itself a form of learning. The laptop is not the problem; the habit of transcription is. Students who type could gain the same benefit if they resisted the temptation to record everything and instead wrote down only what they had understood."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m3",
+              "kind": "mark",
+              "no": 3,
+              "category": "inference",
+              "prompt": "With which one of the following statements would the author most likely agree?",
+              "choices": [
+                "Laptops should be banned from lecture halls.",
+                "Students should record lectures as completely as possible.",
+                "Notes written by hand are valuable mainly because they are easier to read later.",
+                "Students learn more when they process information than when they copy it word for word."
+              ],
+              "points": 4,
+              "answer": 4,
+              "explanation": "要約には何が大事かの判断が必要で、それ自体が学習になる。問題はパソコンではなく書き写す習慣、という主張。4 に同意するはず。1 は「パソコンが問題ではない」と矛盾、2 は逆、3 は本文にない。"
+            }
+          ]
+        },
+        {
+          "instruction": "",
+          "answerLine": true,
+          "passage": {
+            "label": "(4)",
+            "paragraphs": [
+              "Volunteer tourism, in which travelers pay to spend a few weeks helping at schools or building projects abroad, has grown into a large industry. Its appeal is easy to understand: participants see a new country while doing something worthwhile. But short visits by untrained volunteers can do more harm than good. Children may become attached to a series of adults who then disappear, and construction work carried out by inexperienced visitors often has to be redone by local workers. Those who want to help would often achieve more by donating the money they would spend on travel to organizations that employ local staff."
+            ],
+            "source": "[Original passage written for this mock exam]"
+          },
+          "questions": [
+            {
+              "id": "m4",
+              "kind": "mark",
+              "no": 4,
+              "category": "inference",
+              "prompt": "Which one of the following statements best captures the main argument of the passage?",
+              "choices": [
+                "People who want to help may do more by supporting local organizations than by volunteering briefly abroad.",
+                "Volunteer tourism benefits local communities in every case.",
+                "Travelers should never visit schools in other countries.",
+                "Construction projects abroad should be carried out only by volunteers."
+              ],
+              "points": 4,
+              "answer": 1,
+              "explanation": "短期の未経験の参加者はかえって害になることがあり、旅費を現地の人を雇う団体に寄付するほうが役立つ、という主張。1 が要旨。2 は逆、3 は言い過ぎ、4 は本文と逆。"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
