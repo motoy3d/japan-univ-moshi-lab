@@ -29,11 +29,12 @@ export function LocalResultPage() {
   return <Result review={local.review} history={history} profile={{}} local />;
 }
 
-export function answerText(q: QuestionWithKey, groupChoices: string[] | undefined, v: unknown) {
+/** 解答の表示。start は語群の番号の始まり（世界史の語群は 11 から） */
+export function answerText(q: QuestionWithKey, groupChoices: string[] | undefined, v: unknown, start = 1) {
   if (v === undefined || v === null || v === "") return "（無解答）";
   if (q.kind === "write") return String(v);
   const c = (q.choices ?? groupChoices)?.[Number(v) - 1];
-  return c ? `${v}. ${c}` : String(v);
+  return c ? `${start + Number(v) - 1}. ${c}` : String(v);
 }
 
 function Result({ review, history, profile, local }: { review: AttemptReview; history: AttemptSummary[]; profile: Profile; local?: boolean }) {
@@ -41,6 +42,18 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
   const [onlyWrong, setOnlyWrong] = useState(false);
   const [catFilter, setCatFilter] = useState<string | null>(null);
   const resultById = new Map(a.results.map((x) => [x.id, x]));
+  // 論述（自己採点）: 模範解答と観点を見て、利用者が自分で点を付ける（この端末に保存。サーバーの得点・偏差値には入れない）
+  const selfQs = exam.sections.flatMap((s) => s.groups.flatMap((g) => g.questions)).filter((q) => q.selfGrade);
+  const selfMax = selfQs.reduce((t, q) => t + q.points, 0);
+  const selfKey = `moshi.self.${a.attemptId}`;
+  const [selfPts, setSelfPts] = useState<Record<string, number>>(() => store.get<Record<string, number>>(selfKey) ?? {});
+  const setSelf = (id: string, v: number) =>
+    setSelfPts((p) => {
+      const n = { ...p, [id]: v };
+      store.set(selfKey, n);
+      return n;
+    });
+  const selfTotal = selfQs.reduce((t, q) => t + (selfPts[q.id] ?? 0), 0);
   const loggedIn = !!currentUser();
   useEffect(() => track("result_view", { exam_id: exam.id, kind: exam.kind ?? "mock" }), [exam.id, exam.kind]);
   const pct = a.score / a.maxScore;
@@ -169,6 +182,18 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
         </>
       )}
 
+      {selfQs.length > 0 && (
+        <section className="card" style={{ marginTop: 16 }} aria-label="論述の自己採点">
+          <b>論述は自己採点です</b>
+          <p className="small" style={{ margin: "4px 0" }}>
+            論述 {selfQs.length}問（{selfMax}点）は自動採点の得点・偏差値に含めていません。下の解説にある模範解答と採点の観点を見て、各問に点を付けてください（この端末に保存されます）。
+          </p>
+          <p style={{ margin: 0 }}>
+            自動採点 {a.score} / {a.maxScore}点 ＋ 論述 {selfTotal} / {selfMax}点 ＝ <b>{a.score + selfTotal}</b> / {a.maxScore + selfMax}点（参考）
+          </p>
+        </section>
+      )}
+
       <h2 id="review">解答・解説</h2>
       <div className="row small no-print" style={{ marginBottom: 8 }}>
         <label className="row"><input type="checkbox" checked={onlyWrong} onChange={(e) => setOnlyWrong(e.target.checked)} /> 間違えた問題だけ</label>
@@ -187,17 +212,31 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
             <h3 style={{ marginTop: 0, fontFamily: "var(--font-en)" }}>{s.label}</h3>
             {shown.map(({ q, g }) => {
               const res = resultById.get(q.id);
-              const correctText = q.kind === "write" ? (q.answer as string[]).join(" / ") : answerText(q, g.choices, q.answer);
+              const correctText = q.kind === "write" ? (q.answer as string[]).join(" / ") : answerText(q, g.choices, q.answer, g.choiceStart);
               return (
                 <div className="review-q" key={q.id}>
                   <div>
-                    <span className={`mark ${res?.correct ? "o" : "x"}`}>{res?.correct ? "○" : "×"}</span>
+                    {q.selfGrade ? (
+                      <span className="mark">自</span>
+                    ) : (
+                      <span className={`mark ${res?.correct ? "o" : "x"}`}>{res?.correct ? "○" : "×"}</span>
+                    )}
                     <b>{q.kind === "write" ? "記述" : ""}({questionLabel(q)})</b>
                     <span className="badge" style={{ marginLeft: 8 }}>{q.points}点</span>
                   </div>
                   {q.prompt && <div className="q-prompt" style={{ fontSize: 15, margin: "4px 0" }}>{q.prompt}</div>}
-                  <div className="ans">あなたの解答: {answerText(q, g.choices, a.answers[q.id])}</div>
-                  <div className="ans">正解: <b>{correctText}</b></div>
+                  <div className="ans">あなたの解答: {answerText(q, g.choices, a.answers[q.id], g.choiceStart)}</div>
+                  {q.selfGrade ? (
+                    <label className="ans row no-print">
+                      自己採点
+                      <select value={selfPts[q.id] ?? 0} onChange={(e) => setSelf(q.id, Number(e.target.value))} aria-label={`(${questionLabel(q)}) の自己採点`}>
+                        {Array.from({ length: q.points + 1 }, (_, i) => <option key={i} value={i}>{i}点</option>)}
+                      </select>
+                      / {q.points}点
+                    </label>
+                  ) : (
+                    <div className="ans">正解: <b>{correctText}</b></div>
+                  )}
                   <div className="exp">{q.explanation}</div>
                   <QuestionFeedback examId={exam.id} questionId={q.id} attemptRef={a.attemptId} />
                 </div>

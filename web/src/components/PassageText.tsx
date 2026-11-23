@@ -34,7 +34,7 @@ export function renderMarkup(
             opts.underline(no, m[3] ?? "")
           ) : (
             <>
-              <span className="uline-no">({no})</span>
+              <span className="uline-no">({m[2]})</span>
               <span className="uline">{m[3]}</span>
             </>
           )}

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
 import { useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
-import { allQuestions, questionLabel } from "../../../shared/scoring";
+import { allQuestions, choiceNumber, markColumns, questionLabel } from "../../../shared/scoring";
 import type { Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
 type Paper = "A4" | "B5";
@@ -90,9 +90,10 @@ export function PrintPage() {
         {parts.has("booklet") && (
           <div className="sheet"><Booklet exam={e} /></div>
         )}
-        {parts.has("mark") && (
-          <div className="sheet landscape"><MarkSheet exam={e} /></div>
-        )}
+        {parts.has("mark") &&
+          Array.from({ length: markSheetPages(e) }, (_, pg) => (
+            <div className="sheet landscape" key={pg}><MarkSheet exam={e} page={pg} /></div>
+          ))}
         {parts.has("write") && (
           <div className="sheet"><WriteSheet exam={e} /></div>
         )}
@@ -129,6 +130,14 @@ function Cover({ exam }: { exam: Exam }) {
 
 /* ---------------- 問題本文 ---------------- */
 function Booklet({ exam }: { exam: Exam }) {
+  // 2桁の語群番号で答える空欄は、本文に (1)(2) のように解答欄の組を示す
+  const pairs = new Map(markColumns(exam).filter((c) => c.cols.length === 2).map((c) => [c.q.no, c.cols]));
+  const blank = pairs.size
+    ? (no: number) => {
+        const c = pairs.get(no);
+        return <span className="b-blank">{c ? <>({c[0]})&thinsp;┆&thinsp;({c[1]})</> : `( ${no} )`}</span>;
+      }
+    : undefined;
   return (
     <div className="booklet">
       {exam.sections.map((s) => (
@@ -140,7 +149,7 @@ function Booklet({ exam }: { exam: Exam }) {
           </div>
           {s.example && <div className="b-example">{s.example}</div>}
           {s.passage && s.groups.map((g, gi) => g.wordBox && <WordBox key={gi} words={g.wordBox} />)}
-          {s.passage && <BookletPassage passage={s.passage} />}
+          {s.passage && <BookletPassage passage={s.passage} blank={blank} />}
           {s.groups.map((g, gi) => (
             <BookletGroup key={gi} group={g} wordBoxShown={!!s.passage} />
           ))}
@@ -151,7 +160,7 @@ function Booklet({ exam }: { exam: Exam }) {
   );
 }
 
-function BookletPassage({ passage }: { passage: Passage }) {
+function BookletPassage({ passage, blank }: { passage: Passage; blank?: (no: number) => ReactNode }) {
   return (
     <>
       <div className={`b-passage ${passage.dialogue ? "dialogue" : ""}`}>
@@ -161,7 +170,7 @@ function BookletPassage({ passage }: { passage: Passage }) {
           return (
             <p key={i}>
               {i === 0 && passage.label && <span className="b-plabel">{passage.label}</span>}
-              {sp ? <><span style={{ display: "inline-block", width: "4.2em" }}>{sp[0]}:</span>{renderMarkup(sp[1])}</> : renderMarkup(para)}
+              {sp ? <><span style={{ display: "inline-block", width: "4.2em" }}>{sp[0]}:</span>{renderMarkup(sp[1], { blank })}</> : renderMarkup(para, { blank })}
             </p>
           );
         })}
@@ -196,12 +205,22 @@ function BookletGroup({ group, wordBoxShown }: { group: QuestionGroup; wordBoxSh
       {group.passage && <BookletPassage passage={group.passage} />}
       {group.wordBox && !wordBoxShown && <WordBox words={group.wordBox} />}
       {group.choices && (
-        <div className="b-shared">
+        // 語群が多いとき（世界史の語群など）は4列に並べる
+        <div className="b-shared" style={group.choices.length > 8 ? { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", columnGap: "3mm", fontSize: "10pt", lineHeight: 1.45 } : undefined}>
           {group.choices.map((c, i) => (
-            <div className="c" key={i}><span>{i + 1}.</span><span>{c}</span></div>
+            <div className="c" key={i} style={group.choiceStart ? { gridTemplateColumns: "7mm 1fr" } : undefined}>
+              <span>{choiceNumber(group, i + 1)}{group.choiceStart ? "" : "."}</span><span>{c}</span>
+            </div>
           ))}
         </div>
       )}
+      {group.questions
+        .filter((q) => q.kind === "write" && q.prompt)
+        .map((q) => (
+          <div className="b-q no-num" key={q.id}>
+            <div><div className="prompt jp">{questionLabel(q)}　{q.prompt}</div></div>
+          </div>
+        ))}
       {!group.choices &&
         group.questions
           .filter((q) => q.kind === "mark")
@@ -243,10 +262,20 @@ function BookletQuestion({ q, answerLine, hideNo }: { q: Question; answerLine?: 
    1ブロック35列 × 2ブロック。 */
 const COLS_PER_BLOCK = 35;
 const BLOCKS = 2;
+const COLS_PER_PAGE = COLS_PER_BLOCK * BLOCKS;
+
+/** マーク解答用紙の枚数（2桁の語群番号で答える模試は解答欄が多く、70列を超えると2枚目に続ける） */
+export function markSheetPages(exam: Exam): number {
+  const cols = markColumns(exam).reduce((n, c) => n + c.cols.length, 0);
+  return Math.max(1, Math.ceil(cols / COLS_PER_PAGE));
+}
 const DIGITS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-"];
 
-export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number, number> }) {
-  const used = allQuestions(exam).filter((q) => q.kind === "mark").length;
+export function MarkSheet({ exam, filled, page = 0 }: { exam: Exam; filled?: Record<number, number>; page?: number }) {
+  // 解答欄（列）の数。2桁の語群番号で答える空欄は1問で2列使う
+  const used = markColumns(exam).reduce((n, c) => n + c.cols.length, 0);
+  const pages = markSheetPages(exam);
+  const offset = page * COLS_PER_PAGE;
   return (
     <div className="ms">
       <div className="ms-top">
@@ -255,7 +284,7 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
           <div className="b" />
         </div>
         <div className="ms-box ms-mid">
-          <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試　英語</span>
+          <span>{exam.edition}　{exam.university} {exam.faculty} 予想模試　{exam.subject}{pages > 1 ? `（${page + 1}/${pages}枚目）` : ""}</span>
           <b>解答用紙A</b>
         </div>
         <div className="ms-notes">
@@ -294,7 +323,7 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
               <div className="h">解　　　　答　　　　欄</div>
               <div className="ms-qcols">
                 {Array.from({ length: COLS_PER_BLOCK }, (_, c) => {
-                  const no = b * COLS_PER_BLOCK + c + 1;
+                  const no = offset + b * COLS_PER_BLOCK + c + 1;
                   return (
                     <div className={`ms-qcol ${no > used ? "unused" : ""}`} key={no}>
                       <span className="qno">({no})</span>
@@ -310,7 +339,7 @@ export function MarkSheet({ exam, filled }: { exam: Exam; filled?: Record<number
             </div>
           ))}
           <div className="ms-foot">
-            解答番号（{used + 1}）以降の欄は使用しません。
+            {page < pages - 1 ? `解答番号（${offset + COLS_PER_PAGE + 1}）以降は${page + 2}枚目に続きます。` : `解答番号（${used + 1}）以降の欄は使用しません。`}
             {allQuestions(exam).some((q) => q.kind === "write") && "記述の設問は解答用紙Bに記入すること。"}
           </div>
         </div>
@@ -325,7 +354,7 @@ function WriteSheet({ exam }: { exam: Exam }) {
   return (
     <div className="ws">
       <div className="ws-head">
-        <div className="ws-title">英語　解答用紙B</div>
+        <div className="ws-title">{exam.subject}　解答用紙B</div>
         <div className="ws-id">
           <span>受験番号</span><div />
           <span>氏名</span><div className="name" />
@@ -341,7 +370,7 @@ function WriteSheet({ exam }: { exam: Exam }) {
                 {qs.map((q) => (
                   <tr key={q.id}>
                     <td className="no">({questionLabel(q)})</td>
-                    <td className="ans" />
+                    <td className="ans">{q.maxChars && <span className="small" style={{ opacity: 0.6 }}>（{q.maxChars}字以内）</span>}</td>
                     <td className="score" />
                   </tr>
                 ))}

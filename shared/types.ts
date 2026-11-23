@@ -10,7 +10,16 @@ export type Category =
   | "inference" // 短文の内容推測
   | "grammar" // 文法・語法
   | "verb-form" // 語形変化：動詞（記述）
-  | "noun-form"; // 派生語：名詞形（記述）
+  | "noun-form" // 派生語：名詞形（記述）
+  // 世界史（地域・時代で分ける。年号などの数値と論述は別に集計する）
+  | "wh-mediterranean" // 古代・中世の地中海世界
+  | "wh-europe" // ヨーロッパ・南北アメリカ（中世〜近代）
+  | "wh-east-asia" // 東アジア
+  | "wh-south-asia" // 南アジア・東南アジア・インド洋
+  | "wh-islam" // 西アジア・イスラーム世界
+  | "wh-contemporary" // 現代（第一次世界大戦以降）
+  | "wh-year" // 年代・数値
+  | "wh-essay"; // 論述（自己採点）
 
 export const CATEGORY_LABELS: Record<Category, string> = {
   logic: "空所補充（文脈・論理）",
@@ -22,6 +31,14 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   grammar: "文法・語法",
   "verb-form": "語形変化：動詞（記述）",
   "noun-form": "派生語：名詞形（記述）",
+  "wh-mediterranean": "古代・中世の地中海世界",
+  "wh-europe": "ヨーロッパ・南北アメリカ",
+  "wh-east-asia": "東アジア",
+  "wh-south-asia": "南アジア・東南アジア・インド洋",
+  "wh-islam": "西アジア・イスラーム世界",
+  "wh-contemporary": "現代（第一次世界大戦以降）",
+  "wh-year": "年代・数値",
+  "wh-essay": "論述（自己採点）",
 };
 
 /** マーク式（選択）か記述式か */
@@ -41,6 +58,10 @@ export interface Question {
   /** 選択肢（グループ共通選択肢を使う場合は省略） */
   choices?: string[];
   points: number;
+  /** 論述など、自動採点しない設問。得点には含めず、結果画面で模範解答と観点を示して自己採点してもらう */
+  selfGrade?: boolean;
+  /** 字数の上限（論述。表示用） */
+  maxChars?: number;
 }
 
 /** 正解・解説（受験前のクライアントには送らない） */
@@ -57,6 +78,12 @@ export interface QuestionGroup<Q = Question> {
   instruction: string;
   /** グループ共通の選択肢 */
   choices?: string[];
+  /**
+   * 共通の選択肢（語群）の番号の始まり（例: 11）。指定すると選択肢 i（1始まり）を choiceStart + i - 1 と表示し、
+   * マークシートでは2桁の番号を2つの解答欄（十の位・一の位）にマークする（慶應商 世界史の形式）。
+   * 解答の値・正解は、これまでどおり選択肢の位置（1始まり）で持つ
+   */
+  choiceStart?: number;
   /** 語群（記述の語形変化で使う語の一覧） */
   wordBox?: string[];
   /**

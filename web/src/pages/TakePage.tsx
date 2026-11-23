@@ -7,7 +7,7 @@ import { bumpAttemptCount, clientId, saveLocalResult } from "../guest";
 import { getConfig } from "../config";
 import { store, useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
-import { allQuestions, questionLabel } from "../../../shared/scoring";
+import { allQuestions, choiceIndexFromNumber, choiceNumber, questionLabel, usesTwoDigitMarks } from "../../../shared/scoring";
 import type { Answers, Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
 interface Draft {
@@ -129,7 +129,14 @@ function WebExam({ exam }: { exam: Exam }) {
             <li>試験時間は <b>{exam.durationMin}分</b> です。開始するとタイマーが動き出します。</li>
             <li>解答は自動で端末に一時保存されます。途中でページを閉じても、同じ端末なら続きから再開できます。</li>
             <li>本文中の空所をタップすると、その設問に移動します。</li>
-            <li>大問 VII・VIII は記述式です（本番では記述解答用紙に記入）。綴りまで正確に入力してください。</li>
+            {usesTwoDigitMarks(exam) ? (
+              <>
+                <li>空欄は、各大問の語群から語句を選びます（本番では語群の2桁の番号をマーク）。問2以降は語句を入力してください。</li>
+                <li>字数指定のある論述は自動採点されません。提出後に模範解答と採点の観点を見て、自分で点を付けます。</li>
+              </>
+            ) : (
+              <li>大問 VII・VIII は記述式です（本番では記述解答用紙に記入）。綴りまで正確に入力してください。</li>
+            )}
             <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。</li>
           </ol>
           <div className="row" style={{ marginTop: 16 }}>
@@ -177,7 +184,7 @@ function WebExam({ exam }: { exam: Exam }) {
         {hasPassage && (
           <div className={`pane ${pane === "passage" ? "" : "hidden-mobile"}`}>
             <SectionHead section={section} />
-            <PassageView passage={section.passage!} answers={draft.answers} onBlank={jumpTo} qs={section.groups.flatMap((g) => g.questions)} />
+            <PassageView passage={section.passage!} answers={draft.answers} onBlank={jumpTo} qs={section.groups.flatMap((g) => g.questions)} groups={section.groups} />
             <p className="small muted no-print" style={{ marginTop: 24 }}>
               <button className="btn" onClick={() => setPane("questions")} style={{ minHeight: 40 }}>設問へ →</button>
             </p>
@@ -238,7 +245,10 @@ function SectionHead({ section }: { section: Exam["sections"][number] }) {
   );
 }
 
-function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; answers: Answers; onBlank: (q: Question) => void; qs: Question[] }) {
+function PassageView({ passage: p, answers, onBlank, qs, groups }: { passage: Passage; answers: Answers; onBlank: (q: Question) => void; qs: Question[]; groups?: QuestionGroup[] }) {
+  // 語群の番号が 11 から始まる形式（世界史）では、空欄に選んだ語群の番号を表示する
+  const groupOf = new Map((groups ?? []).flatMap((g) => g.questions.map((q) => [q.id, g] as const)));
+  const shown = (q: Question, v: Answers[string]) => (q.kind === "mark" && groupOf.get(q.id)?.choiceStart ? String(choiceNumber(groupOf.get(q.id), Number(v))) : v);
   const byNo = new Map(qs.filter((q) => q.kind === "mark").map((q) => [q.no, q]));
   const byLabel = new Map(qs.filter((q) => q.kind === "write").map((q) => [q.label, q]));
   const blankBtn = (q: Question | undefined, text: string) => {
@@ -246,12 +256,15 @@ function PassageView({ passage: p, answers, onBlank, qs }: { passage: Passage; a
     return (
       <button type="button" className={`blank ${v ? "filled" : ""} ${q?.kind === "write" ? "w" : ""}`} onClick={() => q && onBlank(q)} aria-label={`空所${text}の設問へ`}>
         <span className="n">({text})</span>
-        {v ? <span className="v">{v}</span> : null}
+        {v && q ? <span className="v">{shown(q, v)}</span> : null}
       </button>
     );
   };
   const opts = {
-    blank: (no: number) => blankBtn(byNo.get(no), String(no)),
+    blank: (no: number) => {
+      const q = byNo.get(no);
+      return blankBtn(q, q ? questionLabel(q) : String(no));
+    },
     write: (label: string) => blankBtn(byLabel.get(label), label),
   };
   return (
@@ -304,7 +317,7 @@ function GroupView({
       )}
       {group.choices && (
         <div className="shared-choices">
-          <ol>{group.choices.map((c, i) => <li key={i}>{c}</li>)}</ol>
+          <ol start={group.choiceStart ?? 1}>{group.choices.map((c, i) => <li key={i}>{c}</li>)}</ol>
         </div>
       )}
       {group.questions.map((q) => (
@@ -322,7 +335,7 @@ function GroupView({
               autoCapitalize="off"
               autoCorrect="off"
               spellCheck={false}
-              placeholder="1語で記入"
+              placeholder={q.maxChars ? `${q.maxChars}字以内で記述（自己採点）` : /[぀-ヿ一-龯]/.test(q.prompt ?? "") ? "語句を記入" : "1語で記入"}
               disabled={disabled}
               aria-label={`記述(${questionLabel(q)})`}
             />
@@ -335,6 +348,17 @@ function GroupView({
                 </button>
               ))}
             </div>
+          ) : group.choiceStart ? (
+            // 語群が多い（50語以上）ので、番号のボタンではなく一覧から選ぶ
+            <select
+              value={(answers[q.id] as number | null) ?? ""}
+              onChange={(e) => (e.target.value ? onPick(q.id, Number(e.target.value)) : onText(q.id, ""))}
+              disabled={disabled}
+              aria-label={`空欄(${questionLabel(q)})の語句`}
+            >
+              <option value="">未選択</option>
+              {group.choices!.map((c, i) => <option key={i} value={i + 1}>{choiceNumber(group, i + 1)}　{c}</option>)}
+            </select>
           ) : (
             <div className="num-row" style={{ ["--n" as string]: group.choices!.length }}>
               {group.choices!.map((_, i) => (
@@ -359,11 +383,11 @@ function PaperEntry({ exam }: { exam: Exam }) {
   // 撮影採点で読み取った答えのうち、AI が自信のないもの（確認を促すため色を付ける）
   const [low] = useState<string[]>(() => store.get<string[]>(`moshi.photo.low.${exam.id}`) ?? []);
   const fromPhoto = store.get<boolean>(`moshi.photo.filled.${exam.id}`);
-  const canPhoto = !!getConfig().photoGrading;
+  const canPhoto = !!getConfig().photoGrading && !usesTwoDigitMarks(exam);
   useEffect(() => store.set(draftKey, { answers, startedAt: 0, section: 0 }), [answers, draftKey]);
 
   const rows = exam.sections.flatMap((s) =>
-    s.groups.flatMap((g) => g.questions.map((q) => ({ q, s: s.label, n: (q.choices ?? g.choices ?? []).length }))),
+    s.groups.flatMap((g) => g.questions.map((q) => ({ q, g, s: s.label, n: (q.choices ?? g.choices ?? []).length }))),
   );
   const marks = rows.filter((r) => r.q.kind === "mark");
   const writes = rows.filter((r) => r.q.kind === "write");
@@ -398,10 +422,18 @@ function PaperEntry({ exam }: { exam: Exam }) {
         </label>
         <h2>マーク（1〜{marks.length}）</h2>
         <div className="sheet-grid">
-          {marks.map(({ q, n }) => (
+          {marks.map(({ q, g, n }) => (
             <div className={`sheet-row ${low.includes(q.id) ? "low" : ""}`} key={q.id}>
-              <span className="no">{q.no}</span>
-              {Array.from({ length: n }, (_, i) => (
+              <span className="no" style={g.choiceStart ? { width: "auto", minWidth: 64 } : undefined}>{g.choiceStart ? `(${questionLabel(q)})` : q.no}</span>
+              {g.choiceStart ? (
+                <CodeInput
+                  value={(answers[q.id] as number | null) ?? null}
+                  toNumber={(i) => choiceNumber(g, i)}
+                  toIndex={(n) => choiceIndexFromNumber(g, n)}
+                  onChange={(i) => setAnswers((a) => ({ ...a, [q.id]: i }))}
+                  label={`空欄(${questionLabel(q)})の語群の番号`}
+                />
+              ) : Array.from({ length: n }, (_, i) => (
                 <button key={i} className={`num-btn ${answers[q.id] === i + 1 ? "selected" : ""}`} onClick={() => pick(q.id, i + 1)} aria-label={`${q.no}番に${i + 1}`}>
                   {i + 1}
                 </button>
@@ -431,5 +463,35 @@ function PaperEntry({ exam }: { exam: Exam }) {
         </div>
       </div>
     </>
+  );
+}
+
+/** 語群の番号（2桁）を入力する欄。番号として正しいときだけ解答（選択肢の位置）を更新する */
+function CodeInput({ value, toNumber, toIndex, onChange, label }: {
+  value: number | null;
+  toNumber: (index: number) => number;
+  toIndex: (num: number) => number | null;
+  onChange: (index: number | null) => void;
+  label: string;
+}) {
+  const [text, setText] = useState(value ? String(toNumber(value)) : "");
+  const valid = text === "" || (/^\d{2}$/.test(text) && toIndex(Number(text)) !== null);
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      maxLength={2}
+      className="write-input"
+      style={{ width: 72, textAlign: "center" }}
+      value={text}
+      aria-label={label}
+      aria-invalid={!valid}
+      placeholder="番号"
+      onChange={(e) => {
+        const t = e.target.value.replace(/[^0-9０-９]/g, "").normalize("NFKC").slice(0, 2);
+        setText(t);
+        onChange(/^\d{2}$/.test(t) ? toIndex(Number(t)) : null);
+      }}
+    />
   );
 }

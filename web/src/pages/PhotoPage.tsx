@@ -4,7 +4,7 @@ import { api } from "../api";
 import { track } from "../analytics";
 import { getConfig } from "../config";
 import { store, useAsync } from "../hooks";
-import { allQuestions } from "../../../shared/scoring";
+import { allQuestions, usesTwoDigitMarks } from "../../../shared/scoring";
 import type { Answers, Exam, PhotoJob } from "../../../shared/types";
 
 /** 端末で長辺 maxSide px の JPEG に縮小し、Base64（data: なし）で返す */
@@ -30,7 +30,8 @@ export function PhotoPage() {
   const exam = useAsync(() => api.exam(id), [id]);
   if (exam.error) return <p className="error">{exam.error}</p>;
   if (!exam.data) return <p className="muted">読み込み中…</p>;
-  if (!getConfig().photoGrading) return <p className="notice">この環境では撮影採点を使えません。<Link to={`/exams/${id}/take?mode=paper`}>答えを手で入力する</Link></p>;
+  if (!getConfig().photoGrading || usesTwoDigitMarks(exam.data))
+    return <p className="notice">{getConfig().photoGrading ? "この模試は撮影採点に対応していません。" : "この環境では撮影採点を使えません。"}<Link to={`/exams/${id}/take?mode=paper`}>答えを手で入力する</Link></p>;
   return <PhotoForm exam={exam.data} />;
 }
 

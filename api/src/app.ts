@@ -3,7 +3,7 @@ import { findTarget } from "../../content/admissions";
 
 /** 志望校の登録上限 */
 const MAX_TARGETS = 3;
-import { allQuestions, scoreExam, stripAnswers } from "../../shared/scoring";
+import { allQuestions, scoreExam, stripAnswers, usesTwoDigitMarks } from "../../shared/scoring";
 import { bucketOf, deviationScore, toExamStats, topPercent } from "../../shared/stats";
 import {
   FEEDBACK_REASONS,
@@ -257,6 +257,8 @@ export async function route(
     const req = parse<PhotoJobRequest>(rawBody);
     const exam = req && findExam(req.examId);
     if (!req || !exam) return err(400, "リクエストが不正です");
+    // 2桁の語群番号で答える形式（世界史）は、読み取りがまだ対応していない
+    if (usesTwoDigitMarks(exam)) return err(400, "この模試は撮影採点に対応していません。答えを入力して採点してください");
     const images = Array.isArray(req.images) ? req.images : [];
     if (images.length < 1 || images.length > 2 || images.some((b) => typeof b !== "string" || b.length > PHOTO_MAX_B64 || !/^[A-Za-z0-9+/=]+$/.test(b)))
       return err(400, "画像は1〜2枚の JPEG で送ってください");

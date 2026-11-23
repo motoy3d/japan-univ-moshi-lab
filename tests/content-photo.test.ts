@@ -2,13 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import type Anthropic from "@anthropic-ai/sdk";
 import { EXAMS } from "../content/index";
-import { allQuestions, scoreExam, stripAnswers } from "../shared/scoring";
+import { allQuestions, autoMaxScore, scoreExam, stripAnswers } from "../shared/scoring";
 import { readAnswerSheets } from "../api/src/photo-reader";
 
 test("すべての模試・演習: 正解どおりに答えると満点、受験前のデータに正解・解説が含まれない", () => {
   for (const exam of EXAMS) {
     const answers = Object.fromEntries(allQuestions(exam).map((q) => [q.id, q.kind === "mark" ? (q.answer as number) : (q.answer as string[])[0]]));
-    assert.equal(scoreExam(exam, answers).score, exam.totalPoints, exam.id);
+    // 論述（自己採点）は自動採点に含めないので、満点は「自己採点の設問を除いた配点」
+    assert.equal(scoreExam(exam, answers).score, autoMaxScore(exam), exam.id);
     const json = JSON.stringify(stripAnswers(exam));
     assert.ok(!/"answer"|"explanation"|"wordForms"/.test(json), `${exam.id}: 受験前データに正解が含まれる`);
   }

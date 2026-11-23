@@ -5,7 +5,7 @@ import { track } from "../analytics";
 import { currentUser } from "../auth";
 import { getConfig } from "../config";
 import { useAsync } from "../hooks";
-import { allQuestions } from "../../../shared/scoring";
+import { allQuestions, usesTwoDigitMarks } from "../../../shared/scoring";
 
 export function ExamPage() {
   const { id = "" } = useParams();
@@ -39,9 +39,10 @@ export function ExamPage() {
             </>
           ) : (
             <>
-              <p className="small" style={{ margin: 0 }}><b>本番どおりに受けるなら紙で</b>：印刷して90分で解き、解答用紙を撮影するか答えを入力して採点します。</p>
+              <p className="small" style={{ margin: 0 }}><b>本番どおりに受けるなら紙で</b>：印刷して{e.durationMin}分で解き、{getConfig().photoGrading && !usesTwoDigitMarks(e) ? "解答用紙を撮影するか" : ""}答えを入力して採点します。</p>
               <Link className="btn btn-primary btn-block" to={`/exams/${id}/print`} onClick={() => track("print_open", { exam_id: id })}>問題冊子・解答用紙を印刷</Link>
-              {getConfig().photoGrading && (
+              {/* 2桁の語群番号で答える形式（世界史）は、撮影採点にまだ対応していない */}
+              {getConfig().photoGrading && !usesTwoDigitMarks(e) && (
                 <Link className="btn btn-block" to={currentUser() ? `/exams/${id}/photo` : `/login?next=${encodeURIComponent(`/exams/${id}/photo`)}`}>
                   解き終えた解答用紙を撮影して採点{currentUser() ? "" : "（ログインが必要）"}
                 </Link>
@@ -81,6 +82,7 @@ export function ExamPage() {
 function sectionKind(s: { groups: { questions: { kind: string; category: string }[] }[] }) {
   const qs = s.groups.flatMap((g) => g.questions);
   const has = (c: string) => qs.some((q) => q.category === c);
+  if (qs.some((q) => q.category.startsWith("wh-"))) return "テーマ史（語群からの空欄補充・語句の記述・論述）";
   if (has("verb-form")) return "中文空所補充（記述・動詞の語形変化）";
   if (has("noun-form")) return "中文空所補充（記述・名詞形）";
   if (has("inference")) return "短文の内容推測（4題）";

@@ -46,7 +46,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
         })}
       </div>
 
-      <h2 id="mocks">模試 <small className="muted">本番と同じ90分・大問8題</small></h2>
+      <h2 id="mocks">模試 <small className="muted">本番と同じ時間・形式</small></h2>
       <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。{getConfig().photoGrading ? "解答用紙は撮影して採点できます。" : "解き終えた答えを入力すると採点できます。"}</p>
       <div className="grid grid-2">
         {mocks.map((e) => {

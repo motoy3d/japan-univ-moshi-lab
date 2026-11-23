@@ -28,7 +28,9 @@ const inRange = (v: number, [lo, hi]: [number, number]) => v >= lo && v <= hi;
 function checkProfile(exam: (typeof EXAMS)[number], qs: ReturnType<typeof allQuestions<(typeof EXAMS)[number]["sections"][number]["groups"][number]["questions"][number]>>) {
   const file = path.join(here, "../content/profiles", `${exam.profile}.json`);
   if (!fs.existsSync(file)) return fail(exam.id, `プロファイル ${exam.profile} が見つからない`);
-  const pr: Profile = JSON.parse(fs.readFileSync(file, "utf8"));
+  const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (raw.format === "history-blank-bank") return checkHistoryProfile(exam, raw as HistoryProfile);
+  const pr: Profile = raw;
   const tag = `プロファイル ${exam.profile}`;
   if (exam.totalPoints !== pr.totalPoints || exam.durationMin !== pr.durationMin) fail(exam.id, `${tag}: 配点・試験時間が違う`);
   const marks = qs.filter((q) => q.kind === "mark"), writes = qs.filter((q) => q.kind === "write");
@@ -63,6 +65,69 @@ function checkProfile(exam: (typeof EXAMS)[number], qs: ReturnType<typeof allQue
     if (!inRange(typeCount[k] ?? 0, range)) fail(exam.id, `${tag}: 長文の設問の種類 ${k} が ${typeCount[k] ?? 0} 問（基準 ${range.join("〜")}）`);
   console.log(`  ↳ ${tag} に適合（長文 計${longTotal}語、設問の種類 ${Object.entries(typeCount).map(([k, v]) => `${k}:${v}`).join(" ")}）`);
 }
+/** 世界史（語群から2桁の番号で選ぶ空欄＋記述・論述）の形式: profile.format === "history-blank-bank" */
+interface HistoryProfile {
+  format: "history-blank-bank";
+  totalPoints: number;
+  durationMin: number;
+  choiceStart: number;
+  sections: { label: string; blanks: [number, number]; writes: [number, number] }[];
+  blanksTotal: [number, number];
+  writesTotal: [number, number];
+  essays: [number, number];
+  essayChars: [number, number];
+  yearBlanks: [number, number];
+  bankSize: [number, number];
+  passageChars: [number, number];
+}
+const countChars = (paras: string[] = []) => paras.join("").replace(/\{\{b:\d+\}\}/g, "").replace(/\{\{u:\w+\|/g, "").replace(/\}\}/g, "").length;
+
+function checkHistoryProfile(exam: (typeof EXAMS)[number], pr: HistoryProfile) {
+  const tag = `プロファイル ${exam.profile}`;
+  if (exam.totalPoints !== pr.totalPoints || exam.durationMin !== pr.durationMin) fail(exam.id, `${tag}: 配点・試験時間が違う`);
+  if (exam.sections.map((s) => s.label).join(",") !== pr.sections.map((s) => s.label).join(","))
+    return fail(exam.id, `${tag}: 大問の並びが違う`);
+  let blanks = 0, writes = 0, essays = 0, years = 0;
+  pr.sections.forEach((ps, i) => {
+    const s = exam.sections[i];
+    const [mg, wg] = s.groups;
+    if (s.groups.length !== 2 || !mg.choices || mg.questions.some((q) => q.kind !== "mark") || wg.questions.some((q) => q.kind !== "write"))
+      return fail(exam.id, `${tag}: 大問${s.label} は「問1 空欄（語群）」「問2以降 記述」の2グループにする`);
+    if (mg.choiceStart !== pr.choiceStart) fail(exam.id, `${tag}: 大問${s.label} の語群の番号が ${pr.choiceStart} から始まっていない`);
+    if (!inRange(mg.choices.length, pr.bankSize)) fail(exam.id, `${tag}: 大問${s.label} の語群 ${mg.choices.length}語（基準 ${pr.bankSize.join("〜")}）`);
+    if ((pr.choiceStart + mg.choices.length - 1) > 99) fail(exam.id, `${tag}: 大問${s.label} の語群の番号が2桁に収まらない`);
+    const nb = mg.questions.length, nw = wg.questions.length;
+    if (!inRange(nb, ps.blanks)) fail(exam.id, `${tag}: 大問${s.label} の空欄 ${nb}（基準 ${ps.blanks.join("〜")}）`);
+    if (!inRange(nw, ps.writes)) fail(exam.id, `${tag}: 大問${s.label} の記述 ${nw}（基準 ${ps.writes.join("〜")}）`);
+    const chars = countChars(s.passage?.paragraphs);
+    if (!inRange(chars, pr.passageChars)) fail(exam.id, `${tag}: 大問${s.label} の本文 ${chars}字（基準 ${pr.passageChars.join("〜")}）`);
+    // 本文の空欄は (1)(2) の組のラベルで、マークシートの列と一致すること
+    for (const q of mg.questions) if (q.label !== `${2 * q.no - 1}-${2 * q.no}`) fail(exam.id, `${q.id}: 空欄のラベルが ${2 * q.no - 1}-${2 * q.no} でない`);
+    // 正解の語句が本文にそのまま出ていないか（答えが見えてしまう）
+    const plain = (s.passage?.paragraphs ?? []).join("").replace(/\{\{b:\d+\}\}/g, "");
+    for (const q of mg.questions) {
+      const t = mg.choices[(q.answer as number) - 1];
+      if (t && t.length >= 2 && !/^\d+$/.test(t) && plain.includes(t)) fail(exam.id, `${q.id}: 正解「${t}」が本文にそのまま出ている`);
+      if (/^\d+$/.test(t ?? "")) years++;
+    }
+    for (const q of wg.questions) {
+      if (!q.prompt) fail(exam.id, `${q.id}: 設問文がない`);
+      if (q.selfGrade) {
+        essays++;
+        if (!q.maxChars || !inRange(q.maxChars, pr.essayChars)) fail(exam.id, `${q.id}: 論述の字数 ${q.maxChars}（基準 ${pr.essayChars.join("〜")}）`);
+        if (q.maxChars && (q.answer as string[])[0].length > q.maxChars) fail(exam.id, `${q.id}: 模範解答が字数を超えている`);
+      }
+    }
+    blanks += nb;
+    writes += nw;
+  });
+  if (!inRange(blanks, pr.blanksTotal)) fail(exam.id, `${tag}: 空欄の合計 ${blanks}（基準 ${pr.blanksTotal.join("〜")}）`);
+  if (!inRange(writes, pr.writesTotal)) fail(exam.id, `${tag}: 記述の合計 ${writes}（基準 ${pr.writesTotal.join("〜")}）`);
+  if (!inRange(essays, pr.essays)) fail(exam.id, `${tag}: 論述 ${essays}問（基準 ${pr.essays.join("〜")}）`);
+  if (!inRange(years, pr.yearBlanks)) fail(exam.id, `${tag}: 年号・数値の空欄 ${years}（基準 ${pr.yearBlanks.join("〜")}）`);
+  console.log(`  ↳ ${tag} に適合（空欄 ${blanks}・記述 ${writes}（論述 ${essays}）・年号 ${years}、本文 ${exam.sections.map((s) => countChars(s.passage?.paragraphs)).join("/")}字）`);
+}
+
 const fail = (examId: string, msg: string) => {
   errors++;
   console.error(`✗ [${examId}] ${msg}`);
@@ -144,7 +209,8 @@ for (const exam of EXAMS) {
             fail(exam.id, `${q.id}: 本文に下線部 {{u:${q.no}|...}} が見つからない`);
         } else {
           if (!Array.isArray(q.answer) || q.answer.length === 0) fail(exam.id, `${q.id}: 記述の許容解答が空`);
-          if (hasPassage && q.label && !allWriteTokens.includes(q.label) && !secTokens.writes.includes(q.label))
+          // 本文の記述空所 {{w:a}} と対応する設問（ラベルが英小文字）だけ照合する。世界史の「問2」などは設問文で問う
+          if (hasPassage && q.label && /^[a-z]+$/.test(q.label) && !allWriteTokens.includes(q.label) && !secTokens.writes.includes(q.label))
             fail(exam.id, `${q.id}: 本文に記述の空所 {{w:${q.label}}} が見つからない`);
         }
         if (!q.explanation) fail(exam.id, `${q.id}: 解説がない`);

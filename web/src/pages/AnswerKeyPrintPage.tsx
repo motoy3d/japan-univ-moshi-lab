@@ -34,12 +34,12 @@ export function AnswerKeyPrintPage() {
                 <h3><span style={{ fontFamily: "var(--font-en)" }}>{s.label}</span>（{items.reduce((t, { q }) => t + q.points, 0)}点）</h3>
                 {items.map(({ q, g }) => (
                   <div className="exp" key={q.id}>
-                    <span>{res.get(q.id)?.correct ? "○" : "×"} {q.kind === "write" ? "記" : ""}({questionLabel(q)})</span>
-                    <span className="ans">{q.kind === "write" ? (q.answer as string[]).join(" / ") : q.answer}</span>
+                    <span>{q.selfGrade ? "自" : res.get(q.id)?.correct ? "○" : "×"} {q.kind === "write" ? "記" : ""}({questionLabel(q)})</span>
+                    <span className="ans">{q.kind === "write" ? (q.answer as string[]).join(" / ") : g.choiceStart ? answerText(q, g.choices, q.answer, g.choiceStart) : q.answer}</span>
                     <span>
                       {q.explanation}
                       <br />
-                      <span className="you">あなたの解答: {answerText(q, g.choices, a.answers[q.id])}（配点 {q.points}）</span>
+                      <span className="you">あなたの解答: {answerText(q, g.choices, a.answers[q.id], g.choiceStart)}（配点 {q.points}）</span>
                     </span>
                   </div>
                 ))}

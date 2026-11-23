@@ -175,3 +175,17 @@ python3 scripts/simulate/score.py report /tmp/sim/res/*.json --md docs/quality/s
 3. 印刷見本を更新（`docs/samples/`）。デモを使う場合は `npm -w web run build:demo` → `node scripts/build-demo-artifact.mjs <出力.html>`。
 4. 品質レポート（`docs/quality/review-<id>.md`）に、形式・数値・修正した設問・試し解きの結果を残す。
 5. コミット。本番のデータ（`.local/`）が含まれていないことを `git status` で確認する。
+
+## 世界史（慶應 商学部）の作り方
+
+英語と同じ 1〜5 章の流れで作る。違うところだけ書く。
+
+- 形式は `content/profiles/keio-shogaku-sekaishi.json`（`format: "history-blank-bank"`）。大問3題。各大問は日本語のリード文と、問1（空欄に入る語句を、11 から番号の付いた語群から選ぶ。2桁の番号を2つの解答欄にマーク）、問2以降（語句の記述・短い論述）。
+- 原稿は `scripts/build-keio-shogaku-sekaishi-NN.py`、共通部品は `scripts/authoring/keio_shogaku_sekaishi.py`。
+  - 本文の空欄は `[[キー]]` と書き、`blank("正解の語句", 分野, 解説)` を対応させる。番号（(1)(2) の組）は出てきた順に自動で振る。
+  - 語群は `(語句, 読み)` のリスト。読みで五十音順に並べ、11 から番号を付ける（数字 → 英字 → かな）。正解の語句をすべて含め、残りは紛らわしいが条件で外れる語にする。
+  - 下線部は `{{u:a|語句}}`、記述の空欄（あ）は本文にそのまま書く。設問は `write()`（語句。正解の別表記を並べる）と `essay()`（論述。模範解答・字数・採点の観点）。
+  - 組み立て時に、語群の語が本文にそのまま出ていないか、模範解答が字数以内かを検査する。
+- **事実の確認を必ず行う。** 年・人名・出来事を1項目ずつ出典（Wikipedia などのページを開いて照合）で確かめ、確かめられないことは書かないか、言い切らない表現にする。確認の結果は品質レポートに残す（`docs/quality/review-keio-shogaku-sekaishi-01.md` が例）。
+- 論述は自動採点しない（`selfGrade`）。結果画面で模範解答と観点を示し、利用者が自分で点を付ける。偏差値は自動採点の得点だけで計算する。
+- 撮影採点は2桁の番号の読み取りに未対応なので、世界史の模試では使えない。
