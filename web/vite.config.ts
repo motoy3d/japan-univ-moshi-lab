@@ -7,6 +7,9 @@ import react from "@vitejs/plugin-react";
  * （frame-ancestors は meta では効かないので、CloudFront 管理ポリシーの X-Frame-Options で代替）
  * 開発サーバーは HMR にインラインスクリプトを使うので付けない。
  */
+/** ログイン画面（Cognito）の接続先。接頭辞のドメインと、独自ドメインのログイン画面 */
+const AUTH_ORIGINS = "https://*.amazoncognito.com https://auth.moshi-lab.com";
+
 const CSP = [
   "default-src 'self'",
   // Google アナリティクス（GA4）: gtag.js と計測の送信先
@@ -14,9 +17,9 @@ const CSP = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https://*.google-analytics.com https://www.googletagmanager.com",
-  "connect-src 'self' https://*.amazoncognito.com https://cognito-idp.ap-northeast-1.amazonaws.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com",
+  `connect-src 'self' ${AUTH_ORIGINS} https://cognito-idp.ap-northeast-1.amazonaws.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com`,
   "base-uri 'self'",
-  "form-action 'self' https://*.amazoncognito.com",
+  `form-action 'self' ${AUTH_ORIGINS}`,
   "object-src 'none'",
 ].join("; ");
 

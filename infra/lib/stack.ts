@@ -20,6 +20,9 @@ import * as subs from "aws-cdk-lib/aws-sns-subscriptions";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as secretsmanager from "aws-cdk-lib/aws-secretsmanager";
 import * as budgets from "aws-cdk-lib/aws-budgets";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import * as route53 from "aws-cdk-lib/aws-route53";
+import * as route53Targets from "aws-cdk-lib/aws-route53-targets";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -36,6 +39,13 @@ export interface MoshiLabProps extends StackProps {
   anthropicSecretName?: string;
   /** 月の予算（USD）。超えそうになったら alertEmail に通知（既定 30） */
   monthlyBudgetUsd?: number;
+  /**
+   * 独自ドメイン（例: moshi-lab.com）。Route 53 にホストゾーンがあること。
+   * サイトは https://<domainName>（www. はそこへ転送）、ログイン画面は https://auth.<domainName> になる。
+   */
+  domainName?: string;
+  /** us-east-1 の ACM 証明書の ARN（<domainName>・www.<domainName>・auth.<domainName> を含む）。domainName と一緒に指定する */
+  certificateArn?: string;
 }
 
 /** ログの保管期間（約3か月） */
@@ -149,16 +159,25 @@ export class MoshiLabStack extends Stack {
     // 静的ファイルのセキュリティヘッダは管理ポリシー SECURITY_HEADERS（HSTS・nosniff・X-Frame-Options 等）。
 
     // SPA ルーティング: 拡張子のないパスは index.html を返す（/api/* には適用しない）
+    // 独自ドメインのときは www. 付きでのアクセスを、www. なしの同じパスへ 301 で転送する
+    const custom = props.domainName && props.certificateArn
+      ? { domainName: props.domainName, certificate: acm.Certificate.fromCertificateArn(this, "Cert", props.certificateArn) }
+      : undefined;
+    if (props.domainName && !props.certificateArn) throw new Error("domainName を指定するときは certificateArn（us-east-1）も指定してください");
+    const wwwRedirect = custom
+      ? `var h=r.headers.host&&r.headers.host.value;if(h==='www.${custom.domainName}'){var q=Object.keys(r.querystring).map(function(k){return k+'='+r.querystring[k].value;}).join('&');return{statusCode:301,statusDescription:'Moved Permanently',headers:{location:{value:'https://${custom.domainName}'+r.uri+(q?'?'+q:'')}}};}`
+      : "";
     const spaRewrite = new cloudfront.Function(this, "SpaRewrite", {
       runtime: cloudfront.FunctionRuntime.JS_2_0,
       code: cloudfront.FunctionCode.fromInline(
-        "function handler(event){var r=event.request;if(r.uri.indexOf('.')===-1){r.uri='/index.html';}return r;}",
+        `function handler(event){var r=event.request;${wwwRedirect}if(r.uri.indexOf('.')===-1){r.uri='/index.html';}return r;}`,
       ),
     });
 
     const siteOrigin = origins.S3BucketOrigin.withOriginAccessControl(siteBucket);
     const distribution = new cloudfront.Distribution(this, "Cdn", {
       defaultRootObject: "index.html",
+      ...(custom ? { domainNames: [custom.domainName, `www.${custom.domainName}`], certificate: custom.certificate } : {}),
       priceClass: cloudfront.PriceClass.PRICE_CLASS_200, // 日本を含み、最も高い地域を除外
       defaultBehavior: {
         origin: siteOrigin,
@@ -184,7 +203,20 @@ export class MoshiLabStack extends Stack {
         },
       },
     });
-    const siteUrl = `https://${distribution.distributionDomainName}`;
+    const cloudfrontUrl = `https://${distribution.distributionDomainName}`;
+    const siteUrl = custom ? `https://${custom.domainName}` : cloudfrontUrl;
+
+    // 独自ドメインの DNS（Route 53 のホストゾーンに、サイトの向き先を登録）
+    let zone: route53.IHostedZone | undefined;
+    let apexRecord: route53.ARecord | undefined;
+    if (custom) {
+      zone = route53.HostedZone.fromLookup(this, "Zone", { domainName: custom.domainName });
+      const target = route53.RecordTarget.fromAlias(new route53Targets.CloudFrontTarget(distribution));
+      apexRecord = new route53.ARecord(this, "SiteA", { zone, target });
+      new route53.AaaaRecord(this, "SiteAAAA", { zone, target });
+      new route53.ARecord(this, "WwwA", { zone, recordName: "www", target });
+      new route53.AaaaRecord(this, "WwwAAAA", { zone, recordName: "www", target });
+    }
 
     // ---------- 認証 ----------
     const userPool = new cognito.UserPool(this, "Users", {
@@ -219,10 +251,22 @@ export class MoshiLabStack extends Stack {
     }
 
     const domainPrefix = props.domainPrefix ?? `moshi-lab-${this.account}`;
-    const domain = userPool.addDomain("Domain", {
+    const prefixDomain = userPool.addDomain("Domain", {
       cognitoDomain: { domainPrefix },
       managedLoginVersion: cognito.ManagedLoginVersion.CLASSIC_HOSTED_UI,
     });
+    // 独自ドメインのログイン画面（auth.<domainName>）。接頭辞のドメインも残す（同じユーザープールに両方置ける）。
+    // Cognito は親ドメイン（<domainName>）に A レコードがあることを求めるので、サイトのレコードの後に作る。
+    let domain = prefixDomain;
+    if (custom && zone && apexRecord) {
+      const authDomain = userPool.addDomain("AuthDomain", {
+        customDomain: { domainName: `auth.${custom.domainName}`, certificate: custom.certificate },
+        managedLoginVersion: cognito.ManagedLoginVersion.CLASSIC_HOSTED_UI,
+      });
+      authDomain.node.addDependency(apexRecord);
+      new route53.ARecord(this, "AuthA", { zone, recordName: "auth", target: route53.RecordTarget.fromAlias(new route53Targets.UserPoolDomainTarget(authDomain)) });
+      domain = authDomain;
+    }
 
     const client = userPool.addClient("Web", {
       generateSecret: false, // SPA なので公開クライアント + PKCE
@@ -231,8 +275,9 @@ export class MoshiLabStack extends Stack {
         flows: { authorizationCodeGrant: true },
         // COGNITO_ADMIN: 本人が自分のメールアドレス・パスワードを変更するため（自分の属性の読み書きだけ）
         scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE, cognito.OAuthScope.COGNITO_ADMIN],
-        callbackUrls: [`${siteUrl}/callback`, "http://localhost:5173/callback"],
-        logoutUrls: [`${siteUrl}/`, "http://localhost:5173/"],
+        // CloudFront の URL も残す（独自ドメインの DNS が行き渡るまでの間や、障害時の確認用）
+        callbackUrls: [...new Set([`${siteUrl}/callback`, `${cloudfrontUrl}/callback`]), "http://localhost:5173/callback"],
+        logoutUrls: [...new Set([`${siteUrl}/`, `${cloudfrontUrl}/`]), "http://localhost:5173/"],
       },
       accessTokenValidity: Duration.hours(1),
       idTokenValidity: Duration.hours(1),

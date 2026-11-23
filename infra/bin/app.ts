@@ -19,4 +19,7 @@ new MoshiLabStack(app, "MoshiLab", {
   anthropicSecretName: app.node.tryGetContext("anthropicSecretName") || undefined,
   // 月の予算（USD）: -c monthlyBudgetUsd=30
   monthlyBudgetUsd: Number(app.node.tryGetContext("monthlyBudgetUsd")) || undefined,
+  // 独自ドメイン: -c domainName=moshi-lab.com -c certificateArn=arn:aws:acm:us-east-1:...（docs/deploy.md）
+  domainName: app.node.tryGetContext("domainName") || undefined,
+  certificateArn: app.node.tryGetContext("certificateArn") || undefined,
 });

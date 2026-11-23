@@ -52,6 +52,28 @@ GA4 のプロパティとウェブストリームを作り、測定ID（`G-` で
 
 初回のデプロイ後、出力の `GoogleRedirectUri` を Google Cloud Console の「承認済みのリダイレクト URI」に登録する。`ALERT_EMAIL` に届く確認メールのリンクも開く。
 
+## 6.5 独自ドメイン（moshi-lab.com）
+
+2026-11-23 に設定済み。サイトは `https://moshi-lab.com`（`www.` は転送）、ログイン画面は `https://auth.moshi-lab.com`。
+
+1. Route 53 でドメインを登録する（ホストゾーンが自動で作られる）。
+2. **us-east-1** の ACM で、`<ドメイン>`・`www.<ドメイン>`・`auth.<ドメイン>` を含む証明書を DNS 検証で作り、検証用の CNAME をホストゾーンに登録する（発行まで数分）。
+3. CDK のコンテキストに `-c domainName=<ドメイン> -c certificateArn=<証明書の ARN>` を足してデプロイする。CloudFront の別名・Route 53 のレコード・Cognito の独自ドメインが作られる（ログイン画面の準備に10分前後かかる）。
+4. 独自ドメインを変えるときは、`web/vite.config.ts` の `AUTH_ORIGINS`（CSP）も直す。
+
+CloudFront の URL（`*.cloudfront.net`）と接頭辞のログイン用ドメインも残してあり、ログイン後の戻り先にも登録されている。
+
+## 6.6 PC から直接デプロイする場合（現在の運用）
+
+```bash
+npm run build
+cd infra && npx cdk deploy --profile motoikataoka \
+  -c domainPrefix=moshi-lab -c alertEmail=<通知先メール> \
+  -c domainName=moshi-lab.com -c certificateArn=<us-east-1 の証明書の ARN>
+```
+
+Google ログイン・GA4・撮影採点を有効にしたあとは、`-c googleClientId=... -c gaId=... -c photoGrading=true` も毎回付ける（付け忘れると無効に戻る）。Node.js 26 が必要。
+
 ## 7. デプロイ
 
 GitHub の Actions → `deploy` → Run workflow。撮影採点を有効にするときは `photo_grading` にチェックを入れる。
