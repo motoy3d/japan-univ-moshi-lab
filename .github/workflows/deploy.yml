@@ -32,7 +32,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build # validate + web build
-      - uses: aws-actions/configure-aws-credentials@v4
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
           aws-region: ap-northeast-1
