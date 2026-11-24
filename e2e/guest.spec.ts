@@ -5,7 +5,7 @@ test("登録なしで大問演習を解き、結果・満足度・問題への�
   page.on("pageerror", (e) => errors.push(e.message));
 
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /慶應義塾大学 商学部 英語の予想模試/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "本番と同じ形の予想模試" })).toBeVisible();
   await page.getByText("文法・語法と中文の空所補充").click();
   await page.getByRole("link", { name: /今すぐ解く/ }).click();
   await page.getByRole("button", { name: "試験を開始する" }).click();
@@ -39,7 +39,7 @@ test("登録なしで大問演習を解き、結果・満足度・問題への�
 
 test("模試は紙で受ける導線: 印刷 → 答えを入力して採点", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("link", { name: /第1回/ }).click();
+  await page.locator('a.exam-card[href="/exams/keio-shogaku-eigo-01"]').click();
   await expect(page.getByRole("link", { name: "問題冊子・解答用紙を印刷" })).toBeVisible();
   await page.getByRole("link", { name: "解き終えた答えを入力して採点" }).click();
   await page.getByRole("button", { name: "1番に2", exact: true }).click();

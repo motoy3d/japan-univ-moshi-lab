@@ -97,7 +97,7 @@ export function HistoryPage() {
           <Link key={a.attemptId} to={`/results/${a.attemptId}`} className="recent-row history-row">
             <span className="recent-date">{fmtDate(a.createdAt)}</span>
             <span className="recent-title">
-              {a.examTitle.replace(/慶應義塾大学 商学部 英語\s*/, "")}
+              {a.examTitle.replace(/慶應義塾大学 商学部\s*/, "")}
               {a.mode === "paper" && <span className="badge" style={{ marginLeft: 6 }}>紙</span>}
               <span className="history-meta">偏差値 {a.deviation?.toFixed(1) ?? "—"} ・ {fmtDuration(a.durationSec)}</span>
             </span>

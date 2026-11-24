@@ -87,9 +87,9 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
   );
 }
 
-/** 「第1回 慶應義塾大学 商学部 英語 予想模試」→「第1回 予想模試」。科目が増えたら大学名を残す */
+/** 「第1回 慶應義塾大学 商学部 英語 予想模試」→「第1回 英語 予想模試」。大学・学部が増えたら残す */
 function shortTitle(t: string) {
-  return t.replace(/慶應義塾大学 商学部 英語\s*/, "");
+  return t.replace(/慶應義塾大学 商学部\s*/, "");
 }
 
 export function HomePage() {
@@ -106,9 +106,9 @@ function GuestHome() {
     <>
       <section className="hero hero-guest">
         <div className="hero-main">
-          <p className="hero-greet">慶應義塾大学 商学部 英語</p>
+          <p className="hero-greet">慶應義塾大学 商学部　英語・世界史</p>
           <h1 className="hero-title">本番と同じ形の予想模試</h1>
-          <p className="hero-sub">大問の並びも、設問の数も、紙の大きさも本番どおり。<b>無料・登録なし</b>で、すぐ受けられます。</p>
+          <p className="hero-sub">大問の並びも、設問の数も、本番に合わせて作っています。<b>無料・登録なし</b>で、すぐ受けられます。</p>
           <div className="row" style={{ marginTop: 14 }}>
             {firstPractice && <a className="btn btn-hero" href="#practice">大問演習（15〜25分）</a>}
             {firstMock && <Link className="btn btn-ghost" to={`/exams/${firstMock.id}`}>模試（90分）</Link>}
