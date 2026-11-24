@@ -6,6 +6,7 @@ import { currentUser } from "../auth";
 import { clientId, getLocalResult, localResults } from "../guest";
 import { fmtDate, fmtDuration, store, useAsync } from "../hooks";
 import { Histogram, PartBars } from "../components/Charts";
+import { FigureView } from "../components/FigureView";
 import { CountUp, Ring, cheer, opportunities } from "../components/Motivation";
 import { MIN_POPULATION_FOR_DEVIATION, scoreForDeviation } from "../../../shared/stats";
 import { questionLabel } from "../../../shared/scoring";
@@ -225,6 +226,7 @@ function Result({ review, history, profile, local }: { review: AttemptReview; hi
                     <span className="badge" style={{ marginLeft: 8 }}>{q.points}点</span>
                   </div>
                   {q.prompt && <div className="q-prompt" style={{ fontSize: 15, margin: "4px 0" }}>{q.prompt}</div>}
+                  {q.figure && <FigureView figure={q.figure} />}
                   <div className="ans">あなたの解答: {answerText(q, g.choices, a.answers[q.id], g.choiceStart)}</div>
                   {q.selfGrade ? (
                     <label className="ans row no-print">

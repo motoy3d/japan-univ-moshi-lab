@@ -214,6 +214,8 @@ for (const exam of EXAMS) {
             fail(exam.id, `${q.id}: 本文に記述の空所 {{w:${q.label}}} が見つからない`);
         }
         if (!q.explanation) fail(exam.id, `${q.id}: 解説がない`);
+        if (q.figure && !fs.existsSync(path.join(here, "../web/public", q.figure.src))) fail(exam.id, `${q.id}: 図 ${q.figure.src} が web/public にない`);
+        if (q.figure && !q.figure.alt) fail(exam.id, `${q.id}: 図の説明（alt）がない`);
         if (!(q.category in CATEGORY_LABELS)) fail(exam.id, `${q.id}: 未定義の分野 ${q.category}`);
       }
       if (group.wordForms) {

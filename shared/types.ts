@@ -62,6 +62,16 @@ export interface Question {
   selfGrade?: boolean;
   /** 字数の上限（論述。表示用） */
   maxChars?: number;
+  /** 設問に付ける図（グラフ・地図など）。src は Web の公開パス（web/public 以下） */
+  figure?: Figure;
+}
+
+export interface Figure {
+  src: string;
+  /** 画像を見られない人向けの説明（答えを書かない） */
+  alt: string;
+  /** 図の下に出す出典 */
+  source?: string;
 }
 
 /** 正解・解説（受験前のクライアントには送らない） */

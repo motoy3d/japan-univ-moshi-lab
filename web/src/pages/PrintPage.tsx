@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
 import { useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
+import { FigureView } from "../components/FigureView";
 import { allQuestions, choiceNumber, markColumns, questionLabel } from "../../../shared/scoring";
 import type { Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
@@ -215,10 +216,14 @@ function BookletGroup({ group, wordBoxShown }: { group: QuestionGroup; wordBoxSh
         </div>
       )}
       {group.questions
-        .filter((q) => q.kind === "write" && q.prompt)
+        // 「問6(A)〜(D)」のような小問は、問題冊子には最初の (A) の設問文だけを載せる（本番と同じ。(B) 以降は解答用紙Bの欄だけ）
+        .filter((q) => q.kind === "write" && q.prompt && !/\([B-Z]\)$/.test(q.label ?? ""))
         .map((q) => (
           <div className="b-q no-num" key={q.id}>
-            <div><div className="prompt jp">{questionLabel(q)}　{q.prompt}</div></div>
+            <div>
+              <div className="prompt jp">{questionLabel(q).replace(/\(A\)$/, "")}　{q.prompt}</div>
+              {q.figure && <FigureView figure={q.figure} />}
+            </div>
           </div>
         ))}
       {!group.choices &&

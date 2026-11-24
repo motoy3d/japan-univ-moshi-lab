@@ -29,19 +29,23 @@ def blank(answer, category, explanation):
     return {"answer": answer, "category": category, "explanation": explanation}
 
 
-def write(label, prompt, answers, explanation, category):
-    """語句の記述。answers は正解として認める表記をすべて並べる（・や＝の有無は採点時に吸収する）"""
-    return {"kind": "write", "label": label, "prompt": prompt, "answers": answers,
-            "explanation": explanation, "category": category, "points": WRITE}
+def write(label, prompt, answers, explanation, category, figure=None, points=WRITE):
+    """語句の記述。answers は正解として認める表記をすべて並べる（・や＝の有無は採点時に吸収する）。
+    figure: {"src": "/figures/xxx.svg", "alt": 答えを書かない説明, "source": 出典}（グラフ・地図の設問）"""
+    w = {"kind": "write", "label": label, "prompt": prompt, "answers": answers,
+         "explanation": explanation, "category": category, "points": points}
+    if figure:
+        w["figure"] = figure
+    return w
 
 
-def essay(label, prompt, max_chars, model, viewpoints):
+def essay(label, prompt, max_chars, model, viewpoints, points=ESSAY):
     """論述（字数制限つき）。自動採点はせず、模範解答と採点の観点を示して自己採点してもらう"""
     if len(model) > max_chars:
         raise ValueError(f"{label}: 模範解答が {len(model)} 字で {max_chars} 字を超えている: {model}")
     exp = f"【模範解答】{model}（{len(model)}字）\n【採点の観点】" + " ".join(f"{'①②③④'[i]}{v}" for i, v in enumerate(viewpoints))
     return {"kind": "write", "label": label, "prompt": prompt, "answers": [model],
-            "explanation": exp, "category": "wh-essay", "points": ESSAY,
+            "explanation": exp, "category": "wh-essay", "points": points,
             "selfGrade": True, "maxChars": max_chars}
 
 
@@ -129,6 +133,11 @@ def section(label, paragraphs, blanks, bank, writes):
     for w in writes:
         q = {"id": None, "kind": "write", "no": None, "label": w["label"], "category": w["category"],
              "prompt": w["prompt"], "points": w["points"], "answer": w["answers"], "explanation": w["explanation"]}
+        if w.get("figure"):
+            fig = w["figure"]
+            if not (ROOT / "web" / "public" / fig["src"].lstrip("/")).exists():
+                raise FileNotFoundError(f"図 {fig['src']} が web/public にない")
+            q["figure"] = fig
         if w.get("selfGrade"):
             q["selfGrade"] = True
             q["maxChars"] = w["maxChars"]

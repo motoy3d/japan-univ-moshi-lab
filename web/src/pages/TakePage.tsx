@@ -7,6 +7,7 @@ import { bumpAttemptCount, clientId, saveLocalResult } from "../guest";
 import { getConfig } from "../config";
 import { store, useAsync } from "../hooks";
 import { renderMarkup, splitSpeaker } from "../components/PassageText";
+import { FigureView } from "../components/FigureView";
 import { allQuestions, choiceIndexFromNumber, choiceNumber, questionLabel, usesTwoDigitMarks } from "../../../shared/scoring";
 import type { Answers, Exam, Passage, Question, QuestionGroup } from "../../../shared/types";
 
@@ -326,6 +327,7 @@ function GroupView({
             <span className="q-no">({questionLabel(q)})</span>
             {q.prompt && <span className="q-prompt">{q.prompt}</span>}
           </div>
+          {q.figure && <FigureView figure={q.figure} />}
           {q.kind === "write" ? (
             <input
               type="text"
