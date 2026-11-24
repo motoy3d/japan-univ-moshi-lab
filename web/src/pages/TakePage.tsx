@@ -149,7 +149,7 @@ function WebExam({ exam }: { exam: Exam }) {
             ) : (
               <li>大問 VII・VIII は記述式です（本番では記述解答用紙に記入）。綴りまで正確に入力してください。</li>
             )}
-            <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。どこまでスクロールしても押せて、それぞれ最後に見ていた位置に戻ります。</li>
+            <li>スマホでは右下の「本文 / 設問」で表示を切り替えます。どこまでスクロールしても押せて、それぞれ最後に見ていた位置に戻ります。</li>
           </ol>
           <div className="row" style={{ marginTop: 16 }}>
             <button className="btn btn-primary" onClick={() => { track("exam_start", { exam_id: exam.id, kind: exam.kind ?? "mock", mode: "web" }); setDraft((d) => ({ ...d, startedAt: Date.now() })); }}>試験を開始する</button>
@@ -173,12 +173,6 @@ function WebExam({ exam }: { exam: Exam }) {
         </span>
         <span className="progress">解答 {answeredCount}/{qs.length}</span>
         <span className="spacer" />
-        {hasPassage && (
-          <div className="pane-toggle" role="tablist" aria-label="表示の切り替え">
-            <button role="tab" aria-selected={pane === "passage"} className={pane === "passage" ? "active" : ""} onClick={() => switchPane("passage")}>本文</button>
-            <button role="tab" aria-selected={pane === "questions"} className={pane === "questions" ? "active" : ""} onClick={() => switchPane("questions")}>設問</button>
-          </div>
-        )}
         <button className="btn btn-primary" onClick={() => setConfirm(true)} disabled={busy}>提出</button>
       </div>
       <div className="section-tabs" role="tablist">
@@ -192,6 +186,12 @@ function WebExam({ exam }: { exam: Exam }) {
           );
         })}
       </div>
+      {hasPassage && (
+        <div className="pane-toggle no-print" role="tablist" aria-label="表示の切り替え">
+          <button role="tab" aria-selected={pane === "passage"} className={pane === "passage" ? "active" : ""} onClick={() => switchPane("passage")}>本文</button>
+          <button role="tab" aria-selected={pane === "questions"} className={pane === "questions" ? "active" : ""} onClick={() => switchPane("questions")}>設問</button>
+        </div>
+      )}
       <div className={`take-body ${hasPassage ? "" : "no-passage"}`}>
         {hasPassage && (
           <div className={`pane ${pane === "passage" ? "" : "hidden-mobile"}`}>
