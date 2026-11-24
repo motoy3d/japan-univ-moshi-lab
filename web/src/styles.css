@@ -987,3 +987,18 @@ h2.first { margin-top: 8px; }
   .stamp { opacity: 0.92; }
   .stamp .spark { display: none; }
 }
+
+/* ---- 受験（スマホ）: 本文と設問の切り替えを、常に見えている残り時間のバーに置く ---- */
+.pane-toggle { display: none; }
+@media (max-width: 820px) {
+  .pane-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: var(--surface-2); flex: none; }
+  .pane-toggle button {
+    min-height: 36px; min-width: 52px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent;
+    color: var(--ink-2); font-weight: 700; font-size: 14px; cursor: pointer;
+  }
+  .pane-toggle button.active { background: var(--surface); color: var(--accent); box-shadow: 0 1px 3px rgb(0 0 0 / 0.12); }
+  .take-bar { gap: 8px; padding-left: 12px; padding-right: 12px; }
+  .take-bar .btn { padding: 6px 12px; }
+  .question { scroll-margin-top: 76px; }
+}
+@media (max-width: 380px) { .take-bar .progress { display: none; } }

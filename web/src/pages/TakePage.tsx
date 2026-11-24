@@ -103,13 +103,24 @@ function WebExam({ exam }: { exam: Exam }) {
     (qid: string, v: string) => setDraft((d) => ({ ...d, answers: { ...d.answers, [qid]: v } })),
     [],
   );
+  // スマホ: 本文と設問は同じ画面を切り替えて見せる。それぞれ最後に見ていた位置を覚え、切り替えたら戻す
+  const scrollPos = useRef<{ passage: number; questions: number }>({ passage: 0, questions: 0 });
+  const switchPane = (to: "passage" | "questions") => {
+    if (to === pane) return;
+    scrollPos.current[pane] = window.scrollY;
+    setPane(to);
+    const y = scrollPos.current[to];
+    requestAnimationFrame(() => window.scrollTo({ top: y }));
+  };
   const goSection = (i: number) => {
     setDraft((d) => ({ ...d, section: i }));
     setPane("passage");
+    scrollPos.current = { passage: 0, questions: 0 };
     window.scrollTo({ top: 0 });
     document.querySelectorAll(".take-body > .pane").forEach((p) => (p.scrollTop = 0));
   };
   const jumpTo = (q: Question) => {
+    if (pane !== "questions") scrollPos.current.passage = window.scrollY;
     setPane("questions");
     requestAnimationFrame(() => {
       const el = document.getElementById(`q-${q.kind}-${q.no}`);
@@ -138,7 +149,7 @@ function WebExam({ exam }: { exam: Exam }) {
             ) : (
               <li>大問 VII・VIII は記述式です（本番では記述解答用紙に記入）。綴りまで正確に入力してください。</li>
             )}
-            <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。</li>
+            <li>スマホでは画面上部の「本文 / 設問」で表示を切り替えます。どこまでスクロールしても押せて、それぞれ最後に見ていた位置に戻ります。</li>
           </ol>
           <div className="row" style={{ marginTop: 16 }}>
             <button className="btn btn-primary" onClick={() => { track("exam_start", { exam_id: exam.id, kind: exam.kind ?? "mock", mode: "web" }); setDraft((d) => ({ ...d, startedAt: Date.now() })); }}>試験を開始する</button>
@@ -162,6 +173,12 @@ function WebExam({ exam }: { exam: Exam }) {
         </span>
         <span className="progress">解答 {answeredCount}/{qs.length}</span>
         <span className="spacer" />
+        {hasPassage && (
+          <div className="pane-toggle" role="tablist" aria-label="表示の切り替え">
+            <button role="tab" aria-selected={pane === "passage"} className={pane === "passage" ? "active" : ""} onClick={() => switchPane("passage")}>本文</button>
+            <button role="tab" aria-selected={pane === "questions"} className={pane === "questions" ? "active" : ""} onClick={() => switchPane("questions")}>設問</button>
+          </div>
+        )}
         <button className="btn btn-primary" onClick={() => setConfirm(true)} disabled={busy}>提出</button>
       </div>
       <div className="section-tabs" role="tablist">
@@ -175,19 +192,13 @@ function WebExam({ exam }: { exam: Exam }) {
           );
         })}
       </div>
-      {hasPassage && (
-        <div className="pane-switch">
-          <button className={pane === "passage" ? "active" : ""} onClick={() => setPane("passage")}>本文</button>
-          <button className={pane === "questions" ? "active" : ""} onClick={() => setPane("questions")}>設問</button>
-        </div>
-      )}
       <div className={`take-body ${hasPassage ? "" : "no-passage"}`}>
         {hasPassage && (
           <div className={`pane ${pane === "passage" ? "" : "hidden-mobile"}`}>
             <SectionHead section={section} />
             <PassageView passage={section.passage!} answers={draft.answers} onBlank={jumpTo} qs={section.groups.flatMap((g) => g.questions)} groups={section.groups} />
             <p className="small muted no-print" style={{ marginTop: 24 }}>
-              <button className="btn" onClick={() => setPane("questions")} style={{ minHeight: 40 }}>設問へ →</button>
+              <button className="btn" onClick={() => switchPane("questions")} style={{ minHeight: 40 }}>設問へ →</button>
             </p>
           </div>
         )}
