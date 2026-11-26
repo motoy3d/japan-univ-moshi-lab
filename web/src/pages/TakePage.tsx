@@ -1,3 +1,4 @@
+import { useSerifFont } from "../fonts";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
@@ -18,6 +19,7 @@ interface Draft {
 }
 
 export function TakePage() {
+  useSerifFont();
   const { id = "" } = useParams();
   const [params] = useSearchParams();
   const mode = params.get("mode") === "paper" ? "paper" : "web";

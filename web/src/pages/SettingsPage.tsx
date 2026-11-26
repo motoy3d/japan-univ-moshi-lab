@@ -1,3 +1,4 @@
+import { useTitle } from "../hooks";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { api } from "../api";
@@ -10,6 +11,7 @@ import type { TargetRef } from "../targets";
 const GOALS = [55, 58, 60, 62, 65, 68, 70, 72, 75];
 
 export function SettingsPage() {
+  useTitle("マイページ");
   const nav = useNavigate();
   const user = currentUser();
   const [nickname, setNickname] = useState("");

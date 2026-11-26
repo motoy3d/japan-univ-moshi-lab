@@ -4,13 +4,14 @@ import { api } from "../api";
 import { track } from "../analytics";
 import { currentUser } from "../auth";
 import { getConfig } from "../config";
-import { useAsync } from "../hooks";
+import { useAsync, useTitle } from "../hooks";
 import { allQuestions, usesTwoDigitMarks } from "../../../shared/scoring";
 
 export function ExamPage() {
   const { id = "" } = useParams();
   const exam = useAsync(() => api.exam(id), [id]);
   const stats = useAsync(() => api.stats(id), [id]);
+  useTitle(exam.data ? `${exam.data.title}${exam.data.kind === "practice" ? "" : ` ${exam.data.edition}`}` : undefined);
   useEffect(() => {
     if (exam.data) track("exam_view", { exam_id: id, kind: exam.data.kind ?? "mock" });
   }, [exam.data, id]);

@@ -1,3 +1,5 @@
+import { useTitle } from "../hooks";
+import { useSerifFont } from "../fonts";
 import { Link } from "react-router-dom";
 import { getConfig } from "../config";
 
@@ -7,6 +9,8 @@ import { getConfig } from "../config";
  * グラデーション・絵文字・アイコンの並んだ機能紹介は使わない。書くことは、確かめた数字だけ。
  */
 export function AboutPage() {
+  useTitle("模試ラボについて");
+  useSerifFont();
   const photo = getConfig().photoGrading;
   return (
     <article className="about">

@@ -1005,3 +1005,11 @@ h2.first { margin-top: 8px; }
   .take-body > .pane { padding-bottom: 140px; }
   .question { scroll-margin-top: 76px; }
 }
+
+/* ---- 読み込み中に中身がずれない（CLS 対策） ---- */
+main.container { min-height: 100dvh; } /* フッターを最初から画面の外に置き、中身が入っても押し下げない */
+.skeleton { pointer-events: none; background: linear-gradient(90deg, var(--surface) 0%, var(--surface-2) 50%, var(--surface) 100%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+.skeleton.practice-card { min-height: 120px; }
+.skeleton.mock-skel { min-height: 187px; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }

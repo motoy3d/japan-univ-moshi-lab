@@ -3,7 +3,7 @@ import { api } from "../api";
 import { getConfig } from "../config";
 import { currentUser } from "../auth";
 import { localResults } from "../guest";
-import { fmtDate, useAsync } from "../hooks";
+import { fmtDate, useAsync, useTitle } from "../hooks";
 import type { AttemptSummary, ExamListItem } from "../../../shared/types";
 import { Ring, daysUntil, opportunities } from "../components/Motivation";
 import { deviationScore, scoreForDeviation } from "../../../shared/stats";
@@ -31,6 +31,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
       <h2 id="practice">大問演習 <small className="muted">15〜25分・大問1つ</small></h2>
       <p className="small muted section-lead">模試とは別の問題です。演習で解いた英文が模試に出ることはありません。</p>
       <div className="grid grid-3">
+        {!exams && !error && <Skeletons n={6} cls="practice-card" />}
         {practice.map((e) => {
           const mine = list.filter((a) => a.examId === e.id);
           return (
@@ -49,6 +50,7 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
       <h2 id="mocks">模試 <small className="muted">本番と同じ時間・形式</small></h2>
       <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。{getConfig().photoGrading ? "解答用紙は撮影して採点できます。" : "解き終えた答えを入力すると採点できます。"}</p>
       <div className="grid grid-2">
+        {!exams && !error && <Skeletons n={3} cls="mock-skel" />}
         {mocks.map((e) => {
           const mine = list.filter((a) => a.examId === e.id);
           const top = mine.length ? Math.max(...mine.map((a) => a.score)) : 0;
@@ -87,12 +89,18 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
   );
 }
 
+/** 読み込み中の枠。実物と同じ大きさにして、表示されたときに中身がずれないようにする */
+function Skeletons({ n, cls }: { n: number; cls: string }) {
+  return <>{Array.from({ length: n }, (_, i) => <div key={i} className={`card exam-card skeleton ${cls}`} aria-hidden />)}</>;
+}
+
 /** 「第1回 慶應義塾大学 商学部 英語 予想模試」→「第1回 英語 予想模試」。大学・学部が増えたら残す */
 function shortTitle(t: string) {
   return t.replace(/慶應義塾大学 商学部\s*/, "");
 }
 
 export function HomePage() {
+  useTitle(undefined);
   return currentUser() ? <MemberHome /> : <GuestHome />;
 }
 

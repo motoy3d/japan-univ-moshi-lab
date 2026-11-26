@@ -1,3 +1,4 @@
+import { useSerifFont } from "../fonts";
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import { api } from "../api";
 import { useAsync } from "../hooks";
@@ -7,6 +8,7 @@ import { questionLabel } from "../../../shared/scoring";
 
 /** 解答・解説冊子（自分の解答つき） */
 export function AnswerKeyPrintPage() {
+  useSerifFont();
   const { id = "" } = useParams();
   const [params] = useSearchParams();
   const large = params.get("text") === "large";

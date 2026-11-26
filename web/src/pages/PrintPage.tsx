@@ -1,3 +1,4 @@
+import { useSerifFont } from "../fonts";
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { api } from "../api";
@@ -29,6 +30,7 @@ export function pageCss(paper: Paper, large = false) {
 }
 
 export function PrintPage() {
+  useSerifFont();
   const { id = "" } = useParams();
   const [params, setParams] = useSearchParams();
   const exam = useAsync(() => api.exam(id), [id]);

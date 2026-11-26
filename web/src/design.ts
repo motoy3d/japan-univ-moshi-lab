@@ -1,3 +1,4 @@
+import { loadFont } from "./fonts";
 // デザイン確認用の切り替え（配色・形・トップの見せ方・ヘッダー・書体・ロゴ）。
 // 「?design=1」を付けて開いた端末（またはデモ版）だけで切り替えパネルが出る。本番の利用者には出ない。
 // 決まったら DEFAULT を書き換えれば、その組み合わせが全員の標準になる。
@@ -39,6 +40,7 @@ export function loadDesign(preview: boolean): Design {
 
 export function applyDesign(d: Design) {
   const el = document.documentElement;
+  if (d.font === "maru") loadFont("maru");
   for (const [k, v] of Object.entries(d)) el.dataset[k] = String(v);
 }
 

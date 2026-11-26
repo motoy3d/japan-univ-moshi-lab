@@ -5,3 +5,5 @@ Disallow: /admin
 Disallow: /settings
 Disallow: /history
 Disallow: /callback
+
+Sitemap: https://moshi-lab.com/sitemap.xml

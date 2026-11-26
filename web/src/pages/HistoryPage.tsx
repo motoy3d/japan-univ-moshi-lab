@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { api } from "../api";
-import { fmtDate, fmtDuration, useAsync } from "../hooks";
+import { fmtDate, fmtDuration, useAsync, useTitle } from "../hooks";
 import { PartBars, TrendLine } from "../components/Charts";
 import type { AttemptSummary, PartScore } from "../../../shared/types";
 
@@ -32,6 +32,7 @@ const ADVICE: Record<string, string> = {
 };
 
 export function HistoryPage() {
+  useTitle("成績分析");
   const r = useAsync(() => api.attempts(), []);
   if (r.error) return <p className="error">{r.error}</p>;
   if (!r.data) return <p className="muted">読み込み中…</p>;

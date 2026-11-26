@@ -1,3 +1,4 @@
+import { useTitle } from "../hooks";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -29,6 +30,7 @@ function LegalShell({ title, children }: { title: string; children: ReactNode })
 }
 
 export function TermsPage() {
+  useTitle("利用規約");
   return (
     <LegalShell title={`${SERVICE} 利用規約`}>
       <p>
@@ -103,6 +105,7 @@ export function TermsPage() {
 }
 
 export function PrivacyPage() {
+  useTitle("プライバシーポリシー");
   return (
     <LegalShell title={`${SERVICE} プライバシーポリシー`}>
       <p>

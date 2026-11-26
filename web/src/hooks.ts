@@ -52,3 +52,11 @@ export const store = {
     }
   },
 };
+
+/** ページの題名（ブラウザのタブ・検索結果・共有に使われる）。未指定ならサイト全体の題名 */
+export const SITE_TITLE = "模試ラボ｜慶應商学部 英語・世界史の予想模試（無料・登録なし）";
+export function useTitle(title?: string) {
+  useEffect(() => {
+    document.title = title ? `${title}｜模試ラボ` : SITE_TITLE;
+  }, [title]);
+}

@@ -1,9 +1,11 @@
+import { useTitle } from "../hooks";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { currentUser, handleCallback, localLogin, login } from "../auth";
 import { getConfig } from "../config";
 
 export function LoginPage() {
+  useTitle("ログイン");
   const [params] = useSearchParams();
   const next = params.get("next") ?? "/";
   const nav = useNavigate();
