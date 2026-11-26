@@ -200,3 +200,46 @@ def finalize(sections, exam_id, edition):
     print(f"→ {out.relative_to(ROOT)}（{total}点）")
     _counter["mark"] = 0
     return exam
+
+
+# ---------- 大問演習 ----------
+PRACTICE_DISCLAIMER = "本演習は、過去の出題形式を参考に独自に作成したオリジナル問題です。慶應義塾大学および同大学の入学試験とは一切関係がありません。模試とは別の問題で、模試に再び出ることはありません。論述の設問は自動採点の対象外で、模範解答と採点の観点を見て自己採点します。"
+
+
+def finalize_practice(sec, practice_id, title, practice_type, minutes):
+    """大問演習（大問1つ）を content/practice/<practice_id>.json に書き出す。
+    sec は section() で作った大問（解答番号は 1 から。呼ぶ前に section() を作ること）"""
+    w = 0
+    for g in sec["groups"]:
+        for q in g["questions"]:
+            if q["kind"] == "write":
+                w += 1
+                q["id"], q["no"] = f"w{w}", w
+    total = sum(q["points"] for g in sec["groups"] for q in g["questions"])
+    exam = {
+        "id": practice_id,
+        "kind": "practice",
+        "practiceType": practice_type,
+        "profile": "keio-shogaku-sekaishi",
+        "university": "慶應義塾大学",
+        "faculty": "商学部",
+        "subject": "世界史",
+        "title": title,
+        "edition": "大問演習",
+        "durationMin": minutes,
+        "totalPoints": total,
+        "coverNotes": [
+            "空欄の解答は、語群の番号（2桁）を解答用紙A（マークシート）にマークすること。",
+            "問2以降の解答は、解答用紙Bの所定の欄に記入すること。字数の指定がある設問では、句読点も1字に数える。",
+            "問題冊子の余白は下書きに用いてよい。",
+        ],
+        "disclaimer": PRACTICE_DISCLAIMER,
+        "sections": [sec],
+    }
+    out = ROOT / "content" / "practice" / f"{practice_id}.json"
+    out.write_text(json.dumps(exam, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    qs = [q for g in sec["groups"] for q in g["questions"]]
+    chars = len(re.sub(r"\{\{b:\d+\}\}|\{\{u:\w+\||\}\}", "", "".join(sec["passage"]["paragraphs"])))
+    print(f"{practice_id}: {practice_type} {minutes}分 本文{chars}字 空欄{sum(q['kind'] == 'mark' for q in qs)} 記述{w} 語群{len(sec['groups'][0]['choices'])}語 {total}点")
+    _counter["mark"] = 0
+    return exam

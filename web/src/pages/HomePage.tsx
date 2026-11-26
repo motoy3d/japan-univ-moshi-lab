@@ -24,15 +24,20 @@ function practiceTitle(e: ExamListItem) {
 function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: AttemptSummary[]; error?: string }) {
   const mocks = exams?.filter((e) => e.kind !== "practice") ?? [];
   const practice = exams?.filter((e) => e.kind === "practice") ?? [];
+  const practiceSubjects = [...new Set(practice.map((e) => e.subject))];
   const resultLink = (a: AttemptSummary) => (currentUser() ? `/results/${a.attemptId}` : `/results/local/${a.attemptId}`);
   return (
     <>
       {error && <p className="error">{error}</p>}
       <h2 id="practice">大問演習 <small className="muted">15〜25分・大問1つ</small></h2>
-      <p className="small muted section-lead">模試とは別の問題です。演習で解いた英文が模試に出ることはありません。</p>
+      <p className="small muted section-lead">模試とは別の問題です。演習で解いた問題が模試に出ることはありません。</p>
+      {!exams && !error && <div className="grid grid-3"><Skeletons n={6} cls="practice-card" /></div>}
+      {/* 科目が2つ以上あるときは、科目ごとに見出しを付けて分ける（英語・世界史が混ざらないように） */}
+      {practiceSubjects.map((subject) => (
+      <section key={subject} aria-label={`大問演習（${subject}）`}>
+      {practiceSubjects.length > 1 && <h3 style={{ margin: "16px 0 8px" }}>{subject}</h3>}
       <div className="grid grid-3">
-        {!exams && !error && <Skeletons n={6} cls="practice-card" />}
-        {practice.map((e) => {
+        {practice.filter((e) => e.subject === subject).map((e) => {
           const mine = list.filter((a) => a.examId === e.id);
           return (
             <Link key={e.id} to={`/exams/${e.id}`} className="card exam-card practice-card">
@@ -46,6 +51,8 @@ function ExamLists({ exams, list, error }: { exams?: ExamListItem[]; list: Attem
           );
         })}
       </div>
+      </section>
+      ))}
 
       <h2 id="mocks">模試 <small className="muted">本番と同じ時間・形式</small></h2>
       <p className="small muted section-lead">本番どおりに受けるなら、印刷して紙で解くのがおすすめです。{getConfig().photoGrading ? "解答用紙は撮影して採点できます。" : "解き終えた答えを入力すると採点できます。"}</p>

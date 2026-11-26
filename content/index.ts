@@ -10,9 +10,12 @@ import keioShogakuEigoP03 from "./practice/keio-shogaku-eigo-p03.json";
 import keioShogakuEigoP04 from "./practice/keio-shogaku-eigo-p04.json";
 import keioShogakuEigoP05 from "./practice/keio-shogaku-eigo-p05.json";
 import keioShogakuEigoP06 from "./practice/keio-shogaku-eigo-p06.json";
+import keioShogakuSekaishiP01 from "./practice/keio-shogaku-sekaishi-p01.json";
+import keioShogakuSekaishiP02 from "./practice/keio-shogaku-sekaishi-p02.json";
+import keioShogakuSekaishiP03 from "./practice/keio-shogaku-sekaishi-p03.json";
 
 const MOCKS = [keioShogakuEigo01, keioShogakuEigo02, keioShogakuSekaishi01] as ExamWithKey[];
-const PRACTICE = [keioShogakuEigoP01, keioShogakuEigoP02, keioShogakuEigoP03, keioShogakuEigoP04, keioShogakuEigoP05, keioShogakuEigoP06] as ExamWithKey[];
+const PRACTICE = [keioShogakuEigoP01, keioShogakuEigoP02, keioShogakuEigoP03, keioShogakuEigoP04, keioShogakuEigoP05, keioShogakuEigoP06, keioShogakuSekaishiP01, keioShogakuSekaishiP02, keioShogakuSekaishiP03] as ExamWithKey[];
 
 export const EXAMS: ExamWithKey[] = [...MOCKS, ...PRACTICE];
 

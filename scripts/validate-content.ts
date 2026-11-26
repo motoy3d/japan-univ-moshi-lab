@@ -82,14 +82,20 @@ interface HistoryProfile {
 }
 const countChars = (paras: string[] = []) => paras.join("").replace(/\{\{b:\d+\}\}/g, "").replace(/\{\{u:\w+\|/g, "").replace(/\}\}/g, "").length;
 
-function checkHistoryProfile(exam: (typeof EXAMS)[number], pr: HistoryProfile) {
+/** practice: 大問演習（大問ごとの形式だけを見る。合計・試験時間・大問の並びは見ない） */
+function checkHistoryProfile(exam: (typeof EXAMS)[number], pr: HistoryProfile, practice = false) {
   const tag = `プロファイル ${exam.profile}`;
-  if (exam.totalPoints !== pr.totalPoints || exam.durationMin !== pr.durationMin) fail(exam.id, `${tag}: 配点・試験時間が違う`);
-  if (exam.sections.map((s) => s.label).join(",") !== pr.sections.map((s) => s.label).join(","))
-    return fail(exam.id, `${tag}: 大問の並びが違う`);
+  if (!practice) {
+    if (exam.totalPoints !== pr.totalPoints || exam.durationMin !== pr.durationMin) fail(exam.id, `${tag}: 配点・試験時間が違う`);
+    if (exam.sections.map((s) => s.label).join(",") !== pr.sections.map((s) => s.label).join(","))
+      return fail(exam.id, `${tag}: 大問の並びが違う`);
+  } else if (!exam.practiceType) fail(exam.id, "practiceType（一覧の表示名）がない");
   let blanks = 0, writes = 0, essays = 0, years = 0;
-  pr.sections.forEach((ps, i) => {
-    const s = exam.sections[i];
+  const pairs = practice
+    ? exam.sections.map((s) => [pr.sections.find((x) => x.label === s.label), s] as const)
+    : pr.sections.map((ps, i) => [ps, exam.sections[i]] as const);
+  pairs.forEach(([ps, s]) => {
+    if (!ps) return fail(exam.id, `大問${s.label} がプロファイルにない`);
     const [mg, wg] = s.groups;
     if (s.groups.length !== 2 || !mg.choices || mg.questions.some((q) => q.kind !== "mark") || wg.questions.some((q) => q.kind !== "write"))
       return fail(exam.id, `${tag}: 大問${s.label} は「問1 空欄（語群）」「問2以降 記述」の2グループにする`);
@@ -121,6 +127,10 @@ function checkHistoryProfile(exam: (typeof EXAMS)[number], pr: HistoryProfile) {
     blanks += nb;
     writes += nw;
   });
+  if (practice) {
+    console.log(`  ↳ 大問演習（${exam.practiceType}）: ${tag} の大問の形式に適合（空欄 ${blanks}・記述 ${writes}（論述 ${essays}）、本文 ${exam.sections.map((s) => countChars(s.passage?.paragraphs)).join("/")}字）`);
+    return;
+  }
   if (!inRange(blanks, pr.blanksTotal)) fail(exam.id, `${tag}: 空欄の合計 ${blanks}（基準 ${pr.blanksTotal.join("〜")}）`);
   if (!inRange(writes, pr.writesTotal)) fail(exam.id, `${tag}: 記述の合計 ${writes}（基準 ${pr.writesTotal.join("〜")}）`);
   if (!inRange(essays, pr.essays)) fail(exam.id, `${tag}: 論述 ${essays}問（基準 ${pr.essays.join("〜")}）`);
@@ -137,7 +147,9 @@ const fail = (examId: string, msg: string) => {
 function checkPracticeProfile(exam: (typeof EXAMS)[number]) {
   const file = path.join(here, "../content/profiles", `${exam.profile}.json`);
   if (!fs.existsSync(file)) return fail(exam.id, `プロファイル ${exam.profile} が見つからない`);
-  const pr: Profile = JSON.parse(fs.readFileSync(file, "utf8"));
+  const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+  if (raw.format === "history-blank-bank") return checkHistoryProfile(exam, raw as HistoryProfile, true);
+  const pr: Profile = raw;
   if (!exam.practiceType) fail(exam.id, "practiceType（一覧の表示名）がない");
   for (const s of exam.sections) {
     const ps = pr.sections.find((x) => x.label === s.label);
@@ -283,6 +295,32 @@ for (const exam of EXAMS) {
     }
   }
   console.log(`✓ 試験間の重複なし（${EXAMS.length}件、${N}語連続一致で検査）`);
+}
+
+// 日本語の本文（世界史など）の重複: 句読点・記号を除いて20字連続で同じ部分が別の試験にないか
+{
+  const N = 20;
+  const grams = new Map<string, string>();
+  for (const e of EXAMS) {
+    const text = e.sections
+      // 設問文は「〜字以内で記述しなさい」などの決まった言い回しが多いので、本文だけを比べる。段落の境目はまたがない
+      .flatMap((s) => [...(s.passage?.paragraphs ?? []), ...s.groups.flatMap((g) => g.passage?.paragraphs ?? [])])
+      .join("｜")
+      .replace(/\{\{[buw]:\w+\|?/g, "")
+      .replace(/\}\}/g, "")
+      .replace(/[^぀-ヿ一-龯々ー0-9０-９｜]/g, "");
+    const seen = new Set<string>();
+    let reported = 0;
+    for (let i = 0; i + N <= text.length; i++) {
+      const g = text.slice(i, i + N);
+      if (g.includes("｜") || seen.has(g)) continue;
+      seen.add(g);
+      const other = grams.get(g);
+      if (other && other !== e.id && reported++ < 3) fail(e.id, `${other} と同じ日本語の文が出ている: 「${g}」`);
+      if (!other) grams.set(g, e.id);
+    }
+  }
+  console.log(`✓ 日本語の本文の重複なし（${N}字連続一致で検査）`);
 }
 
 // 志望校データ: 日付の形式・模試 ID の存在・年度切れ
